@@ -53,4 +53,6 @@ if (interactive())
   rm(list = ls())
 }
 
+usethis::use_tidy_description()
+
 options(c3t_verbose = TRUE)
