@@ -51,8 +51,9 @@ if (interactive())
     pacman::p_load(char = pkgsToLoad, character.only = TRUE)
 
   rm(list = ls())
-}
 
-usethis::use_tidy_description()
+  usethis::use_tidy_description()
+
+}
 
 options(c3t_verbose = TRUE)
