@@ -107,7 +107,7 @@ test_that("Checking contiguity on a small set",
   matDistances <- matrix(c( 0.0, 50.0, 1.0,
                             50.0,  0.0, 2.0,
                             1.0,  2.0, 0.0), nrow = 3L)
-  # notlint end
+  # nolint end
 
 
   distances <- constructor_DistMat(matDistances)
