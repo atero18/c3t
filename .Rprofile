@@ -4,7 +4,7 @@ pacmanInstalled <-
 if (!pacmanInstalled)
 {
   message("Installing `pacman` package")
-  utils::install.packages("pacman")
+  utils::install.packages("pacman", repos = "https://cran.rstudio.com/")
 }
 
 pkgsToInstall <- list()
@@ -14,7 +14,7 @@ pkgsToLoad <- list()
 if (file.exists("./DESCRIPTION"))
 {
   if (!pacman::p_isinstalled("remotes"))
-    utils::install.packages("remotes")
+    utils::install.packages("remotes", repos = "https://cran.rstudio.com/")
 
   pkgsToInstall[["dependencies"]] <-
     remotes::local_package_deps(".", dependencies = TRUE)
@@ -44,7 +44,7 @@ if (length(pkgsToInstall) > 0L)
 
 
 if (length(pkgsToInstall) > 0L)
-  utils::install.packages(pkgsToInstall)
+  utils::install.packages(pkgsToInstall, repos = "https://cran.rstudio.com/")
 
 if (length(pkgsToLoad) > 0L)
   pacman::p_load(char = pkgsToLoad, character.only = TRUE)
