@@ -13,9 +13,9 @@ Description: Enable clustering with connectivity (regionalization) and/or
     constraints) and another to enhance a feasible solution.
 License: CC BY 4.0
 URL: 
-    https://git.lab.sspcloud.fr/ttassin/agregation-geographique-avec-continuite
+    https://github.com/atero18/c3t/
 BugReports: 
-    https://git.lab.sspcloud.fr/ttassin/agregation-geographique-avec-continuite/-/issues
+    https://github.com/atero18/c3t/issues
 Depends: 
     R (>= 2.10)
 Imports:
