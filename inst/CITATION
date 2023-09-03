@@ -1,0 +1,9 @@
+bibentry(
+  bibtype  = "Unpublished",
+  title    = "Classification non-supervisée avec contraintes de connexité et de taille",
+  author   = "Tangi Tassin",
+  institution  = "Ensai",
+  year     = 2023,
+  language   = "Français",
+  note = "Réalisé dans le cadre d'un stage de deuxième année au sein de l'école d'ingénieurs Ensai"
+)

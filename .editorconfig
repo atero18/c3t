@@ -1,0 +1,9 @@
+[*.{cpp,hpp,R,mm}]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+max_line_length = 80
+
+# R files should end with a newline
+[*.R]
+insert_final_newline = true

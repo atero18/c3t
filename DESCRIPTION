@@ -1,0 +1,100 @@
+Type: Package
+Package: c3t
+Title: Clustering with Connectivity and Size Constraints
+Version: 0.1.0
+Authors@R: c(
+    person("Tangi", "Tassin", , "tangi.tassin@outlook.fr", role = c("aut", "cre")),
+    person("Stéphane", "Legleye", role = "ths",
+           comment = "ensai.fr")
+  )
+Description: Enable clustering with connectivity (regionalization) and/or
+    minimum-maximum size constraints. It also provides an algorithm to
+    attempt making a regionalization feasible (while respecting size
+    constraints) and another to enhance a feasible solution.
+License: CC BY 4.0
+URL: 
+    https://git.lab.sspcloud.fr/ttassin/agregation-geographique-avec-continuite
+BugReports: 
+    https://git.lab.sspcloud.fr/ttassin/agregation-geographique-avec-continuite/-/issues
+Depends: 
+    R (>= 2.10)
+Imports:
+    checkmate,
+    cli,
+    dplyr (>= 1.1.0),
+    fastDummies,
+    fastmap,
+    igraph,
+    lifecycle,
+    Matrix,
+    methods,
+    pkgconfig,
+    purrr,
+    Rcpp,
+    rlang,
+    stringi,
+    tibble,
+    tidyr
+Suggests:
+    cluster,
+    spelling,
+    testthat,
+    fpc,
+    withr
+LinkingTo: 
+    Rcpp,
+    RcppArmadillo
+ByteCompile: true
+Config/potools/style: base
+Config/testthat/edition: 3
+Config/testthat/load-all: list(export_all = TRUE, helpers = FALSE)
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Collate: 
+    'abstractSymMat.R'
+    'distMat.R'
+    'pbCon.R'
+    'partition_tools.R'
+    'size_constraints.R'
+    'dunn_index.R'
+    'calinski_harabasz.R'
+    'tools.R'
+    'arguments.R'
+    'criteria.R'
+    'partition_class.R'
+    'AHCTree.R'
+    'fusion_constraint.R'
+    'AHR_single.R'
+    'AHR_grid.R'
+    'AHR_single2.R'
+    'RcppExports.R'
+    'articulation_points.R'
+    'c3t-package.R'
+    'clusters_contiguity.R'
+    'contiguity.R'
+    'symSparseMat.R'
+    'contiguityMat.R'
+    'data.R'
+    'medoids.R'
+    'elements_distances.R'
+    'enhancer.R'
+    'fusion.R'
+    'fusionTree.R'
+    'initialisation.R'
+    'interior_boundary.R'
+    'linkage_distances.R'
+    'parallelization.R'
+    'proximity.R'
+    'resolver.R'
+    'sim_context.R'
+    'sim_contiguity.R'
+    'sim_distances.R'
+    'sim_repartition.R'
+    'sim_grid.R'
+    'size_score.R'
+    'symMMat.R'
+    'symVMat.R'
+    'transferable_points.R'
