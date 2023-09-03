@@ -13,3 +13,4 @@
 ^R\AHR_single2.R$
 ^.covrignore$
 
+^codecov\.yml$
