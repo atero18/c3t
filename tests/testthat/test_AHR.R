@@ -2,16 +2,16 @@ rm(list = ls())
 
 set.seed(1234L)
 
-# Comparison with existing (implies a set where all elements are pairwise contiguous,
-# meaning the contiguity constraint disappears)
+# Comparison with existing (implies a set where all elements are
+# pairwise contiguous, meaning the contiguity constraint disappears)
 
 n <- 5L
 cont <- complete_contiguity_matrix(n)
 indivs <- seq_len(n)
 M <- sum(indivs)
 
-donnees <- gen_context(n, quantitatives_mat <- matrix(c(10.0, 2.0,
-                                                      -2.0, 4.0,
+donnees <- gen_context(n, quantitatives_mat = matrix(c( 10.0,  2.0, # nolint: spaces_inside_linter
+                                                        -2.0,  4.0,
                                                       1000.0, 40.0),
                                                     ncol = 2L))
 d <- euclidean_distance
@@ -125,13 +125,13 @@ test_that("Checking contiguity on a small set",
   # nolint end
 
 
-  # 1 and 2 are contiguous, and 3 is not contiguous with anyone. Thus, we have two connected components,
-  # {1,2} and {3}
+  # 1 and 2 are contiguous, and 3 is not contiguous with anyone. Thus, we have
+  # two connected components, {1,2} and {3}
   sizes <- seq_len(n)
 
   # Without the contiguity constraint, it is preferable to link 1 to 3
-  # and leave 2 alone. However, with the constraint, there is no choice: the only possible linkage
-  # is {1,2} and {3}.
+  # and leave 2 alone. However, with the constraint, there is no choice: the
+  # only possible linkage is {1,2} and {3}.
   pb <- constructor_pbCon(distances = matDistances, data = data,
                           sizes = sizes, contiguity = mat_cont)
 
@@ -162,19 +162,6 @@ test_that("With an excessively large max constraint, no cluster can be formed",
 
   expect_length(AHR_single(pb), 1L)
 })
-
-# Validation of functionality under multiple iterations
-
-# test_that("",
-#           {
-#             data(grid_queen_vide0_metropole0_x7_y7_indivMoy100_quant3_qual0)
-#             g7x7 = grid_queen_vide0_metropole0_x7_y7_indivMoy100_quant3_qual0
-#             matrice_dist7x7 = as.matrix(dist(g7x7$context, method = "euclidean"))
-#             pb7x7 = constructor_pbCon(matrice_dist7x7, contiguite = g7x7$contiguity,
-#                           sizes = g7x7$sizes[,"nbIndividuals"], m = 0,
-#                           M = sum(g7x7$sizes[,"nbIndividuals"]))
-#             CAH_pb(pb7x7)
-#           })
 
 test_that("Functioning of the grid",
 {

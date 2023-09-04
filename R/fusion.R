@@ -324,29 +324,31 @@ transform_contiguity_list <- function(pb, liste_contiguite, # nolint: cyclocomp_
 
 
   # Categorization of fusions
-  if (!pb$hasMinConstraint())
-  {
-    singletonMin <- minAny <- minMin <- rep(FALSE, nrow(liste_contiguite))
-    singletonAny <- (nbElementsClusters[col1] == 1L |
-                      nbElementsClusters[col2] == 1L)
-  }
-  else
+  if (pb$hasMinConstraint())
   {
     singletonMin <- (nbElementsClusters[col1] == 1L &
-                      taillesClusters[col2] < pb$m) |
+                       taillesClusters[col2] < pb$m) |
       (nbElementsClusters[col2] == 1L &
          taillesClusters[col1] < pb$m)
 
     singletonAny <- (nbElementsClusters[col1] == 1L |
-                      nbElementsClusters[col2] == 1L)
+                       nbElementsClusters[col2] == 1L)
 
     minMin <- taillesClusters[col1] < pb$m &
       taillesClusters[col2] < pb$m &
       !singletonMin
 
     minAny <- (taillesClusters[col1] < pb$m |
-                taillesClusters[col2] < pb$m) &
+                 taillesClusters[col2] < pb$m) &
       !singletonMin
+  }
+  else
+  {
+    singletonMin <- minAny <- minMin <- rep(FALSE, nrow(liste_contiguite))
+    singletonAny <- (nbElementsClusters[col1] == 1L |
+                       nbElementsClusters[col2] == 1L)
+
+
   }
 
   restant <- !singletonAny & !minAny

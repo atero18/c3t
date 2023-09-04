@@ -212,7 +212,8 @@ test_that("Articulation Points - Test with Clustering",
 
 # Checking Transferable Point Detection
 # Checking Internal Boundary Calculation
-test_that("Transferable Points - Transferable Points are the Points on the Internal Boundary",
+test_that(paste0("Transferable Points - Transferable Points are the Points on ",
+                 "the Internal Boundary"),
 {
   # nolint start: T_and_F_symbol_linter
   M <- matrix(c(F, T, T, F, F,

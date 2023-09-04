@@ -250,11 +250,14 @@ AHR_single2 <- function(pb, linkage = "saut_max", partitionInit = NULL, # nolint
     partitionArbre$partition <- standardize_partition(partition)
     partitionArbre$contraintes["min"] <- contrainteMinVerifiee
 
-    if (!contrainteMinVerifiee)
-      partitionArbre$scoreSizeConsts[c("min", "total")] <-
-      score_constraints_min(pb, clustersSizes = clustersSizes)
-    else
+    if (contrainteMinVerifiee)
       partitionArbre$scoreSizeConsts[c("min", "total")] <- 0.0
+    else
+    {
+      partitionArbre$scoreSizeConsts[c("min", "total")] <-
+        score_constraints_min(pb, clustersSizes = clustersSizes)
+    }
+
 
     # Ajout des nouvelles contiguités à cluster1
     newContiguitiesC1 <- update_contiguities(linkageDistances,

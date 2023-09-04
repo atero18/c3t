@@ -1,7 +1,6 @@
-rm(list = ls())
-source("profiling/core_profiling.R")
+source("tools/profiling/setup_profiling.R") # nolint
 
-prefixeSauvegarde = "fusionTree"
+prefixeSauvegarde <- "fusionTree"
 
 
 profvis(AHR_fusion_tree(pb7x7))

@@ -1,23 +1,23 @@
-rm(list = ls())
-source("profiling/core_profiling.R")
+source("tools/profiling/setup_profiling.R") # nolint
 
-prefixeSauvegarde = "silhouette"
+prefixeSauvegarde <- "silhouette"
 
 # Grille 7x7
 
 pb7x7 <- c3t_grid_simulation(7L, 7L, distance = "euclidean",
-                               m = 0.0, M = Inf,
-                               calculToutesValeurs = TRUE)
+                             m = 0.0, M = Inf,
+                             calculToutesValeurs = TRUE)
 
+n <- nrow(pb7x7)
 # Cas avec partition triviale
-profvis(silhouette(pb7x7, 1:49))
+profvis(silhouette(pb7x7, seq_en(n)))
 
 # Cas avec partition plus complexe
-partition = AHR_single(pb7x7)[[10]]$partition
+partition <- AHR_single(pb7x7)[[10L]]$partition
 profvis(silhouette(pb7x7, partition))
 
 # Ajout du renvoi des détails
-partition = AHR_single(pb7x7)[[10]]$partition
+partition <- AHR_single(pb7x7)[[10L]]$partition
 profvis(silhouette(pb7x7, partition, details = TRUE))
 
 
@@ -37,24 +37,25 @@ pb20x20 <- c3t_grid_simulation(20L, 20L, distance = "euclidean",
                                calculToutesValeurs = TRUE)
 
 
+n <- nrow(pb20x20)
 # Cas avec partition triviale
-profvis(silhouette(pb20x20, 1:400), rerun = TRUE)
+profvis(silhouette(pb20x20, seq_len(n)), rerun = TRUE)
 
 # Cas avec partition plus complexe
-partition = AHR_single(pb20x20)[[10]]$partition
+partition <- AHR_single(pb20x20)[[10L]]$partition
 profvis(silhouette(pb20x20, partition))
 
 
 # Comparaison avec l'existant
 
 pb30x50 <- c3t_grid_simulation(30L, 50L, distance = "euclidean",
-                                 m = 0.0, M = Inf,
-                                 calculToutesValeurs = TRUE)
+                               m = 0.0, M = Inf,
+                               calculToutesValeurs = TRUE)
 
 set.seed(123L)
-partition = sample(1:20, replace = TRUE, size = 30*50)
+partition <- sample(1L:20L, replace = TRUE, size = 30L * 50L)
 
-m <- mark(c3t = c3t::silhouette(pb30x50, partition),
+m <- mark(c3t = c3t::silhouette(pb30x50, partition), # nolint
           cluster = cluster::silhouette(partition, dmatrix = matrice_dist30x50),
           check = FALSE)
 m

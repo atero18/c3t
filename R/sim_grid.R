@@ -82,9 +82,9 @@ grid_simulation_1 <- function(x_int,
                                        10.0, 5.0,
                                        -10.0, 9.0), byrow = TRUE, ncol = 2L))
 
-  return(list("contiguity" = contiguity_matrix,
-              "repartition" = repartition_df,
-              "context" = context_df))
+  return(list(contiguity = contiguity_matrix,
+              repartition = repartition_df,
+              context = context_df))
 }
 
 
@@ -117,9 +117,9 @@ c3t_grid_simulation <- function(x_int, y_int, m = 0.0, M = Inf,
            c("euclidean", "manhattan", "minkowski"))
   {
     d <- switch(distance,
-                "manhattan" = distance_manhattan,
-                "euclidean" = distance_euclidienne,
-                "minkowski" = function_distance_minkowski(p))
+                manhattan = distance_manhattan,
+                euclidean = distance_euclidienne,
+                minkowski = function_distance_minkowski(p))
   }
   else
   {
@@ -187,8 +187,8 @@ grid_simulation <- function(x_int, y_int, contiguityType = "Queen",
                             qualitatives_list = qualitatives_list,
                             nbQuantitatives_int = nbQuantitatives)
 
-  return(list("contiguity" = matCont, "repartition" = repartition_df,
-              "context" = context_df))
+  return(list(contiguity = matCont, repartition = repartition_df,
+              context = context_df))
 }
 
 #' A few grids to apply connectivity constraints.
@@ -326,8 +326,8 @@ survey_simulation <- function(x_int, y_int, nbIndividuals_int)
   context_df$type <- "urbain"
   context_df[repartition_df$nbIndividuals == 0L, "type"] <- "rural"
 
-  return(list("contiguity" = mat_cont, "repartition" = repartition_df,
-              "context" = context_df))
+  return(list(contiguity = mat_cont, repartition = repartition_df,
+              context = context_df))
 
 }
 

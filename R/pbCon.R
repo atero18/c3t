@@ -228,20 +228,19 @@ pbCon$methods(
 pbCon$methods(
   isFullyConnected = function(calcul = TRUE)
   {
-    if (!isContiguityPropertyCalculated("fullyConnected"))
-    {
-      if (calcul)
-      {
-        completementConnecte <- all(degres() == nrow(.self) - 1L)
-        setContiguityProperty("fullyConnected", completementConnecte)
-        return(completementConnecte)
-      }
-
-      else
-        return(FALSE)
-    }
-    else
+    if (isContiguityPropertyCalculated("fullyConnected"))
       return(getContiguityProperty("fullyConnected"))
+
+    if (calcul)
+    {
+      completementConnecte <- all(degres() == nrow(.self) - 1L)
+      setContiguityProperty("fullyConnected", completementConnecte)
+      return(completementConnecte)
+    }
+
+    else
+      return(FALSE)
+
   },
   aContrainteContiguite = function()
   {

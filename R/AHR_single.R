@@ -257,11 +257,16 @@ AHR_single <- function(pb, linkage = "complete", partitionInit = NULL, # nolint:
   contraintes <-         c(TRUE, FALSE,  TRUE)
   names(contraintes) <- c("connectivity", "min", "max")
 
-  if (!contrainteMinVerifiee)
-    scoreMinSizeConst <-
-    score_constraints_min(pb, clustersSizes = V(grapheClasses)$size)
-  else
+  if (contrainteMinVerifiee)
     scoreMinSizeConst <- 0.0
+  else
+  {
+    scoreMinSizeConst <-
+      score_constraints_min(pb, clustersSizes = V(grapheClasses)$size)
+  }
+
+
+
 
   partitionRef <-
     partition(pb, partition = partition, method = "RAH",
@@ -361,11 +366,13 @@ AHR_single <- function(pb, linkage = "complete", partitionInit = NULL, # nolint:
     partitionArbre$partition <- standardize_partition(partition)
     partitionArbre$contraintes["min"] <- contrainteMinVerifiee
 
-    if (!contrainteMinVerifiee)
-      partitionArbre$scoreSizeConsts[c("min", "total")] <-
-      score_constraints_min(pb, clustersSizes = V(grapheClasses)$size)
-    else
+    if (contrainteMinVerifiee)
       partitionArbre$scoreSizeConsts[c("min", "total")] <- 0.0
+    else
+    {
+      partitionArbre$scoreSizeConsts[c("min", "total")] <-
+        score_constraints_min(pb, clustersSizes = V(grapheClasses)$size)
+    }
 
     # Add of the new contiguities to the merged cluster
     voisinsCluster1 <- as.numeric(neighbors(grapheClasses, cluster1))

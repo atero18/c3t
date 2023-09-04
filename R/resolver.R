@@ -431,15 +431,15 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
   {
     message <-
       switch(status,
-             "unresolvable" = gettext("unresolvable partition"),
-             "partially_resolved" = gettext("partially resolved partition"),
-             "fully_resolved" = gettext("fully resolved partition"))
+             unresolvable = gettext("unresolvable partition"),
+             partially_resolved = gettext("partially resolved partition"),
+             fully_resolved = gettext("fully resolved partition"))
 
 
     switch(status,
-           "unresolvable" = cli_alert_danger(message),
-           "partially_resolved" = cli_alert_warning(message),
-           "fully_resolved" = cli_alert_success(message)
+           unresolvable = cli_alert_danger(message),
+           partially_resolved = cli_alert_warning(message),
+           fully_resolved = cli_alert_success(message)
     )
   }
 

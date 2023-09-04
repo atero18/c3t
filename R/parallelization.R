@@ -115,17 +115,17 @@ c3t_stop_clusters <- function(forceStop = FALSE)
   {
     if (isTRUE(getOption("c3t_parallelizing", default = TRUE)))
     {
-      if (!forceStop)
+      if (forceStop)
+      {
+        INFO <- gettext("Clusters are present but in use. Forceful deletion")
+        cli_alert_info(INFO)
+      }
+      else
       {
         INFO <-
           gettext("Clusters are present but in use. Set `forceStop` to `TRUE` to force stopping") # nolint: line_length_linter
         cli_alert_info(INFO)
         return(invisible(FALSE))
-      }
-      else
-      {
-        INFO <- gettext("Clusters are present but in use. Forceful deletion")
-        cli_alert_info(INFO)
       }
     }
 
@@ -249,13 +249,16 @@ c3t_APP <- function(fonctionApply, fonctionParApply,
       }
     )
 
-    if (!erreurRealisee)
+    if (erreurRealisee)
+    {
+      parallele <- FALSE
+    }
+    else
     {
       c3t_clusters_rm(elementsToRemove)
       return(res)
     }
-    else
-      parallele <- FALSE
+
   }
 
   if (!parallele)

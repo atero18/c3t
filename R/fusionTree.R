@@ -242,7 +242,7 @@ search_fusionTree <- function(tree,
     }
 
     order <- switch(search,
-                    "DFS" = seq(nbChildrenNodes, 1L),
+                    DFS = seq(nbChildrenNodes, 1L),
                     seq_len(nbChildrenNodes))
 
     childrenNodes <- lapply(order, function(k)

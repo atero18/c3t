@@ -317,13 +317,7 @@ criteria_linkages_grid <- function(criteria, linkages)
   criteria <- corresponding_criterion(criteria)
   criteria <- unique(criteria)
 
-  if (!any(CRITERIA$needsLinkage[CRITERIA$criterion %in% criteria]))
-  {
-    grid <- tibble(criterion = criteria,
-                   linkage = replicate(length(criteria), NULL,
-                                       simplify = FALSE))
-  }
-  else
+  if (any(CRITERIA$needsLinkage[CRITERIA$criterion %in% criteria]))
   {
     linkages <- corresponding_linkage(linkages)
     linkages <- unique(linkages)
@@ -336,6 +330,12 @@ criteria_linkages_grid <- function(criteria, linkages)
 
       grid[grid$criterion %in% noLinkageCriteria, "linkage"] <- NULL
     }
+  }
+  else
+  {
+    grid <- tibble(criterion = criteria,
+                   linkage = replicate(length(criteria), NULL,
+                                       simplify = FALSE))
   }
 
   grid <- distinct(grid)
@@ -682,8 +682,8 @@ optimal_partitions <- function(criterionValues, criterion, byName = TRUE,
   optimalityCrit <- get_optimality_criterion(criterion)
 
   decreasing <- switch(optimalityCrit,
-                       "max" = TRUE,
-                       "min" = FALSE,
+                       max = TRUE,
+                       min = FALSE,
                        stop("unrecognized optimality type for the criterion"))
 
   na.last <- ifelse(isTRUE(keepNA), TRUE, NA)

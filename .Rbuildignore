@@ -9,8 +9,8 @@
 ^_pkgdown\.yml$
 ^\.github$
 ^\.lintr$
-^profiling$
+^tools²$
 ^R\AHR_single2.R$
 ^.covrignore$
-
 ^codecov\.yml$
+^docs$

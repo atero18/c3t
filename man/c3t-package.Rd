@@ -11,8 +11,9 @@ Enable clustering with connectivity (regionalization) and/or minimum-maximum siz
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://git.lab.sspcloud.fr/ttassin/agregation-geographique-avec-continuite}
-  \item Report bugs at \url{https://git.lab.sspcloud.fr/ttassin/agregation-geographique-avec-continuite/-/issues}
+  \item \url{https://github.com/atero18/c3t/}
+  \item \url{https://atero18.github.io/c3t/}
+  \item Report bugs at \url{https://github.com/atero18/c3t/issues}
 }
 
 }

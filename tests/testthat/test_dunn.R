@@ -165,13 +165,15 @@ test_that("Updating Dunn index - max linkage distance",
 # Test contiguous Dunn calculation
 test_that("Calculating contiguous Dunn index - min linkage distance",
 {
+  # nolint start: T_and_F_symbol_linter
   contiguity <- matrix(c(F, T, F, F, F, F,
                          T, F, T, F, F, F,
                          F, T, F, F, F, F,
                          F, F, F, F, T, F,
                          F, F, F, T, F, T,
                          F, F, F, F, T, F),
-                       nrow = 6L, byrow = T)
+                       nrow = 6L, byrow = TRUE)
+  # nolint end
 
   # nolint start: implicit_integer_linter
   distMatrix <- matrix(c(0, 1, 2, 3, 3, 2,

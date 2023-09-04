@@ -1,30 +1,33 @@
-rm(list = ls())
-
+source("tools/profiling/setup_profiling.R") # nolint
+# nolint start: undesirable_function_linter
 library(tibble)
 library(dplyr)
+library(ggplot2)
+# nolint end
+loadNamespace("fpc")
 
 # Profiling sur un petit nombre de données
 # -- Cas avec indice uniquement
-data <- c3t_grid_simulation(30, 50)$data
+data <- c3t_grid_simulation(30L, 50L)$data
 partition <- sample(seq_len(nrow(data)), replace = TRUE, size = nrow(data))
 
-profil <- profvis::profvis(calinski_harabasz(data, partition, valueOnly = TRUE))
+profil <- profvis(calinski_harabasz(data, partition, valueOnly = TRUE))
 profil
 
 # -- Cas avec retour global
-profil2 <- profvis::profvis(calinski_harabasz(data, partition, valueOnly = FALSE))
+profil2 <- profvis(calinski_harabasz(data, partition, valueOnly = FALSE))
 profil2
 
 # Comparaison des performances entre fpc::calinhara et c3t
 
-library(fpc)
 
-data <- c3t_grid_simulation(30, 50)$data
+
+data <- c3t_grid_simulation(30L, 50L)$data
 
 performances_ch <- function(calculCH)
 {
 
-  kMax <- ceiling(nrow(data) / 2)
+  kMax <- ceiling(nrow(data) / 2.0)
 
 
   set.seed(123L)
@@ -36,7 +39,7 @@ performances_ch <- function(calculCH)
     n <- sample(seq_len(nrow(data)), size = 1L)
     partition <- sample(seq_len(min(n, kMax)), size = n, replace = TRUE)
     partition <- standardize_partition(partition)
-    calculCH(data[seq_len(n),], partition)
+    calculCH(data[seq_len(n), ], partition)
     nbTries <- nbTries - 1L
   }
 
@@ -45,7 +48,7 @@ performances_ch <- function(calculCH)
 
 
 m <- mark(fpc = performances_ch(fpc::calinhara),
-          c3t = performances_ch(c3t:::calinski_harabasz))
+          c3t = performances_ch(c3t:::calinski_harabasz)) # nolint
 
 
 
@@ -54,7 +57,7 @@ data <- grid_queen_vide0_metropole0_x50_y70_indivMoy100_quant3_qual0$context
 
 performances_ch2 <- function(calculICH)
 {
-  nValues <- seq(10, nrow(data), 10)
+  nValues <- seq(10L, nrow(data), 10L)
   nbTriesPerN <- 10L
 
   minK <- 10L
@@ -67,7 +70,7 @@ performances_ch2 <- function(calculICH)
   pos <- 1L
   for (n in nValues)
   {
-    actualData <- data[seq_len(n),]
+    actualData <- data[seq_len(n), ]
 
     kValues <- ceiling(seq(from = ifelse(minK < n - 1L, minK, 1L), to = n - 1L,
                            length.out = nbTriesPerN))
@@ -91,10 +94,9 @@ performances_ch2 <- function(calculICH)
   res
 }
 
-
 resFPC <- performances_ch2(fpc::calinhara)
 resFPC$package <- "fpc"
-resC3T <- performances_ch2(c3t:::calinski_harabasz)
+resC3T <- performances_ch2(c3t:::calinski_harabasz) # nolint
 resC3T$package <- "c3t"
 
 comp <- rbind(resFPC,
@@ -122,7 +124,7 @@ comp %>%
 
 performances_ch3 <- function()
 {
-  nValues <- seq(10, nrow(data), 10)
+  nValues <- seq(10L, nrow(data), 10L)
 
   res <- tibble(n = rep(nValues, each = 2L),
                 k = ceiling(rep(nValues, each = 2L) / 2L),
@@ -134,7 +136,7 @@ performances_ch3 <- function()
   pos <- 1L
   for (n in nValues)
   {
-    actualData <- data[seq_len(n),]
+    actualData <- data[seq_len(n), ]
 
     k <- ceiling(n / 2L)
 
@@ -143,7 +145,8 @@ performances_ch3 <- function()
 
 
     m <- mark(fpc = fpc::calinhara(actualData, partition),
-              c3t = c3t:::calinski_harabasz(actualData, partition), iterations = 4)
+              c3t = c3t:::calinski_harabasz(actualData, partition), # nolint
+              iterations = 4L)
 
     memory <- c(memory, m$mem_alloc / m$n_itr)
 
@@ -161,7 +164,8 @@ res %>%
   geom_point(aes(colour = package)) +
   ggtitle("Memory complexity (bytes) depending of the number of elements n")
 
-ratio <- tibble(n = res$n[seq(1, nrow(res), 2L)],
-                memory = res[res$package == "fpc", "memory"] / res[res$package == "c3t", "memory"])
+ratio <- tibble(n = res$n[seq(1L, nrow(res), 2L)],
+                memory = res[res$package == "fpc", "memory"] /
+                  res[res$package == "c3t", "memory"])
 
 ggplot(ratio, aes(x = n, y = memory)) + geom_line()

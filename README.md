@@ -5,9 +5,8 @@
 
 <!-- badges: start -->
 
-[![Codecov test
-coverage](https://codecov.io/gh/atero18/c3t/branch/main/graph/badge.svg)](https://app.codecov.io/gh/atero18/c3t?branch=main)
 [![R-CMD-check](https://github.com/atero18/c3t/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/atero18/c3t/actions/workflows/R-CMD-check.yaml)
+[![test-coverage](https://github.com/atero18/c3t/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/atero18/c3t/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
 The goal of c3t is to …

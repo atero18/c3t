@@ -73,7 +73,8 @@ dunn_index <- function(distances, partition, linkage = "single",
     linkageDistances_mat[upper.tri(linkageDistances_mat)] <-
     linkageDistances_vec
 
-  rownames(linkageDistances_mat) <- colnames(linkageDistances_mat) <- clustersIDs
+  rownames(linkageDistances_mat) <-
+    colnames(linkageDistances_mat) <- clustersIDs
 
   # -- Finding the two clusters with the smallest separation
   clustersMoinsSepares <- which.min(linkageDistances_vec)[1L]
@@ -188,9 +189,11 @@ update_dunn_index <- function(dataCriterion, distances, partitionBefore,
     dataCriterion$clustersMoinsSepares <-
       sort(c(receiver, nomClustersDifferentsReceveur[posMin]))
   }
-  dataCriterion$linkageDistances[nomClusterRec, nomClustersDifferentsReceveur] <-
+  dataCriterion$linkageDistances[nomClusterRec,
+                                 nomClustersDifferentsReceveur] <-
     distancesAReceveur
-  dataCriterion$linkageDistances[nomClustersDifferentsReceveur, nomClusterRec] <-
+  dataCriterion$linkageDistances[nomClustersDifferentsReceveur,
+                                 nomClusterRec] <-
     distancesAReceveur
 
   # If no change has been ben made and the previous separation were concerning

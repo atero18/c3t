@@ -485,7 +485,7 @@ setMethod("all.equal", signature(target = "DistMat", current = "DistMat"),
 #' @noRd
 #' @importFrom methods as setAs
 setAs("matrix", "DistMat", function(from)
-  {
+{
   distances <- as(from, "SymMMat")
   distMat$new(distances = distances, d = NULL, data = NULL)
 })

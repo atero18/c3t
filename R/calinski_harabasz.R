@@ -284,7 +284,7 @@ update_calinski_harabasz <- function(dataCriterion, donor, receiver,
   {
     dataCriterion$nbElementsClusters <-
       dataCriterion$nbElementsClusters[
-        names(dataCriterion$nbElementsClusters) != donor]
+        names(dataCriterion$nbElementsClusters) != donor] # nolint: indentation_linter
   }
 
   dataCriterion$nbElementsClusters[receiver] <-
@@ -318,7 +318,7 @@ update_calinski_harabasz <- function(dataCriterion, donor, receiver,
       dataCriterion$centroids[rownames(dataCriterion$centroids) != donor, ]
     dataCriterion$betweenClusters <-
       dataCriterion$betweenClusters[names(dataCriterion$betweenClusters) !=
-                                      donor]
+                                      donor] # nolint: indentation_linter
   }
 
   dataCriterion$B <- dataCriterion$B -
