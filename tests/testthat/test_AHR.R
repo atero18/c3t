@@ -27,6 +27,9 @@ test_that("Linkage distance - single linkage",
   for (k in 2L:4L)
     expect_identical(cutree(resPerso, k), cutree(calculR, k))
 
+  for (Partition in resPerso$partitions)
+    expect_true(pb$isFeasibleSolution(Partition$partition))
+
 })
 
 test_that("Linkage distance - complete linkage - diameter",
@@ -36,6 +39,9 @@ test_that("Linkage distance - complete linkage - diameter",
 
   for (k in 2L:4L)
     expect_identical(cutree(resPerso, k), cutree(calculR, k))
+
+  for (Partition in resPerso$partitions)
+    expect_true(pb$isFeasibleSolution(Partition$partition))
 })
 
 test_that("Linkage distance - centroid linkage",
@@ -46,6 +52,9 @@ test_that("Linkage distance - centroid linkage",
   for (k in 2L:4L)
     expect_identical(cutree(resPerso, k), cutree(calculR, k))
 
+  for (Partition in resPerso$partitions)
+    expect_true(pb$isFeasibleSolution(Partition$partition))
+
 })
 
 test_that("Linkage distance - average linkage",
@@ -55,6 +64,9 @@ test_that("Linkage distance - average linkage",
 
   for (k in 2L:4L)
     expect_identical(cutree(resPerso, k), cutree(calculR, k))
+
+  for (Partition in resPerso$partitions)
+    expect_true(pb$isFeasibleSolution(Partition$partition))
 })
 
 test_that("Elements distance (`d`) - Minkowski p = 3",
@@ -69,6 +81,9 @@ test_that("Elements distance (`d`) - Minkowski p = 3",
   for (k in 2L:4L)
     expect_identical(cutree(resPerso, k), cutree(calculR, k))
 
+  for (Partition in resPerso$partitions)
+    expect_true(pb$isFeasibleSolution(Partition$partition))
+
 })
 
 test_that("Elements distance (`d`) - Manhattan",
@@ -82,6 +97,9 @@ test_that("Elements distance (`d`) - Manhattan",
 
   for (k in 2L:4L)
     expect_identical(cutree(resPerso, k), cutree(calculR, k))
+
+  for (Partition in resPerso$partitions)
+    expect_true(pb$isFeasibleSolution(Partition$partition))
 })
 
 test_that("Elements distance (`d`) - supremum distance",
@@ -96,6 +114,9 @@ test_that("Elements distance (`d`) - supremum distance",
 
   for (k in 2L:4L)
     expect_identical(cutree(resPerso, k), cutree(calculR, k))
+
+  for (Partition in resPerso$partitions)
+    expect_true(pb$isFeasibleSolution(Partition$partition))
 })
 
 # Verification of the contiguity constraint
@@ -137,6 +158,9 @@ test_that("Checking contiguity on a small set",
 
   resPerso <- AHR_single(pb)
   expect_identical(cutree(resPerso, 2L), c(1L, 1L, 2L))
+
+  for (Partition in resPerso$partitions)
+    expect_true(pb$isFeasibleSolution(Partition$partition))
 })
 
 test_that("Checking contiguity on a larger set",
@@ -179,4 +203,19 @@ test_that("Functioning of the grid",
   expect_list(res, types = "tbl", len = 3L)
   expect_named(res, c("grid", "initialPartitions", "results"))
 
+})
+
+# Same result independently of the complete linkage calculation
+test_that("Same result independently of the entire linkage calculation",
+{
+  pb7x7 <- c3t_grid_simulation(7L, 7L, distance = "euclidean",
+                               calculToutesValeurs = FALSE)
+  pb7x7BIS <- pb7x7$copy(shallow = FALSE)
+
+  res1 <- AHR_single(pb7x7, linkage = "single", calculDistComplet = FALSE)
+  res2 <- AHR_single(pb7x7BIS, linkage = "single", calculDistComplet = TRUE)
+
+  for (i in seq_along(res1$partitions))
+    expect_identical(res1$partitions[[i]]$partition,
+                     res2$partitions[[i]]$partition)
 })

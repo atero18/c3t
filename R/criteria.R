@@ -26,6 +26,7 @@ CRITERIA <- tibble(criterion = c("CHI", "Dunn"), # nolint: object_name_linter
                    handleAbstractSymMat = FALSE)
 
 
+# nocov start
 #' @importFrom tibble add_row
 #' @importFrom checkmate assertString assertCharacter assertFunction
 #' @importFrom checkmate assertNumber assertFlag
@@ -119,8 +120,9 @@ add_criterion <- function(criterion,
                  optimality = optimality),
          envir = asNamespace("c3t"))
 }
+# nocov end
 
-
+# nocov start
 if (requireNamespace("cluster", quietly = TRUE))
 {
   #' silhouette_score
@@ -183,6 +185,7 @@ if (requireNamespace("cluster", quietly = TRUE))
                 handleAbstractSymMat = FALSE)
 
 }
+# nocov end
 
 #' @importFrom checkmate assertCharacter
 corresponding_criterion <- function(criteria)

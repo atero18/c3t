@@ -129,7 +129,7 @@ enhancer_pb <- function(pb, regionalisation, criterion = "Dunn", # nolint: cyclo
     assertCount(maxIt, positive = TRUE)
 
   # Verifying that the given partition is a feasible solution
-  if (!pb$estSolutionFaisable(regionalisation))
+  if (!pb$isFeasibleSolution(regionalisation))
   {
     stop("Given solution is not a feasible solution")
   }
@@ -469,7 +469,7 @@ grid_enhancer_pb <- function(pb, # nolint: cyclocomp_linter
                              ...)
 {
   # Checking arguments
-  if (!pb$estSolutionFaisable(regionalisation))
+  if (!pb$isFeasibleSolution(regionalisation))
   {
     stop("`regionalisation` is not a feasible solution")
   }

@@ -79,22 +79,6 @@ setMethod("[", signature(x = "SymMMat", i = "numeric",
 
 # Assignation des données
 
-#' @importFrom checkmate assertNumber
-assignationSimple_symMMat <- function(x, i, j, value)
-{
-  if (!is.null(x$defaultDiag) && i == j && value != x$defaultDiag)
-  {
-    stop("Default value is already defined for the diagonal")
-  }
-
-  assertNumber(value)
-
-  x$values[i, j] <- value
-  x$values[j, i] <- value
-
-  return(x)
-}
-
 assignation_symMat <- function(x, indexs, values)
 {
   if (!is.null(x$defaultDiag))
@@ -113,6 +97,7 @@ assignation_symMat <- function(x, indexs, values)
   return(x)
 }
 
+# nocov start
 #' @rdname abstractSymMat_replace
 #' @keywords internal
 setReplaceMethod("[", signature(x = "SymMMat", i = "numeric",
@@ -182,6 +167,8 @@ setReplaceMethod("[", signature(x = "SymMMat", i = "missing",
 
                    return(x)
                  })
+
+# nocov end
 
 # Conversions
 #' @importFrom methods setAs

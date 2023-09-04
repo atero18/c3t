@@ -52,6 +52,7 @@ rank_to_xy_grid <- function(k_int, x_int, y_int)
 # First simulation with a simple grid where we have "Queen" contiguity,
 # no mandatory empty zones, and no metropolis, and for context 3
 # quantitative variables with different means and variances
+# nocov start
 #' @importFrom checkmate assertCount assertDouble
 grid_simulation_1 <- function(x_int,
                               y_int,
@@ -86,6 +87,7 @@ grid_simulation_1 <- function(x_int,
               repartition = repartition_df,
               context = context_df))
 }
+# nocov end
 
 
 #' @importFrom checkmate assertCount testString
@@ -117,8 +119,8 @@ c3t_grid_simulation <- function(x_int, y_int, m = 0.0, M = Inf,
            c("euclidean", "manhattan", "minkowski"))
   {
     d <- switch(distance,
-                manhattan = distance_manhattan,
-                euclidean = distance_euclidienne,
+                manhattan = manhattan_distance,
+                euclidean = euclidean_distance,
                 minkowski = function_distance_minkowski(p))
   }
   else
@@ -140,6 +142,7 @@ c3t_grid_simulation <- function(x_int, y_int, m = 0.0, M = Inf,
   pb
 }
 
+# nocov start
 #' Grid Simulation
 #'
 #' Simulates a territory in the form of a grid with its contiguity,
@@ -190,6 +193,7 @@ grid_simulation <- function(x_int, y_int, contiguityType = "Queen",
   return(list(contiguity = matCont, repartition = repartition_df,
               context = context_df))
 }
+# nocov end
 
 #' A few grids to apply connectivity constraints.
 #'

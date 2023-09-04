@@ -383,7 +383,7 @@ pbCon$methods(
     isRegionalisation(partition) &&
       nbTooBigClusters(partition) == 0L
   },
-  estSolutionFaisable = function(partition)
+  isFeasibleSolution = function(partition)
   {
     isRegionalisation(partition) &&
       nbTooSmallClusters(partition) == 0L &&
