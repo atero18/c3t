@@ -36,6 +36,8 @@ Imports:
 Suggests:
     cluster,
     fpc,
+    knitr,
+    rmarkdown,
     spelling,
     testthat,
     withr
@@ -96,3 +98,4 @@ Collate:
     'symMMat.R'
     'symVMat.R'
     'transferable_points.R'
+VignetteBuilder: knitr
