@@ -1,6 +1,6 @@
-source("tools/profiling/setup_profiling.R") # nolint
+source("tools/profiling/setup.R") # nolint
 
-prefixeSauvegarde <- "DistMat"
+profvis <- function(...) profiling(...,  prefix = "distMat")
 
 
 # Comparaison d'accès en fonction du type de stockage
@@ -115,14 +115,15 @@ setMethod("[", signature(x = "matriceS4", i = "numeric",
 
 base <- as.matrix(dist(contexte))
 matriceS4 <- new("matriceS4", mat = base)
-dMvecteur <- constructor_DistMat(base, modeStockage = "vector")
-dMmatrice <- constructor_DistMat(base, modeStockage = "matrix")
+dMvecteur <- constructor_DistMat(base, storageMode = "vector")
+dMmatrice <- constructor_DistMat(base, storageMode = "matrix")
 
-profvis({tempsBase <- temps_acces(base)}, simplify = FALSE)
+profil1 <- profvis({tempsBase <- temps_acces(base)}, simplify = FALSE,
+                   name = "base")
 tempsMatS4 <- temps_acces(matriceS4)
 tempsdMvecteur <- temps_acces(dMvecteur)
-profil1 <- profvis({tempsdMmatrice <- temps_acces(dMmatrice)}, simplify = FALSE)
-profil1
+profil2 <- profvis({tempsdMmatrice <- temps_acces(dMmatrice)},
+                   simplify = FALSE, name = "DistMat")
 
 
 

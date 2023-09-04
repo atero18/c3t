@@ -1,6 +1,6 @@
-source("tools/profiling/setup_profiling.R") # nolint
+source("tools/profiling/setup.R") # nolint
 
-prefixeSauvegarde <- "RAH"
+profvis <- function(...) profiling(...,  prefix = "AHR")
 
 # Comparaison stockage vecteur et matrice
 
@@ -20,30 +20,30 @@ pbMatrice <- c3t_grid_simulation(7L, 7L, distance = "euclidean",
 
 
 set.seed(123L)
-m <- mark(vecteur = AHR_single(pbVecteur, linkage = "saut_min"),
-          matrice = AHR_single(pbMatrice, linkage = "saut_min"),
+m <- mark(vecteur = AHR_single(pbVecteur, linkage = "single"),
+          matrice = AHR_single(pbMatrice, linkage = "single"),
           iterations = 4L, check = FALSE)
 
 
 # Comparaison mode calcul distances
 
 
-m <- mark(mode2 = AHR_single(pb20x20, linkage = "saut_min",
+m <- mark(mode2 = AHR_single(pb20x20, linkage = "single",
                              modeEvaluationDistInter = 2L),
-          mode3 = AHR_single(pb20x20, linkage = "saut_min",
+          mode3 = AHR_single(pb20x20, linkage = "single",
                              modeEvaluationDistInter = 3L),
-          mode4 = AHR_single(pb20x20, linkage = "saut_min",
+          mode4 = AHR_single(pb20x20, linkage = "single",
                              modeEvaluationDistInter = 4L),
-          mode6 = AHR_single(pb20x20, linkage = "saut_min",
+          mode6 = AHR_single(pb20x20, linkage = "single",
                              modeEvaluationDistInter = 6L))
 
-m <- mark(mode2 = AHR_single(pb7x7, linkage = "saut_min",
+m <- mark(mode2 = AHR_single(pb7x7, linkage = "single",
                              modeEvaluationDistInter = 2L),
-          mode3 = AHR_single(pb7x7, linkage = "saut_min",
+          mode3 = AHR_single(pb7x7, linkage = "single",
                              modeEvaluationDistInter = 3L),
-          mode4 = AHR_single(pb7x7, linkage = "saut_min",
+          mode4 = AHR_single(pb7x7, linkage = "single",
                              modeEvaluationDistInter = 4L),
-          mode6 = AHR_single(pb7x7, linkage = "saut_min",
+          mode6 = AHR_single(pb7x7, linkage = "single",
                              modeEvaluationDistInter = 6L), min_iterations = 3L)
 m
 
@@ -60,18 +60,16 @@ m
 pb7x7 <- c3t_grid_simulation(7L, 7L, distance = "euclidean",
                              m = 0.0, M = Inf,
                              calculToutesValeurs = TRUE)
-set.seed(123L)
-profil1 <- profvis({res <- AHR_single(pb7x7, linkage = "saut_min")})
-#save_profiling(profil1, prefixeSauvegarde, "profil1") # nolint
-profil1
+
+profil1 <- profvis({res <- AHR_single(pb7x7, linkage = "single")},
+                   name = "unique_7x7")
 
 # -- Grille 20x20
 pb20x20 <- c3t_grid_simulation(20L, 20L, distance = "euclidean",
                                m = 0.0, M = Inf,
                                calculToutesValeurs = TRUE)
-set.seed(123L)
-profil2 <- profvis({res <- AHR_single(pb20x20, linkage = "saut_min")})
-profil2
+profil2 <- profvis({res <- AHR_single(pb20x20, linkage = "single")},
+                   name = "unique_20x20")
 
 # 22/06/2023 : La recherche initiale des classes contigues prenait beaucoup trop
 # de temps (600 ms sur 1000). Éviter un appel de `which` à chaque fois en
@@ -93,10 +91,9 @@ profil2
 pb30x50 <- c3t_grid_simulation(30L, 50L, distance = "euclidean",
                                m = 0.0, M = Inf,
                                calculToutesValeurs = TRUE)
-set.seed(123L)
-profil3 <- profvis({res <- AHR_single(pb30x50, linkage = "saut_min",
-                                      Cpp = TRUE)})
-profil3
+
+profil3 <- profvis({res <- AHR_single(pb30x50, linkage = "single")},
+                   name = "unique_30x50")
 
 # 23/06/2023 : L'accès aux matrices de distances creuses prenant du temps,
 # stockage des données de distances dans un vecteur, en considérant la symétrie
@@ -121,14 +118,12 @@ profil3
 pb50x70 <- c3t_grid_simulation(50L, 70L, distance = "euclidean",
                                m = 0.0, M = Inf,
                                calculToutesValeurs = TRUE)
-set.seed(123L)
-profil4 <- profvis({res <- AHR_single(pb50x70, linkage = "saut_min")})
-profil4
+
+profil4 <- profvis({res <- AHR_single(pb50x70, linkage = "single")},
+                   name = "unique_50x70")
 
 # 28/06/2023 : Amélioration du calcul de la contiguité inter-classe,
 # important lorsque l'on ne démarre pas le calcul du bas de l'arbre.
-
-profvis({res <- AHR_pb(pb7x7, linkage = "saut_min", nbTries = 1L)})
 
 
 
@@ -143,33 +138,9 @@ pb20x20_complete <- c3t_grid_simulation(20L, 20L, distance = "euclidean",
                                         calculToutesValeurs = TRUE)
 
 m <- mark(nonComplet = as_tibble(AHR_single(pb20x20$copy(),
-                                            linkage = "saut_min",
+                                            linkage = "single",
                                             calculDistComplet = FALSE)),
           complet = as_tibble(AHR_single(pb20x20_complete,
-                                         linkage = "saut_min",
+                                         linkage = "single",
                                          calculDistComplet = TRUE)),
           min_iterations = 4L)
-
-# Ajout de contraintes sur les fusions (relatives aux tailles)
-profvis({res <- AHR_single(pb4x4, linkage = "saut_min",
-                           fusionConstraint = "minAny")})
-
-# Comparaison globale
-listePb <- list("49" = pb7x7,
-                "400" = pb20x20,
-                "1500" = pb30x50,
-                "3500" = pb50x70)
-
-n <- c(49L, 400L, 1500L, 3500L)
-grilleProfiling <- data.frame(n = rep(n, each = 3L),
-                              Cpp = rep(c(TRUE, TRUE, FALSE), length(n)),
-                              calculDistComplet =
-                                rep(c(TRUE, FALSE, FFALSE), length(n)))
-comparaisonRAH <-
-  press(.grid = grilleProfiling,
-  {
-    mark(AHR_single(listePb[[as.character(n)]], linkage = "saut_min",
-                    Cpp = Cpp, calculDistComplet = calculDistComplet))
-  })
-
-comparaisonRAH <- select(comparaisonRAH, -memory)

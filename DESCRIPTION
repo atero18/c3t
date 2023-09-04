@@ -11,7 +11,7 @@ Description: Enable clustering with connectivity (regionalization) and/or
     minimum-maximum size constraints. It also provides an algorithm to
     attempt making a regionalization feasible (while respecting size
     constraints) and another to enhance a feasible solution.
-License: CC BY 4.0
+License: GPL (>= 3)
 URL: https://github.com/atero18/c3t/, https://atero18.github.io/c3t/
 BugReports: https://github.com/atero18/c3t/issues
 Depends: 

@@ -1,4 +1,4 @@
-source("tools/profiling/setup_profiling.R") # nolint
+source("tools/profiling/setup.R") # nolint
 # nolint start: undesirable_function_linter
 library(tibble)
 library(dplyr)
@@ -6,17 +6,20 @@ library(ggplot2)
 # nolint end
 loadNamespace("fpc")
 
+profvis <- function(...) profiling(...,  prefix = "CHI")
+
 # Profiling sur un petit nombre de données
 # -- Cas avec indice uniquement
 data <- c3t_grid_simulation(30L, 50L)$data
 partition <- sample(seq_len(nrow(data)), replace = TRUE, size = nrow(data))
 
-profil <- profvis(calinski_harabasz(data, partition, valueOnly = TRUE))
-profil
+profil1 <- profvis(calinski_harabasz(data, partition, valueOnly = TRUE),
+                   name = "valueOnly")
+
 
 # -- Cas avec retour global
-profil2 <- profvis(calinski_harabasz(data, partition, valueOnly = FALSE))
-profil2
+profil2 <- profvis(calinski_harabasz(data, partition, valueOnly = FALSE),
+                   name = "all_data")
 
 # Comparaison des performances entre fpc::calinhara et c3t
 
