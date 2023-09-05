@@ -1,7 +1,8 @@
+#' @include pbCon.R
+
 # Determines the set of elements from a cluster that are contiguous
 # with at least one element from another cluster.
 # @param cluster_int The identifier of the cluster (strictly positive integer)
-#' @importFrom methods is
 interior_boundary_cluster <- function(contiguity,
                                       cluster_int,
                                       partition,
@@ -14,7 +15,7 @@ interior_boundary_cluster <- function(contiguity,
   if (!any(masque))
     return(NULL)
 
-  if (is(contiguity, "pbCon"))
+  if (is_pbCon(contiguity))
     contiguity <- getmatContPbCon(contiguity)
 
   diag(contiguity) <- FALSE
@@ -80,13 +81,12 @@ interior_boundary_cluster <- function(contiguity,
 #' contiguity, is defined as the set of elements contiguous to at least
 #' one other element from a different cluster than its own.
 #' @importFrom igraph ends E is_igraph
-#' @importFrom methods is
 #' @export
 interior_boundary <- function(contiguity,
                               partition,
                               removeSymmetry = TRUE)
 {
-  if (is(contiguity, "pbCon"))
+  if (is_pbCon(contiguity))
     contiguity <- getmatContPbCon(contiguity)
 
   else if (is_igraph(contiguity))

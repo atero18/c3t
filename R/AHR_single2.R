@@ -141,11 +141,13 @@ AHR_single2 <- function(pb, linkage = "saut_max", partitionInit = NULL, # nolint
   contraintes <-         c(TRUE, FALSE,  TRUE)
   names(contraintes) <- c("connectivity", "min", "max")
 
-  if (!contrainteMinVerifiee)
-    scoreMinSizeConst <-
-    score_constraints_min(pb, clustersSizes = clustersSizes)
-  else
+  if (contrainteMinVerifiee)
     scoreMinSizeConst <- 0.0
+  else
+  {
+    scoreMinSizeConst <-
+      score_constraints_min(pb, clustersSizes = clustersSizes)
+  }
 
   partitionRef <-
     partition(pb, partition = partition, methode = "RAH",
@@ -301,7 +303,7 @@ AHR_single2 <- function(pb, linkage = "saut_max", partitionInit = NULL, # nolint
                       cluster1, cluster2,
                       linkage,
                       usefulClusters =
-                        seq_along(nomClusters)[remainingClusters],
+                        seq_along(nomClusters)[remainingClusters], # nolint: indentation_linter
                       elemDistances = pb,
                       partitionBefore = oldPartition,
                       nbElementsClustersBefore = nbElementsClusters,

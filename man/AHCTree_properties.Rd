@@ -4,11 +4,17 @@
 \alias{AHCTree_properties}
 \alias{length,AHCTree-method}
 \alias{names,AHCTree-method}
+\alias{.nbClusters,AHCTree-method}
+\alias{nbSingletons,AHCTree-method}
 \title{Properties of a \code{AHCTree} object}
 \usage{
 \S4method{length}{AHCTree}(x)
 
 \S4method{names}{AHCTree}(x)
+
+\S4method{.nbClusters}{AHCTree}(partition)
+
+\S4method{nbSingletons}{AHCTree}(partition)
 }
 \arguments{
 \item{x}{A \code{AHCTree} object}
@@ -25,6 +31,11 @@ of partitions stored in the tree. (positive integer)
 of the different partitions stored in the tree. If
 the tree have not been manually modified then it corresponds
 to the number of clusters in each partition.
+
+\item \code{.nbClusters(AHCTree)}: Give the number of cluster in each partition
+
+\item \code{nbSingletons(AHCTree)}: Give the number of cluster with exactly
+one element in each partition contained in the tree
 
 }}
 \keyword{internal}

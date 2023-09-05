@@ -1,4 +1,5 @@
-#' @include elements_distances.R
+#' @include distances_elements.R
+#' @include pbCon.R
 #'
 #' Distance inter-clusters de saut
 #'
@@ -189,8 +190,7 @@ corresponding_linkage <- function(linkages, simplify = TRUE)
     {
       maskNaN <- is.nan(correspondingStrings)
       correspondingStrings[maskNaN] <-
-        LINKAGES$linkage[
-          match_str(linkagesStrings[maskNaN], LINKAGES$names)]
+        LINKAGES$linkage[match_str(linkagesStrings[maskNaN], LINKAGES$names)]
     }
 
     if (simplify)
@@ -482,10 +482,15 @@ calcul_distances_inter <- function(pb, partition, distancesACalculer,
   if (any(masqueTaille))
   {
 
-    distances[masqueTaille] <- distances_mat[
-      cbind(do.call("c", listeClusters[distancesACalculer[masqueTaille, 1L]]),
-            do.call("c", listeClusters[distancesACalculer[masqueTaille, 2L]])),
+    # nolint start: indentation_linter
+    distances[masqueTaille] <-
+      distances_mat[
+        cbind(do.call("c",
+                      listeClusters[distancesACalculer[masqueTaille, 1L]]),
+              do.call("c",
+                      listeClusters[distancesACalculer[masqueTaille, 2L]])),
       drop = TRUE]
+    # nolint end
 
     masque <- !masqueTaille
     distancesACalculer <- distancesACalculer[masque, , drop = FALSE]
@@ -537,7 +542,7 @@ calcul_distances_inter <- function(pb, partition, distancesACalculer,
 {
   # Evaluation by taking directly all distances under the form of a
   # then by splitting the list in submatrices
-  if (!inherits(distances_mat, "pbCon"))
+  if (!is_pbCon(distances_mat))
     return(.calcul_distances_mode_4(distances_mat, partition,
                                     distancesACalculer, linkage, ...))
 
@@ -634,7 +639,6 @@ calcul_distances_inter <- function(pb, partition, distancesACalculer,
 }
 
 
-#' @importFrom methods is
 calculDistancesInter_Cpp <- function(x, partition,
                                      indexs_mat, comp_str = "min")
 {

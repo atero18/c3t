@@ -1,4 +1,4 @@
-#' @include linkage_distances.R
+#' @include distances_lilnkage.R
 #' @importFrom tibble tibble
 LINKAGES <- # nolint: object_name_linter
   tibble(linkage = c("Single", "Complete", "Centroid",

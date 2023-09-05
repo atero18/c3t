@@ -50,12 +50,15 @@ setMethod("[", signature(x = "ContiguityMat", i = "numeric",
 #' @rdname abstractSymMat_access
 #' @keywords internal
 #' @importFrom methods callNextMethod
-setMethod("[", signature(x = "ContiguityMat", i = "missing",
-                         j = "missing", drop = "ANY"),
-          function(x, i, j, drop) {
-            res <- callNextMethod()
-            return(res == 1.0 | res)
-          })
+setMethod(
+  "[",
+  signature(x = "ContiguityMat", i = "missing", j = "missing", drop = "ANY"),
+  function(x, i, j, drop)
+  {
+    res <- callNextMethod()
+    return(res == 1.0 | res)
+  }
+)
 
 # Overloading igraph functions
 

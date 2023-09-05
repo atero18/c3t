@@ -1,13 +1,13 @@
 #' @include abstractSymMat.R
 
+#' @keywords internal
+symVMat <- setRefClass(
+  "SymVMat",
+  fields = list(defaultDiag = "numericOrLogicalOrNULL", values = "ANY"),
+  contains = "AbstractSymMat"
+)
 
 #' @importFrom checkmate assert checkNumber checkFlag
-#' @keywords internal
-symVMat <- setRefClass("SymVMat",
-                       fields = list(defaultDiag = "numericOrLogicalOrNULL",
-                                     values = "ANY"),
-                       contains = "AbstractSymMat")
-
 symVMat$methods(
   setDefautDiag = function(defautD)
   {
@@ -76,81 +76,85 @@ indexs_elements_symVMat <- function(x, pos)
 #' @rdname abstractSymMat_access
 #' @keywords internal
 #' @importFrom checkmate assertIntegerish
-setMethod("[", signature(x = "SymVMat", i = "matrix", j = "missing",
-                         drop = "ANY"),
-          function(x, i, j, drop)
-          {
-            if (ncol(i) != 2L)
-            {
-              stop("`i` must exactly have 2 columns")
-            }
+setMethod(
+  "[",
+  signature(x = "SymVMat", i = "matrix", j = "missing", drop = "ANY"),
+  function(x, i, j, drop)
+  {
+    if (ncol(i) != 2L)
+    {
+      stop("`i` must exactly have 2 columns")
+    }
 
-            if (nrow(i) == 0L)
-              return(NULL)
-
-
-            assertIntegerish(i[, 1L],
-                             lower = 1L, upper = nrow(x),
-                             any.missing = FALSE, all.missing = FALSE)
-
-            assertIntegerish(i[, 2L],
-                             lower = 1L, upper = ncol(x),
-                             any.missing = FALSE, all.missing = FALSE)
-
-            grille <- i
-            donnees <- rep(NA, nrow(grille))
+    if (nrow(i) == 0L)
+      return(NULL)
 
 
-            if (!is.null(x$defaultDiag))
-            {
-              masqueEgalite <- grille[, 1L] == grille[, 2L]
-              masque <- !masqueEgalite
-              if (any(masqueEgalite))
-              {
-                donnees[masqueEgalite] <- x$defaultDiag
-                grille <- grille[masque, ]
-                if (sum(masque) == 1L)
-                  grille <- matrix(grille, ncol = 2L)
-              }
-            }
+    assertIntegerish(i[, 1L],
+                     lower = 1L, upper = nrow(x),
+                     any.missing = FALSE, all.missing = FALSE)
 
-            else
-              masque <- rep(TRUE, nrow(grille))
+    assertIntegerish(i[, 2L],
+                     lower = 1L, upper = ncol(x),
+                     any.missing = FALSE, all.missing = FALSE)
 
-            if (any(masque))
-            {
-              positions <- position_element_symVMat(x, grille)
-              donnees[masque] <- x$values[positions]
-            }
+    grille <- i
+    donnees <- rep(NA, nrow(grille))
 
-            return(donnees)
 
-          })
+    if (!is.null(x$defaultDiag))
+    {
+      masqueEgalite <- grille[, 1L] == grille[, 2L]
+      masque <- !masqueEgalite
+      if (any(masqueEgalite))
+      {
+        donnees[masqueEgalite] <- x$defaultDiag
+        grille <- grille[masque, ]
+        if (sum(masque) == 1L)
+          grille <- matrix(grille, ncol = 2L)
+      }
+    }
+
+    else
+      masque <- rep(TRUE, nrow(grille))
+
+    if (any(masque))
+    {
+      positions <- position_element_symVMat(x, grille)
+      donnees[masque] <- x$values[positions]
+    }
+
+    return(donnees)
+
+  }
+)
 
 
 #' @rdname abstractSymMat_access
 #' @keywords internal
 #' @importFrom checkmate testScalar
-setMethod("[", signature(x = "SymVMat", i = "numeric",
-                         j = "numeric", drop = "ANY"),
-          function(x, i, j, drop)
-          {
-              if (missing(drop))
-                drop <- TRUE
+setMethod(
+  "[",
+  signature(x = "SymVMat", i = "numeric", j = "numeric", drop = "ANY"),
+  function(x, i, j, drop)
+  {
+    if (missing(drop))
+      drop <- TRUE
 
-              else
-                drop <- isTRUE(drop)
+    else
+      drop <- isTRUE(drop)
 
-              grille <- vecs_pos_vers_indexs_pos(i, j)
+    grille <- vecs_pos_vers_indexs_pos(i, j)
 
-              if (!drop || !testScalar(i) && !testScalar(j))
-                return(data_indexs_pos_vers_matrice(x[grille, ],
-                                                    names(x)[i],
-                                                    names(x)[j]))
+    if (!drop || !testScalar(i) && !testScalar(j))
+      return(data_indexs_pos_vers_matrice(x[grille, ],
+                                          names(x)[i],
+                                          names(x)[j]))
 
-              else
-                return(x[grille, ])
-          })
+    else
+      return(x[grille, ])
+  }
+)
 
 # Data affectation
 #' @importFrom checkmate assertNumber
@@ -179,36 +183,40 @@ assignationSimple_symVMat <- function(x, i, j, value)
 
 #' @rdname abstractSymMat_replace
 #' @keywords internal
-setReplaceMethod("[", signature(x = "SymVMat", i = "numeric",
-                                j = "numeric", value = "numeric"),
-                 function(x, i, j, value) {
-                   if (any(i > x$dim) || any(j > x$dim))
-                   {
-                     stop("Specified indices are incorrect")
-                   }
+setReplaceMethod(
+  "[",
+  signature(x = "SymVMat", i = "numeric", j = "numeric", value = "numeric"),
+  function(x, i, j, value) {
+    if (any(i > x$dim) || any(j > x$dim))
+    {
+      stop("Specified indices are incorrect")
+    }
 
+    grille <- expand.grid(i, j)
+    apply(grille, 1L,
+          function(couple) assignationSimple_symVMat(x, couple[1L],
+                                                     couple[2L], value))
 
-                  grille <- expand.grid(i, j)
-                  apply(grille, 1L, function(couple)
-                    assignationSimple_symVMat(x, couple[1L], couple[2L], value))
-
-                  return(x)
-                 })
+    return(x)
+  }
+)
 
 #' @rdname abstractSymMat_replace
 #' @keywords internal
 #' @importFrom checkmate assertIntegerish
-setReplaceMethod("[", signature(x = "SymVMat", i = "matrix",
-                                j = "missing", value = "numeric"),
- function(x, i, j, value) {
+setReplaceMethod(
+  "[",
+  signature(x = "SymVMat", i = "matrix", j = "missing", value = "numeric"),
+  function(x, i, j, value)
+  {
 
-   assertIntegerish(i[, 1L],
-                    lower = 1L, upper = nrow(x),
-                    any.missing = FALSE, all.missing = FALSE)
+    assertIntegerish(i[, 1L],
+                     lower = 1L, upper = nrow(x),
+                     any.missing = FALSE, all.missing = FALSE)
 
-   assertIntegerish(i[, 2L],
-                    lower = 1L, upper = ncol(x),
-                    any.missing = FALSE, all.missing = FALSE)
+    assertIntegerish(i[, 2L],
+                     lower = 1L, upper = ncol(x),
+                     any.missing = FALSE, all.missing = FALSE)
 
     if (length(value) != nrow(i))
     {
@@ -216,25 +224,26 @@ setReplaceMethod("[", signature(x = "SymVMat", i = "matrix",
     }
 
 
-   lapply(seq_len(nrow(i)),
-          function(k)
-            assignationSimple_symVMat(x,
-                                      i[k, 1L],
-                                      i[k, 2L],
-                                      value[k]))
+    lapply(seq_len(nrow(i)),
+           function(k) assignationSimple_symVMat(x, i[k, 1L],
+                                                 i[k, 2L], value[k]))
 
-   return(x)
- })
+    return(x)
+  }
+)
 
 
 #' @rdname abstractSymMat_replace_diag
 #' @keywords internal
-setReplaceMethod("diag", signature(x = "SymVMat", value = "ANY"),
-                 function(x, value)
-                 {
-                   x$setDefautDiag(value)
-                   return(x)
-                 })
+setReplaceMethod(
+  "diag",
+  signature(x = "SymVMat", value = "ANY"),
+  function(x, value)
+  {
+    x$setDefautDiag(value)
+    return(x)
+  }
+)
 
 #' @importFrom methods setAs
 setAs("dist", "SymVMat", function(from)
@@ -248,6 +257,7 @@ setAs("dist", "SymVMat", function(from)
 })
 
 #' @importFrom methods as setAs
+#' @importFrom stats as.dist
 setAs("matrix", "SymVMat", function(from)
 {
   res <- as(as.dist(from), "SymVMat")
@@ -256,19 +266,26 @@ setAs("matrix", "SymVMat", function(from)
 })
 
 #' @importFrom methods as
-setMethod("sousMatCarree", signature(x = "SymVMat", indexs = "numeric"),
-          function(x, indexs)
-          {
-            data <- x[indexs, indexs]
-            res <- as(data, "SymVMat")
-            res@names <- x$names[indexs]
-          })
+setMethod(
+  "sousMatCarree",
+  signature(x = "SymVMat", indexs = "numeric"),
+  function(x, indexs)
+  {
+    data <- x[indexs, indexs]
+    res <- as(data, "SymVMat")
+    res@names <- x$names[indexs]
+  }
+)
 
 #' @importFrom methods setAs
-setAs("SymVMat", "dist", function(from)
+#' @importFrom stats dist as.dist
+setAs(
+  "SymVMat", "dist", # nolint: indentation_linter
+  function(from)
   {
     if (inherits(from$values, "dist"))
       return(from$values)
     else
       return(as.dist(from[]))
-  })
+  }
+)

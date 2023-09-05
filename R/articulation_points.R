@@ -1,3 +1,6 @@
+#' @include pbCon.R
+NULL
+
 #' Find articulation points
 #'
 #' @description find articulation points of a partition.
@@ -176,10 +179,8 @@ is_articulation_pt_cluster <- function(x, contiguity, partition)
 #' @param cluster The cluster identifier, not empty for `partition`.
 #' (strictly positive integer)
 #' @importFrom igraph induced_subgraph articulation_points
-#' @importFrom methods is
 #' @returns A vector composed of indices of elements that are articulation
 #' points. (vector of strictly positive integers)
-#' @noRd
 #' @keywords internal
 articulation_pts_cluster <- function(contiguity,
                                      partition,
@@ -189,7 +190,7 @@ articulation_pts_cluster <- function(contiguity,
   if (length(clusterPoints) <= 2L)
     return(integer(0L))
 
-  if (is(contiguity, "pbCon"))
+  if (is_pbCon(contiguity))
     contiguityCluster <- induced_subgraph(contiguity$contiguity,
                                           clusterPoints)
 

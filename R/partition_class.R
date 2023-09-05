@@ -5,6 +5,7 @@
 
 #' Create a reference class for representing a Partition.
 #' @keywords internal
+
 Partition <-
   setRefClass("Partition",
               fields = list(pb = "pbCon", partition = "numeric",

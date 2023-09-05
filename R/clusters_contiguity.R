@@ -1,6 +1,8 @@
-#' List Contiguous Classes
+#' @include pbCon.R
+
+#' @title List Contiguous Classes
 #'
-#' Function returning the set of contiguous classes in a problem.
+#' @description Function returning the set of contiguous classes in a problem.
 #'
 #' @param partition Partition vector. Must be numeric, containing integers,
 #' and non-empty. (numeric vector)
@@ -15,17 +17,17 @@
 #' are contiguous and i < j are stored.
 #'
 #' @importFrom igraph is_igraph
-#' @importFrom methods is validObject
+#' @importFrom methods validObject
 #' @export
 clusters_contiguity_list <- function(partition, x)
 {
-  if (is(x, "pbCon"))
+  if (is_pbCon(x))
   {
     x <- getmatContPbCon(x)
   }
   else if (is.matrix(x))
   {
-    if (is(x, "ContiguityMat"))
+    if (inherits(x, "ContiguityMat"))
       validObject(x)
 
     else
@@ -34,13 +36,13 @@ clusters_contiguity_list <- function(partition, x)
   else if (is_igraph(x))
     x <- graph_to_contiguity_matrix(x)
 
-  if (is(x, "ContiguityMat"))
+  if (inherits(x, "ContiguityMat"))
   {
     validObject(x)
     x <- x[]
   }
 
-  else if (is(x, "Matrix"))
+  else if (inherits(x, "Matrix"))
     x <- as.matrix(x)
 
   else if (!is.matrix(x))

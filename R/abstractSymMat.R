@@ -1,15 +1,9 @@
+#' @include arguments.R
 # -- `dist` object from `stats` package
 #' @seealso [stats::dist()]
 #' @noRd
 #' @importFrom stats dist
 setOldClass("dist", where = environment())
-
-#' @importFrom methods setClassUnion
-setClassUnion("functionOrNULL", members = c("function", "NULL"))
-setClassUnion("dfOrNULL", members = c("data.frame", "NULL"))
-setClassUnion("numericOrLogicalOrNULL",
-              members = c("numeric", "logical", "NULL"))
-setClassUnion("numericOrLogical", members = c("numeric", "logical"))
 
 #' @title Abstract Class: `AbstractSymMat`
 #' @description A class handling the storage of a symmetric square matrix.
@@ -92,26 +86,30 @@ setMethod("ncol", signature = "AbstractSymMat", function(x) x$dim)
 #' @name abstractSymMat_replace_name
 #' @rdname abstractSymMat_replace_name
 #' @keywords internal
+#' @importFrom methods setReplaceMethod
 NULL
 
 #' @rdname abstractSymMat_replace_name
 #' @keywords internal
-setReplaceMethod("names", signature(x = "AbstractSymMat", value = "vector"),
-                 function(x, value)
-                 {
+setReplaceMethod(
+  "names",
+  signature(x = "AbstractSymMat", value = "vector"),
+  function(x, value)
+  {
 
-                   if (length(value) != x$dim)
-                   {
-                     stop("The name vector must be of size `dim`")
-                   }
+    if (length(value) != x$dim)
+    {
+      stop("The name vector must be of size `dim`")
+    }
 
 
-                   if (anyDuplicated(value) == 0L)
-                     return("The given names must be unique")
+    if (anyDuplicated(value) == 0L)
+      return("The given names must be unique")
 
-                   x$names <- value
-                   return(x)
-                 })
+    x$names <- value
+    return(x)
+  }
+)
 
 
 #' Inherents properties of an `AbstractSymMat
@@ -126,8 +124,11 @@ NULL
 #' @returns For `isSymmetric` : always TRUE as any `AbstractSymMat`
 #' is symmetric.
 #' @keywords internal
-setMethod("isSymmetric", signature = "AbstractSymMat",
-          function(object, ...) TRUE)
+setMethod(
+  "isSymmetric",
+  signature = "AbstractSymMat",
+  function(object, ...) TRUE
+)
 
 #' @rdname abstractSymMat_properties
 #' @returns For `is.matrix` : always `TRUE` as any `AbstractSymMat` is a matrix.
@@ -144,21 +145,27 @@ setMethod("anyNA", signature = "AbstractSymMat", function(x) x$anyNA())
 #' @importFrom methods setGeneric
 setGeneric("diag")
 
-setMethod("diag", signature = "AbstractSymMat",
-          function(x) x[cbind(seq_len(x$dim),
-                              seq_len(x$dim))])
+setMethod(
+  "diag", # nolint: indentation_linter
+  signature = "AbstractSymMat",
+  function(x) x[cbind(seq_len(x$dim), seq_len(x$dim))]
+)
 
 #' Where are located NA is our symmetric matrix?
 #' @param x An `AbstractSymMat` object.
 #' @returns A logical matrix of the same dimensions as the `AbstractSymMat`
 #' object, indicating if each element is NA.
 #' @keywords internal
+#' @importFrom methods setMethod
 setMethod("is.na", signature = "AbstractSymMat", function(x) is.na(x$values))
 
 # Data access abstract rules
-accesMatriceR <- selectMethod("[", signature(x = "matrix",
-                                             i = "numeric", j = "numeric",
-                                             drop = "logical"))
+#' @importFrom methods selectMethod
+accesMatriceR <-
+  selectMethod(
+    "[",
+    signature(x = "matrix", i = "numeric", j = "numeric", drop = "logical")
+  )
 #' Access to `AbstractSymMat` data`
 #'
 #' Rules are the following:
@@ -181,45 +188,56 @@ NULL
 
 #' @rdname abstractSymMat_access
 #' @keywords internal
-setMethod("[", signature(x = "AbstractSymMat", i = "numeric", j = "missing",
-                         drop = "ANY"),
-          function(x, i, j, drop) x[i, seq_len(x$dim)])
+setMethod(
+  "[",
+  signature(x = "AbstractSymMat", i = "numeric", j = "missing", drop = "ANY"),
+  function(x, i, j, drop) x[i, seq_len(x$dim)]
+)
 
 #' @rdname abstractSymMat_access
 #' @keywords internal
-setMethod("[", signature(x = "AbstractSymMat", i = "missing", j = "numeric",
-                         drop = "ANY"),
-          function(x, i, j, drop) (x[seq_len(x$dim), j]))
+setMethod(
+  "[",
+  signature(x = "AbstractSymMat", i = "missing", j = "numeric", drop = "ANY"),
+  function(x, i, j, drop) (x[seq_len(x$dim), j])
+)
 
 #' @rdname abstractSymMat_access
 #' @keywords internal
-setMethod("[", signature(x = "AbstractSymMat", i = "missing", j = "missing",
-                         drop = "ANY"),
-          function(x, i, j, drop) (x[seq_len(x$dim), seq_len(x$dim)]))
+setMethod(
+  "[",
+  signature(x = "AbstractSymMat", i = "missing", j = "missing", drop = "ANY"),
+  function(x, i, j, drop) (x[seq_len(x$dim), seq_len(x$dim)])
+)
 
 # Equality properties
 #' @importFrom methods validObject
-setMethod("all.equal", signature(target = "AbstractSymMat", current = "matrix"),
-          function(target, current, ...)
-          {
-            validObject(target)
-            all(target[] == current)
-          })
+setMethod(
+  "all.equal",
+  signature(target = "AbstractSymMat", current = "matrix"),
+  function(target, current, ...)
+  {
+    validObject(target)
+    all(target[] == current)
+  }
+)
 
 #' @importFrom methods validObject
-setMethod("all.equal", signature(target = "matrix", current = "AbstractSymMat"),
-          function(target, current, ...)
-          {
-            validObject(current)
-            all.equal(current, target)
-          })
+setMethod(
+  "all.equal",
+  signature(target = "matrix", current = "AbstractSymMat"),
+  function(target, current, ...)
+  {
+    validObject(current)
+    all.equal(current, target)
+  }
+)
 
-setMethod("all.equal", signature(target = "AbstractSymMat",
-                                 current = "AbstractSymMat"),
-          function(target, current, ...)
-          {
-            all(current[] == target[])
-          })
+setMethod(
+  "all.equal",
+  signature(target = "AbstractSymMat", current = "AbstractSymMat"),
+  function(target, current, ...) all(current[] == target[])
+)
 
 #' Replace value of a `AbstractSymMat` object or subclasses
 #'
@@ -265,20 +283,23 @@ vecs_pos_vers_indexs_pos <- function(i, j)
 #' @returns A matrix with the given data and optional row/column names.
 #' @noRd
 #' @importFrom checkmate testScalar
-data_indexs_pos_vers_matrice <- function(data, rowNames = NULL,
-                                         colNames = NULL, drop = FALSE) {
-  if (drop && (testScalar(rowNames) || testScalar(colNames))) {
-    return(data)
+data_indexs_pos_vers_matrice <-
+  function(data, rowNames = NULL,
+           colNames = NULL, drop = FALSE)
+  {
+    if (drop && (testScalar(rowNames) || testScalar(colNames)))
+      return(data)
+
+
+    res <- matrix(data, byrow = FALSE,
+                  nrow = length(rowNames),
+                  ncol = length(colNames))
+    rownames(res) <- rowNames
+    colnames(res) <- colNames
+
+    res
   }
 
-  res <- matrix(data, byrow = FALSE,
-                nrow = length(rowNames),
-                ncol = length(colNames))
-  rownames(res) <- rowNames
-  colnames(res) <- colNames
-
-  res
-}
 
 #' @title Extract Submatrix from `AbstractSymMat`
 #' @param x An `AbstractSymMat` object.
@@ -286,19 +307,17 @@ data_indexs_pos_vers_matrice <- function(data, rowNames = NULL,
 #' @returns A submatrix of `AbstractSymMat` based on the given row and
 #' column indices.
 #' @noRd
-sousMatCarree <- function(x, indexs)
-{
-  x[indexs, indexs]
-}
+sousMatCarree <- function(x, indexs) x[indexs, indexs]
 
 #' @importFrom methods setGeneric
 setGeneric("sousMatCarree")
 
+#' @importFrom stats as.dist
+setMethod(
+  "as.dist", # nolint: indentation_linter
+  signature(m = "AbstractSymMat", diag = "ANY", upper = "ANY"),
+  function(m, diag, upper) as(m, "dist"))
 
 #' @importFrom stats as.dist
-setMethod("as.dist", signature(m = "AbstractSymMat", diag = "ANY",
-                               upper = "ANY"),
-          function(m, diag, upper) as(m, "dist"))
-
-#' @importFrom stats as.dist
+#' @importFrom methods setAs
 setAs("AbstractSymMat", "dist", function(from) as.dist(from[]))

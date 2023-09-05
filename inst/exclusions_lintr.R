@@ -1,9 +1,11 @@
 make_exclusions_lintr <- function()
 {
   # Files and folders completly ignores
-  ignored <- file.path(c("inst/tutorials",
+  ignored <- file.path(c("inst/exclusions_lintr.R",
+                         "vignettes/",
                          "tests/testthat.R",
-                         "tests/testthat/helper.R"))
+                         "tests/testthat/helper.R",
+                         "R/AHR_single2.R"))
 
   exclusions_list <- as.list(ignored)
 

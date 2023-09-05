@@ -239,10 +239,10 @@ size_respect_contiguities <- function(pb, liste_contiguite,
 
 codeGroupesLiaison <- function(code) ifelse(is.numeric(code), code,
                                             switch(tolower(code),
-                                                   "singletonmin" = 1L,
-                                                   "singletonany" = 2L,
-                                                   "minmin" = 3L,
-                                                   "minany" = 4L,
+                                                   singletonmin = 1L,
+                                                   singletonany = 2L,
+                                                   minmin = 3L,
+                                                   minany = 4L,
                                                    5L))
 
 #' Transform contiguity list.

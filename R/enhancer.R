@@ -231,12 +231,13 @@ enhancer_pb <- function(pb, regionalisation, criterion = "Dunn", # nolint: cyclo
   subList <- listeElements_vec[listeElements_vec %in% elementsTransferables]
 
   tryCatch(
-    interrupt = function(cond)
-    {
-      message("interruption in the improvement")
-      assign("statut", "interruption", envir = parent.frame(1L))
-    },
-    expr =
+    interrupt = # nolint: indentation_linter
+      function(cond)
+      {
+        message("interruption in the improvement")
+        assign("statut", "interruption", envir = parent.frame(1L))
+      },
+    expr = # nolint: indentation_linter
       {
         while (k <= length(subList) && it <= maxIt)
         {
@@ -593,7 +594,7 @@ grid_enhancer_pb <- function(pb, # nolint: cyclocomp_linter
     posColonne <- which(colnames(results) == critere)
     initialValue <-
       evaluationCriteriaGrid$initialValue[
-        evaluationCriteriaGrid$criterion == critere]
+        evaluationCriteriaGrid$criterion == critere] # nolint: indentation_linter
     results  <- add_column(results,
                            !!nomColonne := # nolint
                              pull(results[, critere]) - initialValue,

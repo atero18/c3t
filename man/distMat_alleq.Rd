@@ -2,11 +2,14 @@
 % Please edit documentation in R/distMat.R
 \name{distMat_alleq}
 \alias{distMat_alleq}
+\alias{all.equal.DistMat.Matrix}
 \alias{all.equal,matrix,DistMat-method}
 \alias{all.equal,DistMat,DistMat-method}
 \title{Custom all.equal method for comparing \code{DistMat} objects with matrices}
 \usage{
-\S4method{all.equal}{DistMat,matrix}(target, current, ...)
+\method{all}{equal.DistMat.Matrix}(target, current)
+
+\S4method{all.equal}{DistMat,matrix}(target, current)
 
 \S4method{all.equal}{matrix,DistMat}(target, current, ...)
 

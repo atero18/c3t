@@ -257,7 +257,7 @@ update_nearest_neighbor <- function(newDistances,
 
       nnKeptDifferent <-
         noNewContiguities[!(
-          oldNearestNeighbor[noNewContiguities] %in% c(cluster1, cluster2))]
+          oldNearestNeighbor[noNewContiguities] %in% c(cluster1, cluster2))] # nolint: indendation_linter
 
       if (length(nnKeptDifferent) > 0L)
         toUpdate <- setdiff(toUpdate, nnKeptDifferent)
@@ -274,8 +274,8 @@ update_nearest_neighbor <- function(newDistances,
     # with cluster1+cluster2 because their distance with cluster1+cluster2
     # will be higher or equal than their distance with cluster2 which is not
     # their lowest.
-    nnKeptDifferent <- toUpdate[!(
-      oldNearestNeighbor[toUpdate] %in% c(cluster1, cluster2))]
+    nnKeptDifferent <-
+      toUpdate[!(oldNearestNeighbor[toUpdate] %in% c(cluster1, cluster2))]
 
     if (length(nnKeptDifferent > 0L))
       toUpdate <- setdiff(toUpdate, nnKeptDifferent)

@@ -213,7 +213,7 @@ c3t_APP <- function(fonctionApply, fonctionParApply,
                     export = character(0L),
                     exportIfAbsent = character(0L),
                     elementsToRemove = export,
-                    envirExport)
+                    envirExport = parent.frame(2L))
 {
   assertFlag(parallele)
 

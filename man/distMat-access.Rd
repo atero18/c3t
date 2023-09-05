@@ -3,23 +3,14 @@
 \name{distMat-access}
 \alias{distMat-access}
 \alias{[,DistMat,matrix,missing,ANY-method}
-\alias{[,DistMat,numeric,numeric,ANY-method}
-\alias{[,DistMat,numeric,missing,ANY-method}
-\alias{[,DistMat,missing,numeric,ANY-method}
-\alias{[,DistMat,missing,missing,ANY-method}
+\alias{[,DistMat,numericOrMissing,numericOrMissing,ANY-method}
 \alias{[,DistMat,list,missing,ANY-method}
 \alias{[,pbCon,ANY,ANY,ANY-method}
 \title{Access to \code{DistMat} data`}
 \usage{
 \S4method{[}{DistMat,matrix,missing,ANY}(x, i, j, drop)
 
-\S4method{[}{DistMat,numeric,numeric,ANY}(x, i, j, drop)
-
-\S4method{[}{DistMat,numeric,missing,ANY}(x, i, j, drop)
-
-\S4method{[}{DistMat,missing,numeric,ANY}(x, i, j, drop)
-
-\S4method{[}{DistMat,missing,missing,ANY}(x, i, j, drop)
+\S4method{[}{DistMat,numericOrMissing,numericOrMissing,ANY}(x, i, j, drop)
 
 \S4method{[}{DistMat,list,missing,ANY}(x, i, j, drop)
 

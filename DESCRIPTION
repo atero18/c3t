@@ -54,6 +54,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3.9000
 Collate: 
+    'arguments.R'
     'abstractSymMat.R'
     'distMat.R'
     'pbCon.R'
@@ -62,7 +63,6 @@ Collate:
     'dunn_index.R'
     'calinski_harabasz.R'
     'tools.R'
-    'arguments.R'
     'criteria.R'
     'partition_class.R'
     'AHCTree.R'
@@ -79,13 +79,13 @@ Collate:
     'contiguityMat.R'
     'data.R'
     'medoids.R'
-    'elements_distances.R'
+    'distances_elements.R'
+    'distances_linkage.R'
     'enhancer.R'
     'fusion.R'
     'fusionTree.R'
     'initialisation.R'
     'interior_boundary.R'
-    'linkage_distances.R'
     'parallelization.R'
     'proximity.R'
     'resolver.R'

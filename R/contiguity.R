@@ -1,3 +1,5 @@
+#' @include pbCon.R
+
 #' Converts contiguity between `igraph` and matrix
 #' @param x object to be converted.
 #' @name contiguity_conversion
@@ -22,7 +24,7 @@ contiguity_matrix_to_graph <- function(x)
 graph_to_contiguity_matrix <- function(x)
 {
   # If graph is a `pbCon`, use its contiguity graph
-  if (inherits(x, "pbCon"))
+  if (is_pbCon(x))
   {
     x$contiguityMatrix <- as.matrix(x$contiguity[]) == 1.0
     diag(x$contiguityMatrix) <- TRUE
@@ -45,14 +47,13 @@ graph_to_contiguity_matrix <- function(x)
 #' @name complete_contiguity
 #' @rdname complete_contiguity
 #' @keywords internal
-#' @importFrom methods is
 #' @importFrom checkmate testCount
 complete_contiguity_matrix <- function(x)
 {
   if (testCount(x, positive = TRUE))
     n <- x
 
-  else if (inherits(x, "pbCon"))
+  else if (is_pbCon(x))
     n <- nrow(x)
 
   else if (is.matrix(x))
@@ -72,14 +73,13 @@ complete_contiguity_matrix <- function(x)
 #' @keywords internal
 #' @seealso [igraph::make_full_graph()]
 #' @importFrom igraph make_full_graph
-#' @importFrom methods is
 #' @importFrom checkmate testCount
 complete_contiguity_graph <- function(x)
 {
   if (testCount(x, positive = TRUE))
     n <- x
 
-  else if (inherits(x, "pbCon"))
+  else if (is_pbCon(x))
     n <- nrow(x)
 
   else if (is.matrix(x))
@@ -108,15 +108,15 @@ setGeneric("is_connected", igraph::is_connected)
 #' @export
 #' @importFrom igraph is_connected
 setMethod("is_connected", signature(graph = "matrix", mode = "ANY"),
-  function(graph, mode)
-  {
-    if (nrow(graph) <= 1L)
-      return(TRUE)
+          function(graph, mode)
+          {
+            if (nrow(graph) <= 1L)
+              return(TRUE)
 
-    graph <- contiguity_matrix_to_graph(graph)
+            graph <- contiguity_matrix_to_graph(graph)
 
-    is_connected(graph, mode = "weak")
-  })
+            is_connected(graph, mode = "weak")
+          })
 
 #' Is a partition checking constraints?
 #' @param partition Partition vector of the set (numeric vector

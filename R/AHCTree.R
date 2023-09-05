@@ -10,9 +10,11 @@
 #' @field partitions A list of Partition objects representing
 #' the hierarchical partitions.
 #' @keywords internal
-AHCTree <- setRefClass("AHCTree",
-                       fields = list(pb = "pbCon",
-                                     partitions = "list"))
+AHCTree <- setRefClass(
+  "AHCTree",
+  fields = list(pb = "pbCon",
+                partitions = "list")
+)
 
 # ... (Rest of the class methods with appropriate roxygen comments)
 
@@ -69,75 +71,54 @@ NULL
 #' @describeIn AHCTree_properties Give the number
 #' of partitions stored in the tree. (positive integer)
 #' @keywords internal
-setMethod("length", signature(x = "AHCTree"),
-          function(x) length(x$partitions))
+setMethod(
+  "length",
+  signature(x = "AHCTree"),
+  function(x) length(x$partitions)
+)
 
 #' @describeIn AHCTree_properties Give the names
 #' of the different partitions stored in the tree. If
 #' the tree have not been manually modified then it corresponds
 #' to the number of clusters in each partition.
 #' @keywords internal
-setMethod("names", signature(x = "AHCTree"),
-          function(x) names(x$partitions))
+setMethod("names", signature(x = "AHCTree"), function(x) names(x$partitions))
 
-setMethod(".nbClusters", signature(partition = "AHCTree"),
-          function(partition)
-          {
-            if (length(partition) == 0L)
-              return(NULL)
+#' @describeIn AHCTree_properties Give the number of cluster in each partition
+#' @keywords internal
+setMethod(
+  ".nbClusters",
+  signature(partition = "AHCTree"),
+  function(partition)
+  {
+    if (length(partition) == 0L)
+      return(NULL)
 
-            else if (!is.null(names(partition)))
-              return(as.numeric(names(partition)))
+    else if (!is.null(names(partition)))
+      return(as.numeric(names(partition)))
 
-            else
-              return(vapply(partition$partitions, .nbClusters, integer(1L)))
-          }
+    else
+      return(vapply(partition$partitions, .nbClusters, integer(1L)))
+  }
 )
 
-setMethod("nbSingletons", signature(partition = "AHCTree"),
-          function(partition)
-          {
-            if (length(partition) == 0L)
-              return(NULL)
+#' @describeIn AHCTree_properties Give the number of cluster with exactly
+#' one element in each partition contained in the tree
+#' @keywords internal
+#' @importFrom methods setMethod
+setMethod(
+  "nbSingletons",
+  signature(partition = "AHCTree"),
+  function(partition)
+  {
+    if (length(partition) == 0L)
+      return(NULL)
 
-            else
-              return(vapply(partition$partition, nbSingletons, integer(1L)))
-          }
+    else
+      return(vapply(partition$partition, nbSingletons, integer(1L)))
+  }
 )
 
-setMethod("checkContiguityConst", signature(x = "AHCTree"),
-          function(x)
-          {
-            if (length(x) == 0L)
-              return(NULL)
-
-            else
-              return(vapply(x$partitions,
-                            checkContiguityConst,
-                            logical(1L)))
-          })
-
-setMethod("checkMinSizeConst", signature(x = "AHCTree"),
-          function(x)
-          {
-            if (length(x) == 0L)
-              return(NULL)
-
-            else
-              return(vapply(x$partitions,
-                            checkMinSizeConst,
-                            logical(1L)))
-          })
-
-setMethod("checkMaxSizeConst", signature(x = "AHCTree"),
-          function(x)
-          {
-            if (length(x) == 0L)
-              return(NULL)
-
-            else
-              return(vapply(x$partitions, checkMaxSizeConst, logical(1L)))
-          })
 
 #' Does partitions of a `AHCTree` verifies constraints?
 #' @param x A `AHCTree`
@@ -146,36 +127,53 @@ setMethod("checkMaxSizeConst", signature(x = "AHCTree"),
 #' @keywords internal
 NULL
 
-setMethod("scoreMinSizeConst", signature(x = "AHCTree"),
-          function(x)
-          {
-            if (length(x) == 0L)
-              return(NULL)
-            else
-              return(vapply(x$partitions, scoreMinSizeConst,
-                            numeric(1L)))
-          })
+.checkConstAHR <- function(x, constraint)
+{
+  if (length(x) == 0L)
+    return(NULL)
 
-setMethod("scoreMaxSizeConst", signature(x = "AHCTree"),
-          function(x)
-          {
-            if (length(x) == 0L)
-              return(NULL)
+  vapply(x$partitions, constraint, logical(1L))
+}
 
-            else
-              return(vapply(x$partitions, scoreMinSizeConst,
-                            numeric(1L)))
-          })
+LISTCHECKFUNCTIONS <- c("checkContiguityConst",
+                        "checkMinSizeConst",
+                        "checkMaxSizeConst")
+nameFunction <- NULL
+#' @importFrom methods setMethod
+#' @importFrom rlang sym
+for (nameFunction in LISTCHECKFUNCTIONS)
+{
+  fun <- sym(nameFunction)
+  setMethod(nameFunction, signature(x = "AHCTree"),
+            function(x) .checkConstAHR(x, fun))
+}
 
-setMethod("scoreSizeConsts", signature(x = "AHCTree"),
-          function(x)
-          {
-            if (length(x) == 0L)
-              return(NULL)
+rm(LISTCHECKFUNCTIONS)
 
-            else
-              return(vapply(x$partitions, scoreSizeConsts, numeric(1L)))
-          })
+
+.getScoreAHC <- function(x, scoreFUN)
+{
+  if (length(x) == 0L)
+    return(NULL)
+
+  vapply(x$partitions, scoreFUN, numeric(1L))
+}
+
+LISTSCOREFUNCTIONS <- c("scoreMinSizeConst",
+                        "scoreMaxSizeConst",
+                        "scoreSizeConsts")
+
+#' @importFrom methods setMethod
+#' @importFrom rlang sym
+for (nameFunction in LISTSCOREFUNCTIONS)
+{
+  fun <- sym(nameFunction)
+  setMethod(nameFunction, signature(x = "AHCTree"),
+            function(x) .getScoreAHC(x, fun) # nolint: object_usage_linter
+  )
+}
+
+rm(LISTSCOREFUNCTIONS)
 
 #' Access to the partitions of a `AHCTree`
 #' @name AHCTree_access
@@ -190,52 +188,59 @@ NULL
 
 #' @rdname AHCTree_access
 #' @keywords internal
-setMethod("[", signature(x = "AHCTree", i = "logical"),
-          function(x, i)
-          {
-            x$partitions <- x$partitions[i]
-            return(x)
-          }
+setMethod(
+  "[",
+  signature(x = "AHCTree", i = "logical"),
+  function(x, i)
+  {
+    x$partitions <- x$partitions[i]
+    return(x)
+  }
 )
 
 #' @rdname AHCTree_access
 #' @keywords internal
-setMethod("[", signature(x = "AHCTree", i = "vector"),
-          function(x, i)
-          {
-            x$partitions <- x$partitions[as.character(i)]
-            return(x)
-          })
-
-#' @rdname AHCTree_access
-#' @keywords internal
-setMethod("[[", signature(x = "AHCTree", i = "numeric"),
-          function(x, i)
-          {
-            x[[as.character(i)]]
-          }
+setMethod(
+  "[", # nolint: indentation_linter
+  signature(x = "AHCTree", i = "vector"),
+  function(x, i)
+  {
+    x$partitions <- x$partitions[as.character(i)]
+    return(x)
+  }
 )
 
 #' @rdname AHCTree_access
 #' @keywords internal
-setMethod("[[", signature(x = "AHCTree", i = "character"),
-          function(x, i)
-          {
-            if (length(i) == 1L)
-              return(x$partitions[[i]])
-
-            else
-              return(x$partitions[i])
-          }
+setMethod(
+  "[[",
+  signature(x = "AHCTree", i = "numeric"),
+  function(x, i)
+  {
+    x[[as.character(i)]]
+  }
 )
 
 #' @rdname AHCTree_access
 #' @keywords internal
-setMethod("[[", signature(x = "AHCTree", i = "missing"),
-          function(x, i)
-          {
-            return(x$partitions)
-          }
+setMethod(
+  "[[",
+  signature(x = "AHCTree", i = "character"),
+  function(x, i)
+  {
+    if (length(i == 1L))
+      x$partitions[[i]]
+    else
+      x$partitions[i]
+  }
+)
+
+#' @rdname AHCTree_access
+#' @keywords internal
+setMethod(
+  "[[",
+  signature(x = "AHCTree", i = "missing"),
+  function(x, i) x$partitions
 )
 
 #' Clusters sizes of a AHC tree partitions.
@@ -246,44 +251,49 @@ setMethod("[[", signature(x = "AHCTree", i = "missing"),
 #' @returns a list with for each partition of the `AHCTree`
 #' a vector containing the size of each cluster.
 #' @keywords internal
-setMethod("clusters_sizes", signature(partition = "AHCTree",
-                                      sizes = "ANY"),
-          function(partition, sizes)
-          {
-            if (length(partition) == 0L)
-              return(NULL)
+setMethod(
+  "clusters_sizes", # nolint: indentation_linter
+  signature(partition = "AHCTree", sizes = "ANY"), # nolint: indentation_linter
+  function(partition, sizes)
+  {
+    if (length(partition) == 0L)
+      return(NULL)
 
-            else
-              return(lapply(partition$partitions,
-                            clusters_sizes))
-          })
+    else
+      return(lapply(partition$partitions, clusters_sizes))
+  }
+)
 
 
 #' @importFrom methods setGeneric
+loadNamespace("stats")
 setGeneric("cutree", stats::cutree)
 
-setMethod("cutree", signature(tree = "AHCTree", k = "numeric", h = "ANY"),
+setMethod("cutree",
+          signature(tree = "AHCTree", k = "numeric", h = "ANY"),
           function(tree, k, h) tree[[k]]$partition)
 
-setMethod("all.equal", signature(target = "AHCTree", current = "AHCTree"),
-          function(target, current)
-          {
-            nbClustersTarget <- nbClusters(target)
-            nbClustersCurrent <- nbClusters(current)
+setMethod(
+  "all.equal",
+  signature(target = "AHCTree", current = "AHCTree"),
+  function(target, current)
+  {
+    nbClustersTarget <- nbClusters(target)
+    nbClustersCurrent <- nbClusters(current)
 
-            if (!setequal(nbClustersCurrent, nbClustersTarget))
-               return(FALSE)
+    if (!setequal(nbClustersCurrent, nbClustersTarget))
+      return(FALSE)
 
-            compPartitions <-
-              vapply(seq_along(nbClustersCurrent),
-                     function(i)
-                     {
-                       all.equal(target$partitions[[i]],
-                                current$partitions[[i]]) # nolint: indentation_linter
-                     },
-                     logical(1L))
-            all(compPartitions)
-          }
+    compPartitions <-
+      vapply(seq_along(nbClustersCurrent),
+             function(i)
+             {
+               all.equal(target$partitions[[i]],
+                        current$partitions[[i]]) # nolint: indentation_linter
+             },
+             logical(1L))
+    all(compPartitions)
+  }
 )
 
 #' Convert an `AHCTree` object to a `tibble`.

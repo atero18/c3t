@@ -1,3 +1,15 @@
+# Class unions
+#' @importFrom methods setClassUnion
+setClassUnion("numericOrMissing", members = c("numeric", "missing"))
+setClassUnion("functionOrNULL", members = c("function", "NULL"))
+setClassUnion("dfOrNULL", members = c("data.frame", "NULL"))
+setClassUnion("numericOrLogicalOrNULL",
+              members = c("numeric", "logical", "NULL"))
+setClassUnion("numericOrLogical", members = c("numeric", "logical"))
+setClassUnion("matriceOrNULL", members = c("matrix", "NULL"))
+setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
+setClassUnion("logicalOrNULL", members = c("logical", "NULL"))
+
 #' @name check_general
 #' @param .var.name Name of the checked object to print in assertions.
 #' Defaults to the heuristic implemented in [checkmate::vname()].
@@ -219,7 +231,6 @@ testStringChoice <- makeTestFunction(checkStringChoice)
 #' @inheritParams check_general
 #' @inherit check_general return
 #' @inherit check_general details
-#' @importFrom methods is
 #' @name checkContiguityMatrix
 #' @rdname checkContiguityMatrix
 #' @family arguments checkers
@@ -435,7 +446,7 @@ checkPartition <- function(x, n = length(x))
   if (length(x) != n)
     return("Size of `x` if different from the one asked.")
 
-  if (is(x, "Partition"))
+  if (inherits(x, "Partition"))
     return(TRUE)
 
   else if (!is.vector(x))

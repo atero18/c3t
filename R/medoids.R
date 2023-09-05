@@ -67,8 +67,11 @@ medoids_partition <- function(distances, partition, clusters = NULL)
     masqueNA <- is.na(medoids)
     medoids[masqueNA] <-
       c3t_sapply(listeClusters[masqueNA],
-                 function(indices) indices[
-                   which.min(rowSums(distances[indices, indices]))])
+                 function(indices)
+                 {
+                   indices[which.min(rowSums(distances[indices, indices]))]
+                 }
+      )
   }
 
   medoids

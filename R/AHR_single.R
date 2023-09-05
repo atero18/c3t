@@ -353,13 +353,11 @@ AHR_single <- function(pb, linkage = "complete", partitionInit = NULL, # nolint:
     if (distancemedoid)
     {
       elementsCluster1 <- listeClusters[[cluster1]]
-      grapheClasses <- set_vertex_attr(grapheClasses, "medoid", cluster1,
-                                       elementsCluster1[
-                                         medoid(pb[elementsCluster1,
+      grapheClasses <-
+        set_vertex_attr(grapheClasses, "medoid", cluster1,
+                        elementsCluster1[medoid(pb[elementsCluster1,
                                                    elementsCluster1,
                                                    drop = FALSE])])
-
-
     }
 
     partitionArbre <- arbreCAH[[nbClusters]]

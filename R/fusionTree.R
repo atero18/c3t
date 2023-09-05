@@ -1,4 +1,3 @@
-
 fusionNode <-
   setRefClass("FusionNode",
               fields = list(pb = "pbCon",

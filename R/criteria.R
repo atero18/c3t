@@ -200,7 +200,7 @@ corresponding_criterion <- function(criteria)
   {
     corresponding[is.na(corresponding)] <-
       CRITERIA$criterion[
-        match_str(criteria[is.na(corresponding)], CRITERIA$names)]
+        match_str(criteria[is.na(corresponding)], CRITERIA$names)] # nolint: indentation_linter
   }
 
   corresponding
@@ -310,7 +310,6 @@ special_cases_criterion <- function(criterion,
   else
     NA_real_
 }
-
 
 #' @importFrom tibble tibble
 #' @importFrom tidyr expand_grid

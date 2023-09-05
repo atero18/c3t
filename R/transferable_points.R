@@ -160,10 +160,10 @@ maj_elements_transferables <- function(anciennePartition_vec,
   {
     pointsArticulationsMAJ_vec <-
       update_art_pts_partition(contiguityGraph,
-                              anciennePartition_vec,
-                              nouvellePartition_vec,
-                              oldTransferablePoints_list$articulation,
-                              clustersModifies)
+                               anciennePartition_vec,
+                               nouvellePartition_vec,
+                               oldTransferablePoints_list$articulation,
+                               clustersModifies)
   }
   else
   {

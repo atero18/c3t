@@ -1,98 +1,95 @@
 #' @include abstractSymMat.R
 #' @include distMat.R
 
-#' @importFrom methods setClassUnion
-setClassUnion("matriceOrNULL", members = c("matrix", "NULL"))
-setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
-setClassUnion("logicalOrNULL", members = c("logical", "NULL"))
 
 #' @keywords internal
 #' @importFrom igraph empty_graph gorder
-pbCon <-
-  setRefClass(
-    "pbCon",
-    fields = list(sizes = "numeric", N = "numeric",
-                  # should be `igraph` but have some issues
-                  # using [methods::setOldClass()] # nolint
-                  contiguity = "ANY",
-                  contiguityMatrix = "matriceOrNULL",
-                  m = "numeric", M = "numeric",
-                  dataContiguity = "list"),
-    contains = "DistMat",
-    methods = list(
-      initialize = function(distances = NULL, d = NULL, data = NULL,
-                            contiguity = NULL, contiguityMatrix = NULL,
-                            sizes = seq_len(nrow(distances)),
-                            m = 0.0, M = Inf, dataContiguity = list(), ...)
+
+setRefClass(
+  "pbCon",
+  fields = list(sizes = "numeric", N = "numeric",
+                # should be `igraph` but have some issues
+                # using [methods::setOldClass()] # nolint
+                contiguity = "ANY",
+                contiguityMatrix = "matriceOrNULL",
+                m = "numeric", M = "numeric",
+                dataContiguity = "list"),
+  contains = "DistMat",
+  methods = list(
+    initialize = function(distances = NULL, d = NULL, data = NULL,
+                          contiguity = NULL, contiguityMatrix = NULL,
+                          sizes = seq_len(nrow(distances)),
+                          m = 0.0, M = Inf, dataContiguity = list(), ...)
+    {
+      if (is.null(distances))
+        return()
+
+      .self$distances <- distances
+      .self$d <- d
+      .self$data <- data
+
+      .self$setContiguity(contiguity, contiguityMatrix, dataContiguity)
+
+      .self$setSizes(sizes)
+
+      .self$setSizeConstraints(m, M)
+    },
+    n = function()
+    {
+      nrow(.self)
+    },
+    setSizes = function(sizes)
+    {
+      .self$sizes <- sizes
+      .self$N <- sum(sizes)
+
+    },
+    #' @importFrom checkmate assertNumber
+    setSizeConstraints = function(tempm = 0.0, tempM = Inf)
+    {
+      assertNumber(tempm, lower = 0.0, finite = TRUE,
+                   null.ok = TRUE, na.ok = TRUE)
+
+      tempm <- simplificationContrainteMin(tempm, sizes)
+
+      .self$m <- ifelse(is.null(tempm) || is.na(tempm), 0.0, tempm)
+
+      assertNumber(tempM, lower = tempM, finite = FALSE,
+                   null.ok = TRUE, na.ok = TRUE)
+
+      tempM <- simplificationContrainteMax(tempM, sizes)
+      .self$M <- ifelse(is.null(tempM) || is.na(tempM), Inf, tempM)
+    },
+
+    setContiguity = function(newContGraph,
+                             newContMat = NULL,
+                             nouvDataContiguite = list())
+    {
+      if (is.null(newContGraph))
       {
-        if (is.null(distances))
-          return()
-
-        .self$distances <- distances
-        .self$d <- d
-        .self$data <- data
-
-        .self$setContiguity(contiguity, contiguityMatrix, dataContiguity)
-
-        .self$setSizes(sizes)
-
-        .self$setSizeConstraints(m, M)
-      },
-      n = function()
-      {
-        nrow(.self)
-      },
-      setSizes = function(sizes)
-      {
-        .self$sizes <- sizes
-        .self$N <- sum(sizes)
-
-      },
-      #' @importFrom checkmate assertNumber
-      setSizeConstraints = function(tempm = 0.0, tempM = Inf)
-      {
-        assertNumber(tempm, lower = 0.0, finite = TRUE,
-                     null.ok = TRUE, na.ok = TRUE)
-
-        tempm <- simplificationContrainteMin(tempm, sizes)
-
-        .self$m <- ifelse(is.null(tempm) || is.na(tempm), 0.0, tempm)
-
-        assertNumber(tempM, lower = tempM, finite = FALSE,
-                     null.ok = TRUE, na.ok = TRUE)
-
-        tempM <- simplificationContrainteMax(tempM, sizes)
-        .self$M <- ifelse(is.null(tempM) || is.na(tempM), Inf, tempM)
-      },
-
-      setContiguity = function(newContGraph,
-                               newContMat = NULL,
-                               nouvDataContiguite = list())
-      {
-        if (is.null(newContGraph))
-        {
-          newContGraph <- complete_contiguity_graph(nrow(.self))
-          newContMat <- complete_contiguity_matrix(nrow(.self))
-        }
-
-        .self$contiguity <- newContGraph
-
-        .self$contiguityMatrix <- newContMat
-
-        .self$dataContiguity <- nouvDataContiguite
-      },
-      setCompleteContiguity = function()
-      {
-        .self$setContiguity(complete_contiguity_graph(.self), NULL,
-                            list(completementConnecte = TRUE))
-      },
-      setOldContiguity = function(dataContiguity_list)
-      {
-        .self$setContiguity(dataContiguity_list$contiguity,
-                            dataContiguity_list$contiguityMatrix,
-                            dataContiguity_list$dataContiguity)
+        newContGraph <- complete_contiguity_graph(nrow(.self))
+        newContMat <- complete_contiguity_matrix(nrow(.self))
       }
-    ))
+
+      .self$contiguity <- newContGraph
+
+      .self$contiguityMatrix <- newContMat
+
+      .self$dataContiguity <- nouvDataContiguite
+    },
+    setCompleteContiguity = function()
+    {
+      .self$setContiguity(complete_contiguity_graph(.self), NULL,
+                          list(completementConnecte = TRUE))
+    },
+    setOldContiguity = function(dataContiguity_list)
+    {
+      .self$setContiguity(dataContiguity_list$contiguity,
+                          dataContiguity_list$contiguityMatrix,
+                          dataContiguity_list$dataContiguity)
+    }
+  )
+) -> pbCon # nolint : assignment_linter
 
 pbCon$methods(
   #' @importFrom igraph is_igraph
@@ -128,6 +125,20 @@ verif_pbCon <- function(object)
 }
 
 setValidity("pbCon", verif_pbCon)
+
+#' @importFrom methods validObject
+#' @importFrom checkmate assertFlag
+is_pbCon <- function(x, checkValidity = FALSE)
+{
+  assertFlag(checkValidity)
+  if (!inherits(x, "pbCon"))
+    return(FALSE)
+
+  if (checkValidity)
+    return(validObject(x))
+
+  TRUE
+}
 
 pbCon$methods(hasMinConstraint = function() m > min(sizes),
               hasMaxConstraint = function() M < N,
@@ -271,21 +282,18 @@ pbCon$methods(
 pbCon$methods(
   connected_components = function()
   {
-    if (!isContiguityPropertyCalculated("connectedComponents"))
-    {
-      if (isFullyConnected(calcul = FALSE) || is.null(contiguity))
-        composantesConnexes <- rep(1L, nrow(.self))
+    if (isContiguityPropertyCalculated("connectedComponents"))
+      return(getContiguityProperty("connectedComponents"))
 
-      else
-        composantesConnexes <- components(contiguity, "weak")$membership
-
-      setContiguityProperty("connectedComponents", composantesConnexes)
-
-      return(composantesConnexes)
-    }
+    if (isFullyConnected(calcul = FALSE) || is.null(contiguity))
+      composantesConnexes <- rep(1L, nrow(.self))
 
     else
-      return(getContiguityProperty("connectedComponents"))
+      composantesConnexes <- components(contiguity, "weak")$membership
+
+    setContiguityProperty("connectedComponents", composantesConnexes)
+
+    return(composantesConnexes)
   }
 )
 
@@ -431,11 +439,11 @@ pbCon$methods(
 #' @rdname distMat-access
 #' @keywords internal
 #' @importFrom methods callNextMethod
-setMethod("[", signature(x = "pbCon", i = "ANY", j = "ANY", drop = "ANY"),
-          function(x, i, j, drop)
-          {
-            callNextMethod()
-          })
+setMethod(
+  "[",
+  signature(x = "pbCon", i = "ANY", j = "ANY", drop = "ANY"),
+  function(x, i, j, drop) callNextMethod()
+)
 
 
 #' @inheritParams arguments_distMat
@@ -534,27 +542,26 @@ pbCon$methods(
                 m = m, M = M,
                 dataContiguity =
                   list(composantesConnexes = rep(1L, length(listeElements))))
-    })
-
+           })
   }
 )
 
 #' @rdname abstractSymMat_replace
 #' @keywords internal
-setReplaceMethod("[", signature(x = "pbCon", i = "numeric", j = "numeric",
-                                value = "numeric"),
-                 function(x, i, j, value) {
-                   callNextMethod()
-                 }
+#' @importFrom methods callNextMethod
+setReplaceMethod(
+  "[",
+  signature(x = "pbCon", i = "numeric", j = "numeric", value = "numeric"),
+  function(x, i, j, value) callNextMethod()
 )
 
 #' @rdname abstractSymMat_replace
 #' @keywords internal
-setReplaceMethod("[", signature(x = "pbCon", i = "matrix", j = "missing",
-                                value = "numeric"),
-                 function(x, i, j, value) {
-                   callNextMethod()
-                 }
+#' @importFrom methods callNextMethod
+setReplaceMethod(
+  "[",
+  signature(x = "pbCon", i = "matrix", j = "missing", value = "numeric"),
+  function(x, i, j, value) callNextMethod()
 )
 
 pbCon$methods(

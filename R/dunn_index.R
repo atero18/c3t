@@ -65,8 +65,8 @@ dunn_index <- function(distances, partition, linkage = "single",
 
   # -- Calculating inter-cluster distances
   linkageDistances_vec <- .calcul_distances_inter(distances,
-                                                partition,
-                                                grid, linkage)
+                                                  partition,
+                                                  grid, linkage)
 
   linkageDistances_mat <- matrix(Inf, nrow = nbClusters, ncol = nbClusters)
   linkageDistances_mat[lower.tri(linkageDistances_mat)] <-
@@ -210,9 +210,9 @@ update_dunn_index <- function(dataCriterion, distances, partitionBefore,
       sort(clustersIDs[clustersMoinsSepares])
   }
 
-  dataCriterion$D <- ifelse(dataCriterion$compactness != 0.0,
-                            dataCriterion$separation / dataCriterion$compactness,
-                            Inf)
+  dataCriterion$D <-
+    ifelse(dataCriterion$compactness != 0.0,
+           dataCriterion$separation / dataCriterion$compactness, Inf)
 
   return(dataCriterion)
 }

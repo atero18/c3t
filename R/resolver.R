@@ -19,7 +19,7 @@ resolve_unfeasible <- function(distances = NULL, contiguity = NULL,
                                sizes = NULL,
                                d = NULL, data = NULL, m = 0.0, M = Inf,
                                standardQuant = FALSE, binarQual = FALSE,
-                               regionalisation,
+                               regionalisation, # nolint : function_argument_linter
                                maxItTransfers = Inf,
                                verbose = FALSE,
                                ...)
