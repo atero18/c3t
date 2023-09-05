@@ -212,16 +212,6 @@ pbCon$methods(
     nb_clusters_trop_gros(M, partition, sizes)
   }
 )
-# Contiguïté
-
-# #' @importFrom igraph E
-# setMethod("E", signature(graph = "pbCon", path = "ANY", directed = "ANY"),
-#           function(graph, path, directed) E(graph$contiguity))
-#
-# #' @importFrom igraph V
-# setMethod("V", signature(graph = "pbCon"),
-#           function(graph) V(graph$contiguity))
-
 
 # -- Récupération des données
 pbCon$methods(
@@ -324,8 +314,11 @@ pbCon$methods(
 setGeneric("count_components", igraph::count_components)
 
 #' @importFrom igraph count_components
-setMethod("count_components", signature(graph = "pbCon", mode = "ANY"),
-          function(graph, mode) graph$nbComposantesConnexes())
+setMethod(
+  "count_components",
+  signature(graph = "pbCon", mode = "ANY"),
+  function(graph, mode) graph$nbComposantesConnexes()
+)
 
 pbCon$methods(isConnected = function(calcul = TRUE)
 {
@@ -361,23 +354,22 @@ setGeneric("are_adjacent", igraph::are_adjacent)
 
 # -- Indique si deux éléments sont adjacents ou non
 #' @importFrom igraph are_adjacent
-setMethod("are_adjacent", signature(graph = "pbCon",
-                                    v1 = "numeric", v2 = "numeric"),
-          function(graph, v1, v2) {
-            assertCount(v1, positive = TRUE)
-            assertCount(v2, positive = TRUE)
+setMethod(
+  "are_adjacent",
+  signature(graph = "pbCon", v1 = "numeric", v2 = "numeric"),
+  function(graph, v1, v2)
+  {
+    assertCount(v1, positive = TRUE)
+    assertCount(v2, positive = TRUE)
 
-            graph$isFullyConnected(calcul = FALSE) ||
-              v1 == v2 ||
-              are_adjacent(graph$contiguity, v1, v2)
-          })
+    graph$isFullyConnected(calcul = FALSE) || v1 == v2 ||
+      are_adjacent(graph$contiguity, v1, v2)
+  }
+)
 
 # Vérification des régionalisations
 pbCon$methods(
-  isPartition = function(partition)
-  {
-    testPartition(partition, nrow(.self))
-  },
+  isPartition = function(partition) testPartition(partition, nrow(.self)),
   isRegionalisation = function(partition)
   {
     if (isFullyConnected(calcul = FALSE))

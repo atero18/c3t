@@ -451,7 +451,7 @@ setMethod("is.na", signature = "DistMat", function(x) is.na(x$distances))
 #' @returns TRUE if the target and current are equal, FALSE otherwise
 #' @name distMat_alleq
 #' @keywords internal
-#' @importFrom methods validObject setMethod
+#' @importFrom methods validObject
 all.equal.DistMat.Matrix <- function(target, current)
 {
   validObject(target)
@@ -527,9 +527,11 @@ setAs("DistMat", "dist", function(from) as(from$distances, "dist"))
 #' @noRd
 #' @importFrom stats as.dist
 #' @importFrom methods as
-setMethod("as.dist",
-          signature(m = "DistMat", diag = "ANY", upper = "ANY"),
-          function(m, diag, upper) as(m, "dist"))
+setMethod(
+  "as.dist",
+  signature(m = "DistMat", diag = "ANY", upper = "ANY"),
+  function(m, diag, upper) as(m, "dist")
+)
 
 #' Constructor function for creating a `DistMat` object
 #'

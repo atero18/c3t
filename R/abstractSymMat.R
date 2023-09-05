@@ -156,7 +156,6 @@ setMethod(
 #' @returns A logical matrix of the same dimensions as the `AbstractSymMat`
 #' object, indicating if each element is NA.
 #' @keywords internal
-#' @importFrom methods setMethod
 setMethod("is.na", signature = "AbstractSymMat", function(x) is.na(x$values))
 
 # Data access abstract rules

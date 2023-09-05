@@ -19,33 +19,41 @@ contiguityMat <- setRefClass("ContiguityMat", contains = "SymSparseMat")
 #' @rdname abstractSymMat_access
 #' @keywords internal
 #' @importFrom methods callNextMethod
-setMethod("[", signature(x = "ContiguityMat", i = "numeric",
-                         j = "numeric", drop = "ANY"),
-          function(x, i, j, drop) {
-            res <- callNextMethod()
-            return(res == 1.0 | res)
-
-          })
-
-#' @rdname abstractSymMat_access
-#' @keywords internal
-#' @importFrom methods callNextMethod
-setMethod("[", signature(x = "ContiguityMat", i = "missing",
-                         j = "numeric", drop = "ANY"),
-          function(x, i, j, drop) {
-            res <- callNextMethod()
-            return(res == 1.0 | res)
-          })
+setMethod(
+  "[",
+  signature(x = "ContiguityMat", i = "numeric", j = "numeric", drop = "ANY"),
+  function(x, i, j, drop)
+  {
+    res <- callNextMethod()
+    return(res == 1.0 | res)
+  }
+)
 
 #' @rdname abstractSymMat_access
 #' @keywords internal
 #' @importFrom methods callNextMethod
-setMethod("[", signature(x = "ContiguityMat", i = "numeric",
-                         j = "missing", drop = "ANY"),
-          function(x, i, j, drop) {
-            res <- callNextMethod()
-            return(res == 1.0 | res)
-          })
+setMethod(
+  "[",
+  signature(x = "ContiguityMat", i = "missing", j = "numeric", drop = "ANY"),
+  function(x, i, j, drop)
+  {
+    res <- callNextMethod()
+    return(res == 1.0 | res)
+  }
+)
+
+#' @rdname abstractSymMat_access
+#' @keywords internal
+#' @importFrom methods callNextMethod
+setMethod(
+  "[",
+  signature(x = "ContiguityMat", i = "numeric", j = "missing", drop = "ANY"),
+  function(x, i, j, drop)
+  {
+    res <- callNextMethod()
+    return(res == 1.0 | res)
+  }
+)
 
 #' @rdname abstractSymMat_access
 #' @keywords internal
@@ -67,16 +75,17 @@ setMethod(
 setGeneric("are_adjacent", igraph::are_adjacent)
 
 #' @importFrom igraph are_adjacent
-setMethod("are_adjacent", signature(graph = "ContiguityMat",
-                                    v1 = "numeric", v2 = "numeric"),
-          function(graph, v1, v2) {
-            assertCount(v1, positive = TRUE)
-            assertCount(v2, positive = TRUE)
+setMethod(
+  "are_adjacent",
+  signature(graph = "ContiguityMat", v1 = "numeric", v2 = "numeric"),
+  function(graph, v1, v2)
+  {
+    assertCount(v1, positive = TRUE)
+    assertCount(v2, positive = TRUE)
 
-            ifelse(v1 == v2, TRUE, graph[v1, v2])
-          })
-
-
+    ifelse(v1 == v2, TRUE, graph[v1, v2])
+  }
+)
 
 #' ContiguityMat
 #'

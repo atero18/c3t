@@ -55,17 +55,19 @@ fusionTree <-
 
 
 #' @importFrom tibble as_tibble
-setMethod("as_tibble", signature(x = "FusionTree"),
-          function(x)
-          {
-            if (length(x$feasibleNodes) > 0L)
-              partitions <- lapply(x$feasibleNodes, as, "Partition")
+setMethod(
+  "as_tibble",
+  signature(x = "FusionTree"),
+  function(x)
+  {
+    if (length(x$feasibleNodes) > 0L)
+      partitions <- lapply(x$feasibleNodes, as, "Partition")
 
-            else
-              partitions <- list()
+    else
+      partitions <- list()
 
-            Partition_list_to_tibble(partitions)
-          }
+    Partition_list_to_tibble(partitions)
+  }
 )
 
 

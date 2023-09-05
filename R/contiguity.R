@@ -107,16 +107,19 @@ setGeneric("is_connected", igraph::is_connected)
 #' @keywords internal
 #' @export
 #' @importFrom igraph is_connected
-setMethod("is_connected", signature(graph = "matrix", mode = "ANY"),
-          function(graph, mode)
-          {
-            if (nrow(graph) <= 1L)
-              return(TRUE)
+setMethod(
+  "is_connected",
+  signature(graph = "matrix", mode = "ANY"),
+  function(graph, mode)
+  {
+    if (nrow(graph) <= 1L)
+      return(TRUE)
 
-            graph <- contiguity_matrix_to_graph(graph)
+    graph <- contiguity_matrix_to_graph(graph)
 
-            is_connected(graph, mode = "weak")
-          })
+    is_connected(graph, mode = "weak")
+  }
+)
 
 #' Is a partition checking constraints?
 #' @param partition Partition vector of the set (numeric vector

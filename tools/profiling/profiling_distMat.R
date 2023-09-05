@@ -95,22 +95,30 @@ contexte <- gen_context(n, nbQuantitatives_int = 1L)
 setClass("matriceS4", slots = list(mat = "ANY"))
 setMethod("nrow", signature = "matriceS4", function(x) nrow(x@mat))
 
-setMethod("[", signature(x = "matriceS4", i = "numeric",
-                         j = "missing", drop = "ANY"),
-          function(x, i, j, drop) x[i, seq_len(nrow(x))])
+setMethod(
+  "[",
+  signature(x = "matriceS4", i = "numeric", j = "missing", drop = "ANY"),
+  function(x, i, j, drop) x[i, seq_len(nrow(x))]
+)
 
-setMethod("[", signature(x = "matriceS4", i = "missing",
-                         j = "numeric", drop = "ANY"),
-          function(x, i, j, drop) (x[seq_len(nrow(x)), j]))
+setMethod(
+  "[",
+  signature(x = "matriceS4", i = "missing", j = "numeric", drop = "ANY"),
+  function(x, i, j, drop) (x[seq_len(nrow(x)), j])
+)
 
-setMethod("[", signature(x = "matriceS4", i = "missing",
-                         j = "missing", drop = "ANY"),
-          function(x, i, j, drop) (x[seq_len(nrow(x)), seq_len(nrow(x))]))
+setMethod(
+  "[",
+  signature(x = "matriceS4", i = "missing", j = "missing", drop = "ANY"),
+  function(x, i, j, drop) (x[seq_len(nrow(x)), seq_len(nrow(x))])
+)
 
 
-setMethod("[", signature(x = "matriceS4", i = "numeric",
-                         j = "numeric", drop = "ANY"),
-          function(x, i, j, drop) (x@mat[i, j]))
+setMethod(
+  "[",
+  signature(x = "matriceS4", i = "numeric", j = "numeric", drop = "ANY"),
+  function(x, i, j, drop) (x@mat[i, j])
+)
 
 
 base <- as.matrix(dist(contexte))

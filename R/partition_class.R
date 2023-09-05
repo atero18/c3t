@@ -191,8 +191,11 @@ verifContraintes <- function(x)
   all(x$contraintes)
 }
 
-setMethod(".nbClusters", signature(partition = "Partition"),
-          function(partition) .nbClusters(partition$partition))
+setMethod(
+  ".nbClusters",
+  signature(partition = "Partition"),
+  function(partition) .nbClusters(partition$partition)
+)
 
 Partition$methods(
   k = function() length(unique(partition))
@@ -202,9 +205,11 @@ Partition$methods(
 #' @param x A Partition object.
 #' @returns The number of singleton clusters.
 #' @noRd
-setMethod("nbSingletons", signature(partition = "Partition"),
-          function(partition) nbSingletons(partition$partition))
-
+setMethod(
+  "nbSingletons",
+  signature(partition = "Partition"),
+  function(partition) nbSingletons(partition$partition)
+)
 
 #' @describeIn score_contraintes_Partition Get the min score.
 #' @noRd
@@ -245,20 +250,21 @@ setGeneric("scoreSizeConsts")
 #' @param partition A Partition object.
 #' @returns A numeric vector representing the sizes of clusters.
 #' @keywords internal
-setMethod("clusters_sizes", signature(partition = "Partition",
-                                      sizes = "ANY"),
-          function(partition, sizes)
-          {
-            clusters_sizes(partition$partition,
-                           sizes = partition$pb$sizes)
-          })
+setMethod(
+  "clusters_sizes",
+  signature(partition = "Partition", sizes = "ANY"),
+  function(partition, sizes)
+  {
+    clusters_sizes(partition$partition,
+                   sizes = partition$pb$sizes)
+  }
+)
 
 
-setMethod("all.equal", signature(target = "Partition", current = "Partition"),
-          function(target, current)
-          {
-            all.equal(target$partition, current$partition)
-          }
+setMethod(
+  "all.equal",
+  signature(target = "Partition", current = "Partition"),
+  function(target, current) all.equal(target$partition, current$partition)
 )
 
 #' Number of elements in a partition

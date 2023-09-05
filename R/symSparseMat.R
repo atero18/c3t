@@ -83,67 +83,74 @@ setGeneric(".get_elem_symSparseMat", function(x, i, j)
 #' @rdname abstractSymMat_access
 #' @keywords internal
 #' @importFrom checkmate assertVector assertIntegerish
-setMethod("[", signature(x = "SymSparseMat", i = "numeric",
-                         j = "numeric", drop = "ANY"),
-          function(x, i, j, drop) {
-            assertVector(i)
-            assertIntegerish(i,
-                             lower = 1L, upper = nrow(x),
-                             any.missing = FALSE,
-                             all.missing = FALSE)
+setMethod(
+  "[",
+  signature(x = "SymSparseMat", i = "numeric", j = "numeric", drop = "ANY"),
+  function(x, i, j, drop)
+  {
+    assertVector(i)
+    assertIntegerish(i,
+                     lower = 1L, upper = nrow(x),
+                     any.missing = FALSE,
+                     all.missing = FALSE)
 
-            assertVector(j)
-            assertIntegerish(j,
-                             lower = 1L, upper = ncol(x),
-                             any.missing = FALSE,
-                             all.missing = FALSE)
+    assertVector(j)
+    assertIntegerish(j,
+                     lower = 1L, upper = ncol(x),
+                     any.missing = FALSE,
+                     all.missing = FALSE)
 
-            .get_elem_symSparseMat(x, i, j)
-          })
+    .get_elem_symSparseMat(x, i, j)
+  }
+)
 
 
 # Data affectation
 
 #' @rdname abstractSymMat_replace
 #' @keywords internal
-setReplaceMethod("[", signature(x = "SymSparseMat", i = "numeric",
-                                j = "numeric", value = "numeric"),
-                 function(x, i, j, value) {
-                   if (i > x$dim || j > x$dim)
-                   {
-                     stop("Given indexes are incorrect")
-                   }
+setReplaceMethod(
+  "[",
+  signature(x = "SymSparseMat", i = "numeric",
+            j = "numeric", value = "numeric"),
+  function(x, i, j, value)
+  {
+    if (i > x$dim || j > x$dim)
+    {
+      stop("Given indexes are incorrect")
+    }
 
-                   if (i == j)
-                   {
-                     if (!is.null(x$defaultDiag) && value != x$defaultDiag)
-                     {
-                       stop("For the diagonal a default value has been given")
-                     }
+    if (i == j)
+    {
+      if (!is.null(x$defaultDiag) && value != x$defaultDiag)
+      {
+        stop("For the diagonal a default value has been given")
+      }
 
-                     else
-                       return(x)
-                   }
+      else
+        return(x)
+    }
 
-                   if (i > j)
-                   {
-                     t <- i
-                     i <- min(t, j)
-                     j <- max(t, j)
-                   }
+    if (i > j)
+    {
+      t <- i
+      i <- min(t, j)
+      j <- max(t, j)
+    }
 
-                   if (nrow(x$values) > 0L)
-                   {
-                     mask <- x$values[, 1L] == i & x$values[, 2L] == j
+    if (nrow(x$values) > 0L)
+    {
+      mask <- x$values[, 1L] == i & x$values[, 2L] == j
 
-                     if (any(mask))
-                       x$values[mask, 3L] <- value
+      if (any(mask))
+        x$values[mask, 3L] <- value
 
-                     return(x)
-                   }
+      return(x)
+    }
 
-                   x$values <- rbind(x$values, c(i, j, value))
+    x$values <- rbind(x$values, c(i, j, value))
 
-                   return(x)
+    return(x)
 
-                 })
+  }
+)
