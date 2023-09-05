@@ -44,6 +44,8 @@ Suggests:
 LinkingTo: 
     Rcpp,
     RcppArmadillo
+VignetteBuilder: 
+    knitr
 ByteCompile: true
 Config/potools/style: base
 Config/testthat/edition: 3
@@ -98,4 +100,3 @@ Collate:
     'symMMat.R'
     'symVMat.R'
     'transferable_points.R'
-VignetteBuilder: knitr
