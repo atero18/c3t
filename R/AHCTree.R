@@ -84,7 +84,6 @@ setMethod(
 #' @keywords internal
 setMethod("names", signature(x = "AHCTree"), function(x) names(x$partitions))
 
-
 #' @describeIn AHCTree_properties Give the number of cluster in each partition
 #' @keywords internal
 setMethod(
