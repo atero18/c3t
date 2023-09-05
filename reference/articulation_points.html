@@ -57,7 +57,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">articulation_pts_clusters</span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">articulation_pts_cluster</span><span class="op">(</span><span class="va">contiguity</span>, <span class="va">partition</span>, <span class="va">cluster</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">articulation_pts_clusters</span><span class="op">(</span></span>
 <span>  <span class="va">contiguity</span>,</span>
 <span>  <span class="va">partition</span>,</span>
 <span>  clusters <span class="op">=</span> <span class="fu">clustersIDs</span><span class="op">(</span><span class="va">partition</span><span class="op">)</span></span>
@@ -77,6 +79,11 @@ must be a regionalisation.
 (vector of strictly positive integers)</p></dd>
 
 
+<dt>cluster</dt>
+<dd><p>The cluster identifier, not empty for <code>partition</code>.
+(strictly positive integer)</p></dd>
+
+
 <dt>clusters</dt>
 <dd><p>List of non-empty clusters for <code>partition</code> for which to
 determine their articulation point(s). Default is all clusters.</p></dd>
@@ -86,6 +93,10 @@ determine their articulation point(s). Default is all clusters.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
+<p>A vector composed of indices of elements that are articulation
+points. (vector of strictly positive integers)</p>
+
+
 <p>For <code>articulation_pts_clusters</code> a vector composed of indices of
 elements from clusters
 in <code>clusters</code> that are articulation points.
@@ -94,7 +105,9 @@ in <code>clusters</code> that are articulation points.
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
     
-<ul><li><p><code>articulation_pts_clusters()</code>: Returns the list of points that are
+<ul><li><p><code>articulation_pts_cluster()</code>: Returns the list of articulation points
+in a cluster resulting from a partition.</p></li>
+<li><p><code>articulation_pts_clusters()</code>: Returns the list of points that are
 articulation points for different clusters.</p></li>
 </ul></div>
     <div class="section level2">
