@@ -11,6 +11,7 @@
 #' of length the number of connected components and giving the number of
 #' clusters per connected component.
 #' @importFrom checkmate assertVector
+#' @examples nbClusters(c(1L, 2L, "x", 1L)) # 3
 #' @export
 nbClusters <- function(partition, components = NULL)
 {
@@ -75,10 +76,7 @@ setGeneric("nbSingletons")
 #' @details This form is also used by [stats::cutree()].
 #' @details Two partitions are equivalent if and only if their
 #' standardised forms are equal.
-#' @examples
-#'
-#' p <- c(2, 3, 1, "a", 2)
-#' standardize_partition(p) # c(1, 2, 3, 4, 1)
+#' @example inst/examples/standardize_partition.R
 standardize_partition <- function(partition)
 {
   clustersIDs <- clustersIDs(partition)
@@ -100,14 +98,7 @@ standardize_partition <- function(partition)
 #' @importFrom checkmate assertVector
 #' @export
 #'
-#' @examples
-#' p1 <- c(2, 4, 3)
-#' p2 <- c("yes", "no", "maybe")
-#' equivalent_partitions(p1, p2) # TRUE
-#'
-#' p3 <- c(2, 4, 3)
-#' p4 <- c("yes", "no", "no")
-#' equivalent_partitions(p3, p4) # FALSE
+#' @example inst/examples/equivalent_partitions.R
 equivalent_partitions <- function(partition1, partition2)
 {
   assertVector(partition1, min.len = 1L,

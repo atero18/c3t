@@ -23,3 +23,6 @@ clusters per connected component.
 Give the number of clusters in a partition. This number can be the
 total number or the number in each connected component.
 }
+\examples{
+nbClusters(c(1L, 2L, "x", 1L)) # 3
+}
