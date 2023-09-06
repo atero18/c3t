@@ -1,4 +1,6 @@
 #' @include arguments.R
+#'
+#'
 # -- `dist` object from `stats` package
 #' @seealso [stats::dist()]
 #' @noRd
@@ -14,7 +16,8 @@ setOldClass("dist", where = environment())
 #' (numericOrLogicalOrNULL).
 #' @keywords internal
 #' @name abstractSymMat
-setRefClass("AbstractSymMat",
+setRefClass(
+  "AbstractSymMat",
   fields = list(dim = "integer", names = "vector",
                 defaultDiag = "numericOrLogicalOrNULL"),
   methods = list(
@@ -37,7 +40,7 @@ setRefClass("AbstractSymMat",
                         subsetCol = seq_len(nrow(.self)),
                         nanIsNA = TRUE,
                         simplify = TRUE) NULL
-    )
+  )
 )
 
 #' Access properties of a `AbstractSymMat` object or subclasses
@@ -50,7 +53,7 @@ NULL
 # @describeIn abstractSymMat_properties names of the elements
 #' @rdname abstractSymMat_properties
 #' @keywords internal
-setMethod("names", signature = "AbstractSymMat", function(x) x$names)
+setMethod("names", signature(x = "AbstractSymMat"), function(x) x$names)
 
 # @describeIn abstractSymMat_properties Number of elements
 #' @rdname abstractSymMat_properties
@@ -61,7 +64,7 @@ setMethod("length", signature(x = "AbstractSymMat"), function(x) x$dim^2L)
 #' integers vector)
 #' @rdname abstractSymMat_properties
 #' @keywords internal
-setMethod("dim", signature = "AbstractSymMat", function(x) c(x$dim, x$dim))
+setMethod("dim", signature(x = "AbstractSymMat"), function(x) c(x$dim, x$dim))
 
 #' @importFrom methods setGeneric
 setGeneric("nrow")
@@ -69,7 +72,7 @@ setGeneric("nrow")
 # @describeIn abstractSymMat_properties Number of rows
 #' @rdname abstractSymMat_properties
 #' @keywords internal
-setMethod("nrow", signature = "AbstractSymMat", function(x) x$dim)
+setMethod("nrow", signature(x = "AbstractSymMat"), function(x) x$dim)
 
 #' @importFrom methods setGeneric
 setGeneric("ncol")
@@ -77,7 +80,7 @@ setGeneric("ncol")
 # @describeIn abstractSymMat_properties Number of columns
 #' @rdname abstractSymMat_properties
 #' @keywords internal
-setMethod("ncol", signature = "AbstractSymMat", function(x) x$dim)
+setMethod("ncol", signature(x = "AbstractSymMat"), function(x) x$dim)
 
 #' Replace the names of elements in an `AbstractSymMat` or subclasses
 #' @param x An `AbstractSymMat` (or subclasses) object.
@@ -126,21 +129,21 @@ NULL
 #' @keywords internal
 setMethod(
   "isSymmetric",
-  signature = "AbstractSymMat",
+  signature(x = "AbstractSymMat"),
   function(object, ...) TRUE
 )
 
 #' @rdname abstractSymMat_properties
 #' @returns For `is.matrix` : always `TRUE` as any `AbstractSymMat` is a matrix.
 #' @keywords internal
-setMethod("is.matrix", signature = "AbstractSymMat", function(x) TRUE)
+setMethod("is.matrix", signature(x = "AbstractSymMat"), function(x) TRUE)
 
 #' Is there any NA is our symmetric matrix?
 #' @param x An `AbstractSymMat` object.
 #' @returns Logical value indicating if any NA values are present in the
 #' `AbstractSymMat` object.
 #' @keywords internal
-setMethod("anyNA", signature = "AbstractSymMat", function(x) x$anyNA())
+setMethod("anyNA", signature(x = "AbstractSymMat"), function(x) x$anyNA())
 
 #' @importFrom methods setGeneric
 setGeneric("diag")
@@ -156,7 +159,7 @@ setMethod(
 #' @returns A logical matrix of the same dimensions as the `AbstractSymMat`
 #' object, indicating if each element is NA.
 #' @keywords internal
-setMethod("is.na", signature = "AbstractSymMat", function(x) is.na(x$values))
+setMethod("is.na", signature(x = "AbstractSymMat"), function(x) is.na(x$values))
 
 # Data access abstract rules
 #' @importFrom methods selectMethod

@@ -34,10 +34,6 @@ setRefClass(
 
       .self$setSizeConstraints(m, M)
     },
-    n = function()
-    {
-      nrow(.self)
-    },
     setSizes = function(sizes)
     {
       .self$sizes <- sizes

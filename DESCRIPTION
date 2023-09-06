@@ -77,8 +77,6 @@ Collate:
     'c3t-package.R'
     'clusters_contiguity.R'
     'contiguity.R'
-    'symSparseMat.R'
-    'contiguityMat.R'
     'data.R'
     'medoids.R'
     'distances_elements.R'

@@ -243,9 +243,6 @@ checkContiguityMatrix <- function(x, # nolint: cyclocomp_linter
                                   nrows = NULL,
                                   ncols = nrows)
 {
-  if (inherits(x, "ContiguityMat"))
-    return(TRUE)
-
   # Checking arguments
   assertFlag(isComplete)
   assertCount(nrows, null.ok = TRUE)

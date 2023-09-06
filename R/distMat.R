@@ -8,14 +8,16 @@
 #' @field data A dataframe containing the data points.
 #' @keywords internal
 distMat <-
-  setRefClass("DistMat",
-              fields = list(distances = "AbstractSymMat",
-                            d = "functionOrNULL",
-                            data = "dfOrNULL"))
+  setRefClass(
+    "DistMat",
+    fields = list(distances = "AbstractSymMat",
+                  d = "functionOrNULL",
+                  data = "dfOrNULL"))
 
 distMat$methods(
-  which_na = function(subsetRow = seq_len(nrow(.self)),
-                      subsetCol = seq_len(nrow(.self)))
+  n = function() nrow(distances),
+  which_na = function(subsetRow = seq_len(n()),
+                      subsetCol = seq_len(n()))
   {
     if (is.list(subsetRow))
     {
@@ -67,7 +69,6 @@ setMethod("length", signature = "DistMat", function(x) length(x$distances))
 #' @rdname abstractSymMat_properties
 #' @keywords internal
 setMethod("dim", signature = "DistMat", function(x) dim(x$distances))
-DISTANCSEPROPERTIES <- c("names", "length", "dim", "nrow", "ncol")
 
 #' @rdname abstractSymMat_properties
 #' @keywords internal
@@ -77,16 +78,11 @@ setMethod("nrow", signature = "DistMat", function(x) nrow(x$distances))
 #' @keywords internal
 setMethod("ncol", signature = "DistMat", function(x) ncol(x$distances))
 
-
-
-#' Check if the function `d` is present to calculate distance values
-#' @param x A `DistMat` object
-#' @returns TRUE if the function d is present, FALSE otherwise
-#' @noRd
-presenceFonctionDistance <- function(x) !is.null(x$d)
-
-
 distMat$methods(
+  #' Check if the function `d` is present to calculate distance values
+  #' @returns TRUE if the function d is present, FALSE otherwise
+  #' @noRd
+  distanceExists = function() !is.null(d),
   calcul_needed_distances = function(subsetRow, subsetCol = NULL)
   {
     na <- which_na(subsetRow, subsetCol)
@@ -174,7 +170,7 @@ distMat_vectorial_access <- function(x, i, j, drop)
 
   res <- x$distances[i, j, drop = drop]
 
-  if (presenceFonctionDistance(x))
+  if (x$distanceExists())
   {
     posNA <- is.na(res)
     if (any(posNA))

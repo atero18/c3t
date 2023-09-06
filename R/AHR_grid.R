@@ -381,7 +381,7 @@ creation_grid_RAH <- function(pb, linkages, nbTries, minNbClusters, # nolint: cy
     stop("No linkage has been given")
   }
 
-  n <- nrow(pb)
+  n <- pb$n()
   # We generate the initial mergers. The first proposed partition will
   # systematically be the trivial partition (each element is its own region).
   # The other partitions (if any) are generated randomly, based on mergers
@@ -503,7 +503,7 @@ AHR_pb <- function(pb, nbTries = 5L, criteria = NULL, # nolint: cyclocomp_linter
   verbose <- isTRUE(getOption("c3t_verbose", default = TRUE))
 
   if (is.infinite(maxNbClusters))
-    maxNbClusters <- nrow(pb)
+    maxNbClusters <- pb$n()
 
   else
     assertCount(maxNbClusters, positive = TRUE)
@@ -517,7 +517,7 @@ AHR_pb <- function(pb, nbTries = 5L, criteria = NULL, # nolint: cyclocomp_linter
     cli_alert_info(startingTime)
   }
 
-  n <- nrow(pb)
+  n <- pb$n()
   # Checking arguments
 
   if (length(criteria) > 0L)

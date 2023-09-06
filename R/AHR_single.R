@@ -21,7 +21,7 @@ AHR_single <- function(pb, linkage = "complete", partitionInit = NULL, # nolint:
   assertFusionConstraint(fusionConstraint)
   fusionConstraint <- corresponding_fusion_const(fusionConstraint)
 
-  n <- nrow(pb)
+  n <- pb$n()
 
   if (is.null(partitionInit))
     partitionInit <- seq_len(n)

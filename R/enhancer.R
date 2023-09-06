@@ -103,7 +103,7 @@ enhance_feasible <-
 #' @importFrom checkmate assertString assertCount
 enhancer_pb <- function(pb, regionalisation, criterion = "Dunn", # nolint: cyclocomp_linter
                         maxIt = Inf,
-                        sampleSize = ceiling(0.8 * nrow(pb)),
+                        sampleSize = ceiling(0.8 * pb$n()),
                         linkage = "single")
 {
   # Verification of arguments
@@ -144,7 +144,7 @@ enhancer_pb <- function(pb, regionalisation, criterion = "Dunn", # nolint: cyclo
   statut <- NULL
 
   nbRegions <- .nbRegions(regionalisation)
-  n <- nrow(pb)
+  n <- pb$n()
 
   # Drawing an arbitrary permutation of all elements
   listeElements_vec <- sample(seq_len(n))

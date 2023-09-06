@@ -158,7 +158,7 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
     status <- "already_feasible"
 
   resolvedRegions <- integer(0L)
-  n <- nrow(pb)
+  n <- pb$n()
 
   # We randomly take a permutation of the elements set
   listeElements_vec <- sample(seq_len(n))

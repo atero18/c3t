@@ -658,7 +658,7 @@ calculDistancesInter_Cpp <- function(x, partition,
       defaultDiag <- ifelse(aDefautDiag, pb$distances$defaultDiag, 0.0)
 
       return(distanceInterSymVMat(pb$distances$values, partition,
-                                  indexs_mat, nrow(pb),
+                                  indexs_mat, pb$n(),
                                   aDefautDiag, defaultDiag, comp_str))
     }
     else

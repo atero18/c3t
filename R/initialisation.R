@@ -14,7 +14,7 @@
 #' @keywords internal
 gen_initial_partition <- function(pb, mode = "unitary", nbFusions = 1L)
 {
-  n <- nrow(pb)
+  n <- pb$n()
 
   partition <- seq_len(n)
   clustersSizes <- clusters_sizes(partition, pb$sizes)
@@ -108,7 +108,7 @@ gen_initial_partitions <- function(pb, modes, nbFusions = 1L)
     vapply(modes, partial(gen_initial_partition,
                           pb = pb,
                           nbFusions = nbFusions),
-           integer(nrow(pb)))
+           integer(pb$n()))
 
   res <- apply(unique(res, MARGIN = 2L), MARGIN = 2L,
                identity, simplify = FALSE)

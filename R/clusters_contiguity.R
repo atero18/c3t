@@ -27,22 +27,12 @@ clusters_contiguity_list <- function(partition, x)
   }
   else if (is.matrix(x))
   {
-    if (inherits(x, "ContiguityMat"))
-      validObject(x)
-
-    else
-      assertContiguityMatrix(x, isComplete = FALSE)
+    assertContiguityMatrix(x, isComplete = FALSE)
   }
   else if (is_igraph(x))
     x <- graph_to_contiguity_matrix(x)
 
-  if (inherits(x, "ContiguityMat"))
-  {
-    validObject(x)
-    x <- x[]
-  }
-
-  else if (inherits(x, "Matrix"))
+  if (inherits(x, "Matrix"))
     x <- as.matrix(x)
 
   else if (!is.matrix(x))
@@ -116,8 +106,8 @@ clusters_contiguity_list <- function(partition, x)
 #' instead of a list.
 #' @keywords internal
 #' @importFrom Matrix sparseMatrix
-clusters_contiguity_matrix <- function(partition, elemsContiguity,
-                                       diag = FALSE)
+clusters_contiguity_matrix <-
+  function(partition, elemsContiguity, diag = FALSE)
 {
   contiguityList <- clusters_contiguity_list(partition, elemsContiguity)
 

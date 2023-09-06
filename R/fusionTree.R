@@ -324,7 +324,7 @@ is_stopCriterion_checked <- function(tree)
 search_fusion_tree_pb <- function(pb, search = "DFS",
                                   stopCriterion = "first_valid_branch",
                                   childChoice = "distance",
-                                  regionalisation = seq_len(nrow(pb)),
+                                  regionalisation = seq_len(pb$n()),
                                   linkage = "complete",
                                   useRecursivity = FALSE)
 {
@@ -481,7 +481,7 @@ search_fusion_tree <- function(distances = NULL, contiguity = NULL,
                           binarQual = binarQual)
 
   if (is.null(regionalisation))
-    regionalisation <- seq_len(nrow(pb))
+    regionalisation <- seq_len(pb$n())
 
   tree <- search_fusion_tree_pb(pb, search = search,
                                 stopCriterion = stopCriterion,
