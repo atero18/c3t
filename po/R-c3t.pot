@@ -1,8 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: c3t 0.1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-27 12:04+0200\n"
+"POT-Creation-Date: 2023-09-06 18:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,11 +10,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: AHR_grid.R:295
+#: AHR_grid.R:293
 msgid "Some errors happened during AHR calculations:"
 msgstr ""
 
-#: AHR_grid.R:301
+#: AHR_grid.R:300
 msgid "All experiences sent an error"
 msgstr ""
 
@@ -31,35 +30,35 @@ msgstr ""
 msgid "No feasible solution obtained"
 msgstr ""
 
-#: AHR_grid.R:380
+#: AHR_grid.R:381
 msgid "No linkage has been given"
 msgstr ""
 
-#: AHR_grid.R:518
+#: AHR_grid.R:516
 msgid "Starting time: {t0}"
 msgstr ""
 
-#: AHR_grid.R:530
+#: AHR_grid.R:528
 msgid "Execution time: {Sys.time() - t0}"
 msgstr ""
 
-#: AHR_grid.R:543
+#: AHR_grid.R:542
 msgid "the problem has ben divided in {length(listeSPb)} connected components"
 msgstr ""
 
-#: AHR_grid.R:578
+#: AHR_grid.R:577
 msgid "{nrow(data$grid)} AHC to evaluate"
 msgstr ""
 
-#: AHR_grid.R:597
+#: AHR_grid.R:596
 msgid "Imporssible to generate non-trivial regionalisations"
 msgstr ""
 
-#: AHR_grid.R:640
+#: AHR_grid.R:641
 msgid "{length(lignesASupprimmer)} redundancie{?s} {?has/have} been removed."
 msgstr ""
 
-#: AHR_grid.R:660
+#: AHR_grid.R:661
 msgid "Calculation of the {criterion} criterion"
 msgstr ""
 
@@ -73,204 +72,180 @@ msgstr ""
 msgid "With centroid linkage all variables must be quantitative"
 msgstr ""
 
-#: abstractSymMat.R:103
+#: abstractSymMat.R:105
 msgid "The name vector must be of size `dim`"
 msgstr ""
 
-#: arguments.R:245
+#: arguments.R:259
 msgid ""
 "Complete matrix is expected but user ask for different number of rows and "
 "columns"
 msgstr ""
 
-#: calinski_harabasz.R:385
+#: calinski_harabasz.R:386
 msgid "`data` does not contain any value"
 msgstr ""
 
-#: calinski_harabasz.R:408
+#: calinski_harabasz.R:413
 msgid "unrecognized type for `data`"
 msgstr ""
 
-#: clusters_contiguity.R:50
-msgid "x must be a matrix or graph contiguity"
+#: clusters_contiguity.R:40
+msgid "`x` must be a matrix or graph contiguity"
 msgstr ""
 
-#: clusters_contiguity.R:53
-msgid ""
-"The number of elements is different between the partition and the contiguity "
-"matrix"
-msgstr ""
-
-#: clusters_contiguity.R:91
+#: clusters_contiguity.R:82
 msgid "0 cannot be a cluster ID"
 msgstr ""
 
-#: contiguity.R:62 contiguity.R:87
+#: contiguity.R:64 contiguity.R:90
 msgid "`x` is not of the correct type"
 msgstr ""
 
-#: contiguityMat.R:117
-msgid ""
-"At least one datum indicates a rank greater than the number of individuals "
-"indicated via `dim`"
-msgstr ""
-
-#: contiguityMat.R:127
-msgid "`M` is not in the correct format"
-msgstr ""
-
-#: criteria.R:55
+#: criteria.R:57
 msgid "This criterion already exists"
 msgstr ""
 
-#: criteria.R:432
+#: criteria.R:437
 msgid "All partitions must have the same number of elements"
 msgstr ""
 
-#: criteria.R:683
+#: criteria.R:689
 msgid "unrecognized optimality type for the criterion"
 msgstr ""
 
-#: distMat.R:569
+#: distMat.R:578
 msgid "At least the distance matrix or the distance function must be provided"
 msgstr ""
 
-#: distMat.R:574
+#: distMat.R:583
 msgid ""
 "Data must be provided and must be a dataframe when 'd' is a distance function"
 msgstr ""
 
-#: distMat.R:580
+#: distMat.R:589
 msgid "The number of data points must be the same for `distances` and `data`"
 msgstr ""
 
-#: distMat.R:597
+#: distMat.R:607
 msgid "Unrecognized storage type"
 msgstr ""
 
-#: distMat.R:636 distMat.R:639
+#: distMat.R:637
 msgid "The provided distance function `d` is incorrect"
 msgstr ""
 
-#: distMat.R:643
+#: distMat.R:660
 msgid "`data` must have rows and columns"
 msgstr ""
 
-#: distances_elements.R:54
+#: distances_elements.R:55
 msgid "Both vectors must have the same size"
 msgstr ""
 
-#: distances_elements.R:171
-msgid "The distance calculation returns a negative value"
-msgstr ""
-
-#: enhancer.R:133
-msgid "Given solution is not a feasible solution"
-msgstr ""
-
-#: enhancer.R:234
-msgid "interruption in the improvement"
-msgstr ""
-
-#: enhancer.R:472
-msgid "`regionalisation` is not a feasible solution"
-msgstr ""
-
-#: enhancer.R:508
-msgid "Evaluation of the {nrow(grille)} enhancement{?s}"
-msgstr ""
-
-#: enhancer.R:552
-msgid ""
-"Calculation of {length(evaluationCriteria)} evaluation criteria on the "
-"initial partition"
-msgstr ""
-
-#: enhancer.R:571
-msgid ""
-"Calcul of {length(evaluationCriteria)} evaluation criteria on the "
-"{nrow(results)} enhanced partition{?s}"
-msgstr ""
-
-#: fusion.R:23
-msgid "`cluster1` and `cluster2` must be elements of `partition`"
-msgstr ""
-
-#: fusion.R:287
-msgid ""
-"It is requested to order the contiguity list by distance, but distances are "
-"not indicated"
-msgstr ""
-
-#: fusionTree.R:180
-msgid "Unrecognized `search` mode"
-msgstr ""
-
-#: fusionTree.R:354
-msgid "Maximum size constraint is not verified"
-msgstr ""
-
-#: fusionTree.R:364
-msgid "No possible fusion"
-msgstr ""
-
-#: fusion_constraint.R:102
-msgid "Some fusion constraint have not been recognized"
-msgstr ""
-
-#: fusion_constraint.R:173
-msgid "Some fusion constraint mode have not been recognized"
-msgstr ""
-
-#: initialisation.R:81
-msgid "Impossible to complete the requested number of fusions"
-msgstr ""
-
-#: initialisation.R:86
-msgid "Unknown `mode`. Must be unitary or random"
-msgstr ""
-
-#: distances_lilnkage.R:27
-msgid "distance function gave a non positive value"
-msgstr ""
-
-#: distances_lilnkage.R:96
+#: distances_linkage.R:97
 msgid "both data.frames must have the same variables"
 msgstr ""
 
-#: distances_lilnkage.R:103
+#: distances_linkage.R:105
 msgid "the distance function provided a result that is not a positive number"
 msgstr ""
 
-#: distances_lilnkage.R:660 distances_lilnkage.R:670
+#: distances_linkage.R:666 distances_linkage.R:678
 msgid "Actually this function doesn't work for other type of data"
 msgstr ""
 
-#: distances_lilnkage.R:689 distances_lilnkage.R:1057 proximity.R:175
+#: distances_linkage.R:699 distances_linkage.R:1071 proximity.R:181
 msgid "`cluster1` and `cluster2` must be different"
 msgstr ""
 
-#: distances_lilnkage.R:721
+#: distances_linkage.R:732
 msgid ""
 "The values used for Lance-Williams update gave at least one negative linkage "
 "distance"
 msgstr ""
 
-#: distances_lilnkage.R:997
+#: distances_linkage.R:1009
 msgid "`cluster1` and `cluster2` must have elements"
 msgstr ""
 
-#: distances_lilnkage.R:1069
+#: distances_linkage.R:1085
 msgid "`linkage` must be single, complete or average"
 msgstr ""
 
-#: distances_lilnkage.R:1075
+#: distances_linkage.R:1092
 msgid ""
 "at least one of `partitionBefore` and `nbElementsClustersBefore` must be "
 "specified"
 msgstr ""
 
-#: medoids.R:21
+#: enhancer.R:134
+msgid "Given solution is not a feasible solution"
+msgstr ""
+
+#: enhancer.R:237
+msgid "interruption in the improvement"
+msgstr ""
+
+#: enhancer.R:475
+msgid "`regionalisation` is not a feasible solution"
+msgstr ""
+
+#: enhancer.R:511
+msgid "Evaluation of the {nrow(grille)} enhancement{?s}"
+msgstr ""
+
+#: enhancer.R:555
+msgid ""
+"Calculation of {length(evaluationCriteria)} evaluation criteria on the "
+"initial partition"
+msgstr ""
+
+#: enhancer.R:574
+msgid ""
+"Calcul of {length(evaluationCriteria)} evaluation criteria on the "
+"{nrow(results)} enhanced partition{?s}"
+msgstr ""
+
+#: fusion.R:24
+msgid "`cluster1` and `cluster2` must be elements of `partition`"
+msgstr ""
+
+#: fusion.R:289
+msgid ""
+"It is requested to order the contiguity list by distance, but distances are "
+"not indicated"
+msgstr ""
+
+#: fusionTree.R:182
+msgid "Unrecognized `search` mode"
+msgstr ""
+
+#: fusionTree.R:358
+msgid "Maximum size constraint is not verified"
+msgstr ""
+
+#: fusionTree.R:370
+msgid "No possible fusion"
+msgstr ""
+
+#: fusion_constraint.R:104
+msgid "Some fusion constraint have not been recognized"
+msgstr ""
+
+#: fusion_constraint.R:178
+msgid "Some fusion constraint mode have not been recognized"
+msgstr ""
+
+#: initialisation.R:82
+msgid "Impossible to complete the requested number of fusions"
+msgstr ""
+
+#: initialisation.R:89
+msgid "Unknown `mode`. Must be unitary or random"
+msgstr ""
+
+#: medoids.R:23
 msgid "the distance matrix is empty"
 msgstr ""
 
@@ -286,196 +261,184 @@ msgstr ""
 msgid "Existing clusters. Complete reset"
 msgstr ""
 
-#: parallelization.R:79
+#: parallelization.R:80
 msgid ""
 "The number of cores proposed ({nbCores}) is greater than the number of "
 "machine cores ({detectCores()}). Reducing"
 msgstr ""
 
-#: parallelization.R:86
+#: parallelization.R:87
 msgid "The requested number of cores is 1. Unnecessary"
 msgstr ""
 
-#: parallelization.R:92
+#: parallelization.R:93
 msgid "Creating {nbCores} clusters"
 msgstr ""
 
-#: parallelization.R:119
+#: parallelization.R:120
+msgid "Clusters are present but in use. Forceful deletion"
+msgstr ""
+
+#: parallelization.R:126
 msgid ""
 "Clusters are present but in use. Set `forceStop` to `TRUE` to force stopping"
 msgstr ""
 
-#: parallelization.R:125
-msgid "Clusters are present but in use. Forceful deletion"
-msgstr ""
-
-#: parallelization.R:223
+#: parallelization.R:225
 msgid "Parallel computation using {c3t_nbCores()} clusters"
 msgstr ""
 
-#: parallelization.R:243
+#: parallelization.R:246
 msgid "Parallelization did not work. Attempting sequential computation"
 msgstr ""
 
-#: partition_tools.R:154
+#: partition_tools.R:145
 msgid ""
 "Each partition should have a number of elements corresponding to the "
 "connected components"
 msgstr ""
 
-#: proximity.R:65
+#: proximity.R:66
 msgid "no neighbors are given"
 msgstr ""
 
-#: proximity.R:73
+#: proximity.R:75
 msgid ""
 "`subsetPoints` make references to `distances` row names but at least one of "
 "them doesn't exist."
 msgstr ""
 
-#: proximity.R:91
+#: proximity.R:93
 msgid ""
 "`subsetNeighbors` make references to `distances` column names but at least "
 "one of them doesn't exist."
 msgstr ""
 
-#: proximity.R:95
+#: proximity.R:98
 msgid "Elements of `subsetNeighbors` are supposed to be unique"
 msgstr ""
 
-#: proximity.R:144
+#: proximity.R:149
 msgid "Looking for inner neighbors needs a square distance matrix"
 msgstr ""
 
-#: resolver.R:104
+#: resolver.R:105
 msgid "Transfert or fusion must be allowed"
 msgstr ""
 
-#: resolver.R:109
+#: resolver.R:112
 msgid "`regionalisation` doesn't check connectivity constraint"
 msgstr ""
 
-#: resolver.R:230
+#: resolver.R:234
 msgid "Clusters fusion"
 msgstr ""
 
-#: resolver.R:282
+#: resolver.R:286
 msgid "Fusion {itFusions} (max: {maxItFusions})"
 msgstr ""
 
-#: resolver.R:340
+#: resolver.R:344
 msgid "Number of iterations (fusions) : {itFusions}"
 msgstr ""
 
-#: resolver.R:349
+#: resolver.R:353
 msgid "Transfert of elements one-by-one"
 msgstr ""
 
-#: resolver.R:409
+#: resolver.R:413
 msgid "Number of iterations (transferts) : {itTransfers}"
 msgstr ""
 
-#: resolver.R:430
+#: resolver.R:434
 msgid "unresolvable partition"
 msgstr ""
 
-#: resolver.R:431
+#: resolver.R:435
 msgid "partially resolved partition"
 msgstr ""
 
-#: resolver.R:432
+#: resolver.R:436
 msgid "fully resolved partition"
 msgstr ""
 
-#: sim_context.R:95
+#: sim_context.R:96
 msgid "`qualitatives_list` must be a list (or NULL)"
 msgstr ""
 
-#: sim_context.R:98
+#: sim_context.R:101
 msgid "`qualitatives_list` is empty"
 msgstr ""
 
-#: sim_context.R:108
+#: sim_context.R:112
 msgid "At least one element in `qualitatives_list` has size zero"
 msgstr ""
 
-#: sim_context.R:118
+#: sim_context.R:122
 msgid "At least one element in `qualitatives_list` is not a vector or factor"
 msgstr ""
 
-#: sim_context.R:148
+#: sim_context.R:153
 msgid "No context has been generated"
 msgstr ""
 
-#: sim_grid.R:64
+#: sim_grid.R:67
 msgid "avgPersonsPerCell_int must be strictly positive"
 msgstr ""
 
-#: sim_grid.R:104
+#: sim_grid.R:109
 msgid "grid not found"
 msgstr ""
 
-#: sim_grid.R:122
+#: sim_grid.R:128
 msgid "`distance` is incorrect"
 msgstr ""
 
-#: sim_repartition.R:33
+#: sim_repartition.R:34
 msgid "There are not enough available zones to consider all parameters"
 msgstr ""
 
-#: sim_repartition.R:57
-msgid "`ppt_in_metropolises_real` must be a proportion in [0,1]"
-msgstr ""
-
-#: symMMat.R:55
+#: symMMat.R:59
 msgid "`i` must have exactly two columns"
 msgstr ""
 
-#: symMMat.R:86 symMMat.R:102
+#: symMMat.R:89
 msgid "Default value is already defined for the diagonal"
 msgstr ""
 
-#: symMMat.R:118
+#: symMMat.R:109
 msgid "Specified indexes are incorrect"
 msgstr ""
 
-#: symMMat.R:160
+#: symMMat.R:157
 msgid "Matrix must be symmetric"
 msgstr ""
 
-#: symMMat.R:163
+#: symMMat.R:162
 msgid "Matrices must have the same size"
 msgstr ""
 
-#: symMMat.R:167
+#: symMMat.R:168
 msgid "Defaut value for the diagonal isn't respected"
 msgstr ""
 
-#: symSparseMat.R:112
-msgid "Given indexes are incorrect"
-msgstr ""
-
-#: symSparseMat.R:117
-msgid "For the diagonal a default value has been given"
-msgstr ""
-
-#: symVMat.R:30
+#: symVMat.R:31
 msgid "Element is not contained in values because is part of the diagonal"
 msgstr ""
 
-#: symVMat.R:82
+#: symVMat.R:86
 msgid "`i` must exactly have 2 columns"
 msgstr ""
 
-#: symVMat.R:158
+#: symVMat.R:167
 msgid "A default value is defined for the diagonal"
 msgstr ""
 
-#: symVMat.R:181
+#: symVMat.R:192
 msgid "Specified indices are incorrect"
 msgstr ""
 
-#: symVMat.R:209
+#: symVMat.R:223
 msgid "The size of `value` doesn't correspond to the number of indexes"
 msgstr ""
 
