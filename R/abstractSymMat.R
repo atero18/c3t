@@ -129,7 +129,7 @@ NULL
 #' @keywords internal
 setMethod(
   "isSymmetric",
-  signature(x = "AbstractSymMat"),
+  signature(object = "AbstractSymMat"),
   function(object, ...) TRUE
 )
 

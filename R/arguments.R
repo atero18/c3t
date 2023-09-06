@@ -235,6 +235,12 @@ testStringChoice <- makeTestFunction(checkStringChoice)
 #' @rdname checkContiguityMatrix
 #' @family arguments checkers
 #' @export
+#' @examples
+#' M <- matrix(c(FALSE,  TRUE, FALSE,
+#'               TRUE, FALSE,  TRUE,
+#'               FALSE,  TRUE, FALSE), nrow = 3L)
+
+#' checkContiguityMatrix(M, isComplete = TRUE)
 #' @importFrom checkmate assertFlag assertCount checkMatrix
 checkContiguityMatrix <- function(x, # nolint: cyclocomp_linter
                                   isComplete = TRUE,
@@ -353,6 +359,7 @@ testContiguityGraph <- makeTestFunction(checkContiguityGraph)
 #' @inherit check_general details
 #' @family arguments checkers
 #' @export
+#' @example inst/examples/checkDistanceMatrix.R
 #' @importFrom checkmate checkMatrix
 checkDistanceMatrix <- function(x, # nolint: cyclocomp_linter
                                 isComplete = TRUE,
@@ -434,6 +441,8 @@ testDistanceMatrix <- makeTestFunction(checkDistanceMatrix)
 #' @inherit check_general details
 #' @family arguments checkers
 #' @export
+#' @example inst/examples/checkPartition.R
+
 #' @importFrom checkmate checkIntegerish
 checkPartition <- function(x, n = length(x))
 {

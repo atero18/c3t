@@ -67,6 +67,12 @@ Check if an argument is a matrix with contiguity matrix properties.
 \details{
 Extension of the \code{checkmate} package.
 }
+\examples{
+M <- matrix(c(FALSE,  TRUE, FALSE,
+              TRUE, FALSE,  TRUE,
+              FALSE,  TRUE, FALSE), nrow = 3L)
+checkContiguityMatrix(M, isComplete = TRUE)
+}
 \seealso{
 Other arguments checkers: 
 \code{\link{checkContiguityGraph}()},
