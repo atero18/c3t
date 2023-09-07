@@ -1,4 +1,4 @@
-#' @include tools.R
+#' @include utils.R
 #' @include criteria.R
 #' @include size_constraints.R
 #' @include partition_tools.R

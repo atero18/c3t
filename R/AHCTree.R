@@ -307,7 +307,7 @@ setMethod(
 #' @noRd
 #' @importFrom tibble as_tibble
 #' @importFrom methods setGeneric
-setGeneric("as_tibble", as_tibble)
+setGeneric("as_tibble", tibble::as_tibble)
 
 #' @importFrom tibble as_tibble
 setMethod("as_tibble", signature(x = "AHCTree"),

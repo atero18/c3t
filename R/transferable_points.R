@@ -23,7 +23,7 @@ frontier_art_to_transferable <- function(frontier_mat,
 #' and transferable elements.
 #' @keywords internal
 #' @name elements_transferables
-#' @importFrom igraph is_named vertex_attr V
+#' @importFrom igraph is_named V
 transferable_elements_pb <- function(regionalisation, pb,
                                      contiguityGraph, contiguityMat)
 {

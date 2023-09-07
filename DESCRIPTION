@@ -3,7 +3,8 @@ Package: c3t
 Title: Clustering with Connectivity and Size Constraints
 Version: 0.1.0
 Authors@R: c(
-    person("Tangi", "Tassin", , "tangi.tassin@outlook.fr", role = c("aut", "cre")),
+    person("Tangi", "Tassin", , "tangi.tassin@outlook.fr", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0004-5956-2910")),
     person("Stéphane", "Legleye", role = "ths",
            comment = "ensai.fr")
   )
@@ -55,6 +56,7 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3.9000
+SystemRequirements: C++17
 Collate: 
     'arguments.R'
     'abstractSymMat.R'
@@ -64,7 +66,7 @@ Collate:
     'size_constraints.R'
     'dunn_index.R'
     'calinski_harabasz.R'
-    'tools.R'
+    'utils.R'
     'criteria.R'
     'partition_class.R'
     'AHCTree.R'

@@ -57,15 +57,6 @@ test_that("Constraints must have correct values",
                                  M = max(sizes) + 1.0))
 })
 
-# Contiguity Verification
-test_that("Contiguity information is correct",
-{
-  pb <- constructor_pbCon(X, contiguity)
-  expect_true(are_adjacent(pb, 1L, 1L))
-  expect_false(are_adjacent(pb, 1L, 2L))
-  expect_true(are_adjacent(pb, 1L, 3L))
-})
-
 # Presence of Constraints Verification
 test_that("Check for the presence of constraints",
 {

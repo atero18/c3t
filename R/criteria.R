@@ -1,5 +1,5 @@
 #' @include arguments.R
-#' @include tools.R
+#' @include utils.R
 #' @include calinski_harabasz.R
 #' @include dunn_index.R
 

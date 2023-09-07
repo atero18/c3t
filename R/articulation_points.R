@@ -28,6 +28,7 @@ NULL
 #' @keywords internal
 #' @importFrom igraph is_igraph V neighbors components
 #' @importFrom igraph is_named delete_vertices induced_subgraph
+#' @importFrom igraph vertex_attr<-
 is_articulation_pt <- function(x, contiguity) # nolint: cyclocomp_linter
 {
 

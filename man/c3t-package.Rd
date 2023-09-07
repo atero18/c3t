@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Tangi Tassin \email{tangi.tassin@outlook.fr}
+\strong{Maintainer}: Tangi Tassin \email{tangi.tassin@outlook.fr} (\href{https://orcid.org/0009-0004-5956-2910}{ORCID})
 
 Other contributors:
 \itemize{

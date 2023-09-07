@@ -3,7 +3,7 @@
 
 
 #' @keywords internal
-#' @importFrom igraph empty_graph gorder
+#' @importFrom igraph gorder
 
 setRefClass(
   "pbCon",
@@ -344,25 +344,6 @@ pbCon$methods(degres = function(elements = seq_len(nrow(.self)))
                   normalized = FALSE))
 })
 
-#' @importFrom methods setGeneric
-#' @importFrom igraph are_adjacent
-setGeneric("are_adjacent", igraph::are_adjacent)
-
-# -- Indique si deux éléments sont adjacents ou non
-#' @importFrom igraph are_adjacent
-setMethod(
-  "are_adjacent",
-  signature(graph = "pbCon", v1 = "numeric", v2 = "numeric"),
-  function(graph, v1, v2)
-  {
-    assertCount(v1, positive = TRUE)
-    assertCount(v2, positive = TRUE)
-
-    graph$isFullyConnected(calcul = FALSE) || v1 == v2 ||
-      are_adjacent(graph$contiguity, v1, v2)
-  }
-)
-
 # Vérification des régionalisations
 pbCon$methods(
   isPartition = function(partition) testPartition(partition, nrow(.self)),
@@ -513,7 +494,7 @@ pbCon$methods(
   #' component in the `pbCon` object's contiguity graph.
   #' @returns A list of `pbCon` objects, each corresponding to a connected
   #' component in the `pbCon` object's contiguity graph.
-  #' @importFrom igraph subgraph
+  #' @importFrom igraph induced_subgraph
   #' @noRd
   split_connected_spb = function()
   {
@@ -523,7 +504,7 @@ pbCon$methods(
     # Create a problem for each connected component
     tapply(seq_len(nrow(.self)), connectedComponents,
            function(listeElements) {
-      grapheCont <- subgraph(contiguity, listeElements)
+      grapheCont <- induced_subgraph(contiguity, listeElements)
       distM <- sousMatrice_distMat(.self, listeElements)
       pbCon$new(distances = distM$distances, d = distM$d, data = distM$data,
                 contiguity = grapheCont, sizes = sizes[listeElements],
