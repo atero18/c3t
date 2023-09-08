@@ -68,7 +68,7 @@ test_that("Equality with fpc package",
   skip_if_not_installed("fpc")
 
   set.seed(123L)
-  data <- c3t_grid_simulation(20L, 20L)$data
+  data <- gen_pb(20L, 20L)$data
   n <- nrow(data)
 
   nbEssais <- 30L

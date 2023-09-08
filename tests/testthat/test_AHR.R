@@ -165,7 +165,7 @@ test_that("Checking contiguity on a small set",
 
 test_that("Checking contiguity on a larger set",
 {
-  pb7x7 <- c3t_grid_simulation(7L, 7L, m = 0.0, M = Inf, distance = "euclidean")
+  pb7x7 <- gen_pb(7L, 7L, m = 0.0, M = Inf, d = "euclidean")
 
   resPerso <- AHR_single(pb7x7)
 
@@ -189,7 +189,7 @@ test_that("With an excessively large max constraint, no cluster can be formed",
 
 test_that("Functioning of the grid",
 {
-  pb7x7 <- c3t_grid_simulation(7L, 7L, distance = "euclidean")
+  pb7x7 <- gen_pb(7L, 7L, d = "euclidean")
 
   d <- pb7x7$d
   context <- pb7x7$data
@@ -208,8 +208,7 @@ test_that("Functioning of the grid",
 # Same result independently of the complete linkage calculation
 test_that("Same result independently of the entire linkage calculation",
 {
-  pb7x7 <- c3t_grid_simulation(7L, 7L, distance = "euclidean",
-                               calculToutesValeurs = FALSE)
+  pb7x7 <- gen_pb(7L, 7L, d = "euclidean", calculateAllDistances = FALSE)
   pb7x7BIS <- pb7x7$copy(shallow = FALSE)
 
   res1 <- AHR_single(pb7x7, linkage = "single", calculDistComplet = FALSE)

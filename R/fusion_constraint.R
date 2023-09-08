@@ -9,7 +9,7 @@ NULL
 #' @describeIn available_fusion_constraints return implemented
 #' fusion constraints.
 #' @family available parameters
-#' @examples available_fusion_constraints()
+#' @keywords internal
 #' @export
 available_fusion_constraints <- function()
 {
@@ -115,7 +115,7 @@ assertFusionConstraint <-
 #' @describeIn available_fusion_constraints return implemented
 #' fusion constraint modes.
 #' @family available parameters
-#' @examples available_fusion_modes()
+#' @keywords internal
 #' @export
 available_fusion_modes <- function()
 {

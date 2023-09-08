@@ -23,7 +23,14 @@ gen_repartition <- function(nbElements_int,
 {
   # Checking arguments
   assertCount(nbElements_int, positive = TRUE)
-  assertCount(nbIndividuals_int, positive = TRUE)
+  assertCount(nbIndividuals_int)
+
+  if (nbIndividuals_int == 0L)
+  {
+    return(data.frame(nbIndividuals = integer(nbElements_int),
+                      emptyFixedZone = logical(nbElements_int),
+                      metropolis = logical(nbElements_int)))
+  }
   assertCount(nbMinEmptyZones_int)
   assertCount(nbMetropolises_int)
   if (nbMetropolises_int > 0L)
@@ -35,7 +42,7 @@ gen_repartition <- function(nbElements_int,
   }
 
   df_repartition <- data.frame(nbIndividuals = integer(nbElements_int),
-                               emptyFixedZone = FALSE)
+                               emptyFixedZone = logical(nbElements_int))
   specialZones_vec <- NULL
   # Creating empty zones
   if (nbMinEmptyZones_int > 0L)

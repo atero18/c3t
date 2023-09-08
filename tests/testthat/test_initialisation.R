@@ -2,7 +2,7 @@ rm(list = ls())
 
 test_that("Unitary partition",
 {
-  pb <- c3t_grid_simulation(7L, 7L)
+  pb <- gen_pb(7L, 7L)
   n <- pb$n()
   partition <- gen_initial_partition(pb, mode = "unitary")
   expect_integerish(partition, len = n)
@@ -11,7 +11,7 @@ test_that("Unitary partition",
 
 test_that("Generate the righ number of fusions",
 {
-  pb <- c3t_grid_simulation(7L, 7L)
+  pb <- gen_pb(7L, 7L)
   n <- pb$n()
 
   set.seed(123L)
@@ -26,7 +26,7 @@ test_that("Generate the righ number of fusions",
 
 test_that("Generate the right number of partitions",
 {
-  pb <- c3t_grid_simulation(7L, 7L)
+  pb <- gen_pb(7L, 7L)
   n <- pb$n()
 
   modes <- c("unitary", "random", "random", "unitary")

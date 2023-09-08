@@ -10,7 +10,7 @@ profvis <- function(...) profiling(...,  prefix = "CHI")
 
 # Profiling sur un petit nombre de données
 # -- Cas avec indice uniquement
-data <- c3t_grid_simulation(30L, 50L)$data
+data <- gen_pb(30L, 50L)$data
 partition <- sample(seq_len(nrow(data)), replace = TRUE, size = nrow(data))
 
 profil1 <- profvis(calinski_harabasz(data, partition, valueOnly = TRUE),
@@ -25,7 +25,7 @@ profil2 <- profvis(calinski_harabasz(data, partition, valueOnly = FALSE),
 
 
 
-data <- c3t_grid_simulation(30L, 50L)$data
+data <- gen_pb(30L, 50L)$data
 
 performances_ch <- function(calculCH)
 {

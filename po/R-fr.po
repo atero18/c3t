@@ -418,8 +418,8 @@ msgid "No context has been generated"
 msgstr "Aucun contexte n'a été généré"
 
 #: sim_grid.R:67
-msgid "avgPersonsPerCell_int must be strictly positive"
-msgstr "avgPersonsPerCell_int doit être strictement positif"
+msgid "avgPersonsPerCell must be strictly positive"
+msgstr "avgPersonsPerCell doit être strictement positif"
 
 #: sim_grid.R:109
 msgid "grid not found"

@@ -13,12 +13,11 @@ Give what criteria are available actually.
 Silhouette score will be available if \code{cluster} package
 is installed.
 }
-\examples{
-available_criteria()
-}
 \seealso{
 Other available parameters: 
+\code{\link{available_elements_distances}()},
 \code{\link{available_fusion_constraints}()},
 \code{\link{available_linkages}()}
 }
 \concept{available parameters}
+\keyword{internal}

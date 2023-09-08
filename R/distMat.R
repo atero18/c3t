@@ -8,11 +8,10 @@
 #' @field data A dataframe containing the data points.
 #' @keywords internal
 distMat <-
-  setRefClass(
-    "DistMat",
-    fields = list(distances = "AbstractSymMat",
-                  d = "functionOrNULL",
-                  data = "dfOrNULL"))
+  setRefClass("DistMat",
+              fields = list(distances = "AbstractSymMat",
+                            d = "functionOrNULL",
+                            data = "dfOrNULL"))
 
 distMat$methods(
   n = function() nrow(distances),
@@ -626,26 +625,9 @@ constructor_DistMat <- function(distances = NULL, d = NULL, data = NULL, # nolin
 
   if (!is.null(d))
   {
-    INCORRECTDSTR <- gettext("The provided distance function `d` is incorrect")
-    if (testString(d))
-    {
-      d <- tolower(d)
-      if (d == "euclidean")
-        d <- euclidean_distance
-      else if (d == "manhattan")
-        d <- manhattan_distance
-      else if (d == "minkowski")
-        d <- function_distance_minkowski(p)
-      else
-      {
-        stop(INCORRECTDSTR)
-      }
+    assertElementDistance(d, p)
 
-    }
-    else if (!is.function(d))
-    {
-      stop(INCORRECTDSTR)
-    }
+    d <- corresponding_d(d, p = p)
 
     if (nrow(data) == 0L || ncol(data) == 0L)
     {

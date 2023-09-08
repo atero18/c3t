@@ -383,7 +383,7 @@ msgid "No context has been generated"
 msgstr ""
 
 #: sim_grid.R:67
-msgid "avgPersonsPerCell_int must be strictly positive"
+msgid "avgPersonsPerCell must be strictly positive"
 msgstr ""
 
 #: sim_grid.R:109

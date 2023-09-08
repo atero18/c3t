@@ -4,9 +4,9 @@ profvis <- function(...) profiling(...,  prefix = "enhancer")
 
 # -- Grille 7x7
 
-pb7x7 <- c3t_grid_simulation(7L, 7L, distance = "euclidean",
-                             m = 0.0, M = Inf,
-                             calculToutesValeurs = TRUE)
+pb7x7 <- gen_pb(7L, 7L, d = "euclidean",
+                m = 0.0, M = Inf,
+                calculateAllDistances = TRUE)
 
 set.seed(123L)
 resPerso <- AHR_single(pb7x7, linkage = "single")
@@ -21,9 +21,9 @@ profil1 <- profvis({res7x7 <- enhancer_pb(pb7x7, resPerso[[5L]]$partition)},
 
 # -- Grille 20x20
 
-pb20x20 <- c3t_grid_simulation(20L, 20L, distance = "euclidean",
-                               m = 0.0, M = 3000.0,
-                               calculToutesValeurs = TRUE)
+pb20x20 <- gen_pb(20L, 20L, d = "euclidean",
+                  m = 0.0, M = 3000.0,
+                  calculateAllDistances = TRUE)
 
 set.seed(123L)
 resPerso <- AHR_single(pb20x20, linkage = "single")

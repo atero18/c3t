@@ -124,7 +124,7 @@ distance_Hausdorff <- function(elemsDistances)
 #' If `description = TRUE` return will me bade invisibly.
 #' @family available parameters
 #' @export
-#' @examples available_linkages()
+#' @keywords internal
 #' @importFrom checkmate assertFlag
 available_linkages <- function(description = FALSE)
 {

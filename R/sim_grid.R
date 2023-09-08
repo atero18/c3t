@@ -49,98 +49,6 @@ rank_to_xy_grid <- function(k_int, x_int, y_int)
   return(list(i = i, j = j))
 }
 
-# First simulation with a simple grid where we have "Queen" contiguity,
-# no mandatory empty zones, and no metropolis, and for context 3
-# quantitative variables with different means and variances
-# nocov start
-#' @importFrom checkmate assertCount assertDouble
-grid_simulation_1 <- function(x_int,
-                              y_int,
-                              avgPersonsPerCell_int = 100.0)
-{
-  assertCount(x_int, positive = TRUE)
-  assertCount(y_int, positive = TRUE)
-  assertDouble(avgPersonsPerCell_int, len = 1L, any.missing = FALSE)
-
-  if (avgPersonsPerCell_int <= 0.0)
-  {
-    stop("avgPersonsPerCell_int must be strictly positive")
-  }
-
-  nbCells <- x_int * y_int
-  contiguity_matrix <- grid_contiguity_matrix(x_int,
-                                              y_int,
-                                              contiguityType = "Queen")
-  repartition_df <-
-    gen_repartition(nbCells,
-                    nbCells * avgPersonsPerCell_int,
-                    nbMinEmptyZones_int = 0L,
-                    nbMetropolises_int = 0L)
-
-  context_df <- gen_context(nbCells,
-                            quantitatives_mat =
-                              matrix(c(0.0, 1.0,
-                                       10.0, 5.0,
-                                       -10.0, 9.0), byrow = TRUE, ncol = 2L))
-
-  return(list(contiguity = contiguity_matrix,
-              repartition = repartition_df,
-              context = context_df))
-}
-# nocov end
-
-
-#' @importFrom checkmate assertCount testString
-c3t_grid_simulation <- function(x_int, y_int, m = 0.0, M = Inf,
-                                distance = "euclidean",
-                                standardQuant = TRUE,
-                                binarQual = TRUE,
-                                storageMode = "matrix",
-                                calculToutesValeurs = TRUE,
-                                p = 2.0)
-{
-  assertCount(x_int, positive = TRUE)
-  assertCount(y_int, positive = TRUE)
-
-  nomData <- paste0("grid_queen_vide0_metropole0_x", x_int,
-                    "_y", y_int,
-                    "_indivMoy100_quant3_qual0")
-  tryCatch(data(list = nomData, package = "c3t", envir = environment()),
-           warning = function(cond) stop("grid not found"))
-
-  grid <- get(nomData, envir = environment())
-  rm(nomData)
-
-  data <- normalize_df(grid$context, standardQuant, binarQual)
-
-  if (is.function(distance))
-    d <- distance
-  else if (testString(distance) && distance %in%
-           c("euclidean", "manhattan", "minkowski"))
-  {
-    d <- switch(distance,
-                manhattan = manhattan_distance,
-                euclidean = euclidean_distance,
-                minkowski = function_distance_minkowski(p))
-  }
-  else
-  {
-    stop("`distance` is incorrect")
-  }
-
-  pb <- constructor_pbCon(data = data,
-                          sizes = grid$repartition$nbIndividuals,
-                          m = m, M = M,
-                          d = d,
-                          standardQuant = standardQuant,
-                          binarQual = binarQual,
-                          storageMode = storageMode)
-
-  if (calculToutesValeurs)
-   pb[]
-
-  pb
-}
 
 # nocov start
 #' Grid Simulation
@@ -151,6 +59,9 @@ c3t_grid_simulation <- function(x_int, y_int, m = 0.0, M = Inf,
 #' @inheritParams grid_contiguity_matrix
 #' @inheritParams gen_context
 #' @inheritParams gen_repartition
+#' @param seed indicates if the random seed should be fixed before generating
+#' values. `NULL` (default) if the seed must not be fixed. Otherwise must
+#' be an integer. (integer)
 #' @returns a list including:
 #' 1. `contiguity`: grid's contiguity matrix
 #' 2. `distribution`: a dataframe specifying the distribution of sizes
@@ -162,19 +73,25 @@ c3t_grid_simulation <- function(x_int, y_int, m = 0.0, M = Inf,
 #'    * `metropolis`: `TRUE` if the zone is a metropolis, `FALSE` otherwise.
 #' 3. `context`: a dataframe where each row corresponds to the context/data
 #' related to an individual, and each column is a variable.
+#' @name gen_grid
 #' @keywords internal
 #' @export
-grid_simulation <- function(x_int, y_int, contiguityType = "Queen",
-                            nbIndividuals = x_int * y_int,
-                            nbMinEmptyZones = 0L,
-                            nbMetropolises = 0L,
-                            propInMetropolises = 0.4,
-                            quantitatives_mat = c(0.0, 1.0),
-                            qualitatives_list = NULL,
-                            nbQuantitatives = 0L)
+gen_grid <- function(x_int, y_int, contiguityType = "Queen",
+                     nbIndividuals = x_int * y_int,
+                     nbMinEmptyZones = 0L,
+                     nbMetropolises = 0L,
+                     propInMetropolises = 0.4,
+                     quantitatives_mat = c(0.0, 1.0),
+                     qualitatives_list = NULL,
+                     nbQuantitatives = 0L,
+                     seed = NULL)
 {
   assertCount(x_int, positive = TRUE)
   assertCount(y_int, positive = TRUE)
+  assertInt(seed, null.ok = TRUE)
+
+  if (!is.null(seed))
+    set.seed(seed)
 
   nbCases <- x_int * y_int
 
@@ -195,114 +112,90 @@ grid_simulation <- function(x_int, y_int, contiguityType = "Queen",
 }
 # nocov end
 
-#' A few grids to apply connectivity constraints.
-#'
-#' Each grid has a number of rows and a number of columns. An average of
-#' 100 people per case are dispatched around the grid. No case are fixed as
-#' empty or a a metropolis. The context is made of 2 quantitative variables and
-#' one qualitative.
-#' @docType data
-#' @keywords data
-#' @name grids
-#' @rdname grids
-#' @format for each grid a list with the following components:
-#' 1. `contiguity`: grid's contiguity matrix
-#' 2. `distribution`: a dataframe specifying the distribution of sizes
-#' across different cells. Contains:
-#'    * `nbIndividuals`: number of individuals in the zone. The sum equals
-#'    `nbElems_int`.
-#'    * `emptyFixedZone`: `TRUE` if the zone has been fixed as empty,
-#'    `FALSE` otherwise.
-#'    * `metropolis`: `TRUE` if the zone is a metropolis, `FALSE` otherwise.
-#' 3. `context`: a dataframe where each row corresponds to the context/data
-#' related to an individual, and each column is a variable.
-NULL
-
-# nolint start
-
-
-
-# #' @rdname grids
-# #' @keywords internal
-# "grid_queen_vide0_metropole0_x2_y3_indivMoy100_quant3_qual0"
-
-# set.seed(123L)
-# grid_queen_vide0_metropole0_x2_y3_indivMoy100_quant3_qual0 = grid_simulation_1(2, 3)
-# # use_data(grid_queen_vide0_metropole0_x2_y3_indivMoy100_quant3_qual0, overwrite = TRUE)
-# save(grid_queen_vide0_metropole0_x2_y3_indivMoy100_quant3_qual0,
-#      file = "simulations/grid_queen_vide0_metropole0_x2_y3_indivMoy100_quant3_qual0.Rdata")
-
-
-# #' @rdname grids
-# #' @keywords internal
-# "grid_queen_vide0_metropole0_x3_y3_indivMoy100_quant3_qual0"
-
-# set.seed(123L)
-# # grid_queen_vide0_metropole0_x3_y3_indivMoy100_quant3_qual0 = grid_simulation_1(3, 3)
-# # use_data(grid_queen_vide0_metropole0_x3_y3_indivMoy100_quant3_qual0, overwrite = TRUE)
-# save(grid_queen_vide0_metropole0_x3_y3_indivMoy100_quant3_qual0,
-#      file = "simulations/grid_queen_vide0_metropole0_x3_y3_indivMoy100_quant3_qual0.Rdata")
-
-
-# #' @rdname grids
-# #' @keywords internal
-# "grid_queen_vide0_metropole0_x4_y4_indivMoy100_quant3_qual0"
-
-# set.seed(123L)
-# grid_queen_vide0_metropole0_x4_y4_indivMoy100_quant3_qual0 = grid_simulation_1(4, 4)
-# # use_data(grid_queen_vide0_metropole0_x4_y4_indivMoy100_quant3_qual0, overwrite = TRUE)
-# save(grid_queen_vide0_metropole0_x4_y4_indivMoy100_quant3_qual0,
-#     file = "simulations/grid_queen_vide0_metropole0_x4_y4_indivMoy100_quant3_qual0.Rdata")
-
-
-#' @rdname grids
+# nocov start
+#' @describeIn gen_grid simpler version with "Queen" contiguity,
+# no mandatory empty zones, and no metropolis, and for context 3
+# quantitative variables with different means and variances
 #' @keywords internal
-"grid_queen_vide0_metropole0_x7_y7_indivMoy100_quant3_qual0"
-
-# set.seed(123L)
-# grid_queen_vide0_metropole0_x7_y7_indivMoy100_quant3_qual0 = grid_simulation_1(7, 7)
-# use_data(grid_queen_vide0_metropole0_x7_y7_indivMoy100_quant3_qual0, overwrite = TRUE)
-# # save(grid_queen_vide0_metropole0_x7_y7_indivMoy100_quant3_qual0,
-# #      file = "simulations/grid_queen_vide0_metropole0_x7_y7_indivMoy100_quant3_qual0.Rdata")
-
-#' @rdname grids
-#' @keywords internal
-"grid_queen_vide0_metropole0_x20_y20_indivMoy100_quant3_qual0"
-
-# set.seed(123L)
-# grid_queen_vide0_metropole0_x20_y20_indivMoy100_quant3_qual0 = grid_simulation_1(20, 20)
-# use_data(grid_queen_vide0_metropole0_x20_y20_indivMoy100_quant3_qual0, overwrite = TRUE)
-# # save(grid_queen_vide0_metropole0_x20_y20_indivMoy100_quant3_qual0,
-# #      file = "simulations/grid_queen_vide0_metropole0_x20_y20_indivMoy100_quant3_qual0.Rdata")
-
-#' @rdname grids
-#' @keywords internal
-"grid_queen_vide0_metropole0_x30_y50_indivMoy100_quant3_qual0"
-
-# set.seed(123L)
-# grid_queen_vide0_metropole0_x30_y50_indivMoy100_quant3_qual0 = grid_simulation_1(30, 50)
-# use_data(grid_queen_vide0_metropole0_x30_y50_indivMoy100_quant3_qual0, overwrite = TRUE)
-# # save(grid_queen_vide0_metropole0_x30_y50_indivMoy100_quant3_qual0,
-# #      file = "simulations/grid_queen_vide0_metropole0_x30_y50_indivMoy100_quant3_qual0.Rdata")
-
-#' @rdname grids
-#' @keywords internal
-"grid_queen_vide0_metropole0_x50_y70_indivMoy100_quant3_qual0"
-
-# set.seed(123L)
-# grid_queen_vide0_metropole0_x50_y70_indivMoy100_quant3_qual0 = grid_simulation_1(50, 70)
-# use_data(grid_queen_vide0_metropole0_x50_y70_indivMoy100_quant3_qual0, overwrite = TRUE)
-# # save(grid_queen_vide0_metropole0_x50_y70_indivMoy100_quant3_qual0,
-# #      file = "simulations/grid_queen_vide0_metropole0_x50_y70_indivMoy100_quant3_qual0.Rdata")
+#' @importFrom checkmate assertCount assertNumber
+#' @export
+simple_grid <- function(x_int, y_int = x_int,
+                        avgPersonsPerCell = 100.0,
+                        seed = NULL)
+{
+  assertCount(x_int, positive = TRUE)
+  assertCount(y_int, positive = TRUE)
+  assertNumber(avgPersonsPerCell,
+               lower = 0.0, finite = TRUE,
+               na.ok = FALSE, null.ok = FALSE)
 
 
-# set.seed(123L)
-# grid_queen_vide0_metropole0_x175_y200_indivMoy100_quant3_qual0 = grid_simulation_1(175, 200)
-# use_data(grid_queen_vide0_metropole0_x175_y200_indivMoy100_quant3_qual0, overwrite = TRUE)
-# save(grid_queen_vide0_metropole0_x175_y200_indivMoy100_quant3_qual0,
-#      file = "simulations/grid_queen_vide0_metropole0_x175_y200_indivMoy100_quant3_qual0.Rdata")
+  nbCells <- x_int * y_int
+  nbIndividuals <- ceiling(nbCells * avgPersonsPerCell)
 
-# nolint end
+  quantitatives_mat <- matrix(c(  0.0, 1.0, # nolint
+                                 10.0, 5.0, # nolint
+                                -10.0, 9.0), byrow = TRUE, ncol = 2L)
+
+  colnames(quantitatives_mat) <- c("mean", "sd")
+
+  gen_grid(x_int, y_int,
+           contiguityType = "Queen",
+           nbIndividuals = nbIndividuals,
+           nbMinEmptyZones = 0L,
+           nbMetropolises = 0L,
+           quantitatives_mat = quantitatives_mat,
+           qualitatives_list = NULL,
+           seed = seed)
+}
+# nocov end
+
+gen_pb_from_grid <- function(grid, m = 0.0, M = Inf,
+                             d = "euclidean",
+                             standardQuant = TRUE,
+                             binarQual = TRUE,
+                             storageMode = "matrix",
+                             calculateAllDistances = TRUE,
+                             p = 2.0)
+{
+  data <- normalize_df(grid$context, standardQuant, binarQual)
+  d <- assertElementDistance(d, p)
+  d <- corresponding_d(d)
+
+  pb <- constructor_pbCon(data = data,
+                          sizes = grid$repartition$nbIndividuals,
+                          m = m, M = M,
+                          d = d,
+                          standardQuant = standardQuant,
+                          binarQual = binarQual,
+                          storageMode = storageMode)
+
+  if (calculateAllDistances)
+    pb[]
+
+  pb
+
+}
+
+gen_pb <- function(x_int, y_int, m = 0.0, M = Inf,
+                   d = "euclidean",
+                   standardQuant = TRUE,
+                   binarQual = TRUE,
+                   storageMode = "matrix",
+                   calculateAllDistances = TRUE,
+                   p = NULL,
+                   seed = 123L)
+{
+  grid <- simple_grid(x_int, y_int, 100.0, seed)
+
+  gen_pb_from_grid(grid,
+                   m, M,
+                   d,
+                   standardQuant, binarQual,
+                   storageMode,
+                   calculateAllDistances, p)
+
+}
 
 survey_simulation <- function(x_int, y_int, nbIndividuals_int)
 {

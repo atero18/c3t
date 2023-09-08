@@ -21,7 +21,7 @@ library(dplyr)
 
 L'objectif de ce tutoriel est d'introduire quelques unes des principales fonctions du packages `c3t`.
 
-Commençons par créer une grille factice de taille 4L par 5 qui servira d'exemple pour l'utilisation des différentes fonctions. On peut via la fonction `grid_simulation` choisir le nombre d'individus présents sur la grille, si certaines cases doivent être vides et si certaines doivent être plus peuplées que les autres (être des métropoles).
+Commençons par créer une grille factice de taille 4L par 5 qui servira d'exemple pour l'utilisation des différentes fonctions. On peut via la fonction `gen_grid` choisir le nombre d'individus présents sur la grille, si certaines cases doivent être vides et si certaines doivent être plus peuplées que les autres (être des métropoles).
 
 Un contexte sera généra pour chaque individu. Le nombre de variables quantatitatives et qualitatives peut être choisi. Ici on choisit de prendre 2 variables normales centrées réduites.
 
@@ -33,7 +33,7 @@ nbIndividuals <- 100L
 nbCasesVides <- 3L
 nbMetropolises <- 2L
 nbVariablesQuant <- 2L
-grille <- grid_simulation(x, y, nbIndividuals = nbIndividuals,
+grille <- gen_grid(x, y, nbIndividuals = nbIndividuals,
                           nbMinEmptyZones = nbCasesVides,
                           nbMetropolises = nbMetropolises,
                           nbQuantitatives = nbVariablesQuant)

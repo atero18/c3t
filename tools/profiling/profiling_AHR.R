@@ -8,15 +8,15 @@ data(grid_queen_vide0_metropole0_x7_y7_indivMoy100_quant3_qual0)
 g7x7 <- grid_queen_vide0_metropole0_x7_y7_indivMoy100_quant3_qual0
 matrice_dist7x7 <- as.matrix(dist(g7x7$context, method = "euclidean"))
 
-pbVecteur <- c3t_grid_simulation(7L, 7L, distance = "euclidean",
-                                 m = 0.0, M = Inf,
-                                 calculToutesValeurs = TRUE,
-                                 storageMode = "vector")
+pbVecteur <- gen_pb(7L, 7L, d = "euclidean",
+                    m = 0.0, M = Inf,
+                    calculateAllDistances = TRUE,
+                    storageMode = "vector")
 
-pbMatrice <- c3t_grid_simulation(7L, 7L, distance = "euclidean",
-                                 m = 0.0, M = Inf,
-                                 calculToutesValeurs = TRUE,
-                                 storageMode = "matrix")
+pbMatrice <- gen_pb(7L, 7L, d = "euclidean",
+                    m = 0.0, M = Inf,
+                    calculateAllDistances = TRUE,
+                    storageMode = "matrix")
 
 
 set.seed(123L)
@@ -57,17 +57,17 @@ m
 
 # Étude sans calcul de distance en interne et sans contrainte de taille
 # -- Grille 7x7
-pb7x7 <- c3t_grid_simulation(7L, 7L, distance = "euclidean",
-                             m = 0.0, M = Inf,
-                             calculToutesValeurs = TRUE)
+pb7x7 <- gen_pb(7L, 7L, d = "euclidean",
+                m = 0.0, M = Inf,
+                calculateAllDistances = TRUE)
 
 profil1 <- profvis({res <- AHR_single(pb7x7, linkage = "single")},
                    name = "unique_7x7")
 
 # -- Grille 20x20
-pb20x20 <- c3t_grid_simulation(20L, 20L, distance = "euclidean",
-                               m = 0.0, M = Inf,
-                               calculToutesValeurs = TRUE)
+pb20x20 <- gen_pb(20L, 20L, d = "euclidean",
+                  m = 0.0, M = Inf,
+                  calculateAllDistances = TRUE)
 profil2 <- profvis({res <- AHR_single(pb20x20, linkage = "single")},
                    name = "unique_20x20")
 
@@ -88,9 +88,9 @@ profil2 <- profvis({res <- AHR_single(pb20x20, linkage = "single")},
 # qu'un accès un à un
 
 # -- Grille 30x50
-pb30x50 <- c3t_grid_simulation(30L, 50L, distance = "euclidean",
-                               m = 0.0, M = Inf,
-                               calculToutesValeurs = TRUE)
+pb30x50 <- gen_pb(30L, 50L, d = "euclidean",
+                  m = 0.0, M = Inf,
+                  calculateAllDistances = TRUE)
 
 profil3 <- profvis({res <- AHR_single(pb30x50, linkage = "single")},
                    name = "unique_30x50")
@@ -115,9 +115,9 @@ profil3 <- profvis({res <- AHR_single(pb30x50, linkage = "single")},
 # de temps dans le calcul des distances inter-clusters c'est l'accès aux données
 
 # -- Grille 50x70
-pb50x70 <- c3t_grid_simulation(50L, 70L, distance = "euclidean",
-                               m = 0.0, M = Inf,
-                               calculToutesValeurs = TRUE)
+pb50x70 <- gen_pb(50L, 70L, d = "euclidean",
+                  m = 0.0, M = Inf,
+                  calculateAllDistances = TRUE)
 
 profil4 <- profvis({res <- AHR_single(pb50x70, linkage = "single")},
                    name = "unique_50x70")
@@ -129,13 +129,13 @@ profil4 <- profvis({res <- AHR_single(pb50x70, linkage = "single")},
 
 # Comparaison calcul complet des distances au début ou non
 #
-pb20x20 <- c3t_grid_simulation(20L, 20L, distance = "euclidean",
-                               m = 0.0, M = Inf,
-                               calculToutesValeurs = FALSE)
+pb20x20 <- gen_pb(20L, 20L, d = "euclidean",
+                  m = 0.0, M = Inf,
+                  calculateAllDistances = FALSE)
 
-pb20x20_complete <- c3t_grid_simulation(20L, 20L, distance = "euclidean",
-                                        m = 0.0, M = Inf,
-                                        calculToutesValeurs = TRUE)
+pb20x20_complete <- gen_pb(20L, 20L, d = "euclidean",
+                           m = 0.0, M = Inf,
+                           calculateAllDistances = TRUE)
 
 m <- mark(nonComplet = as_tibble(AHR_single(pb20x20$copy(),
                                             linkage = "single",

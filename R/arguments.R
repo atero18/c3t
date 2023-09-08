@@ -708,6 +708,62 @@ assertCompatibleCriterion <- makeAssertionFunction(checkCompatibleCriterion)
 #' @importFrom checkmate makeTestFunction
 testCompatibleCriterion <- makeTestFunction(checkCompatibleCriterion)
 
+#' @importFrom checkmate assertFlag checkCharacter checkList
+checkElementDistances <- function(distances, p = NULL, unique = FALSE)
+{
+  if (is.function(distances))
+    return(TRUE)
+
+  else if (length(distances) == 0L)
+    return("No content given.")
+
+  else if (unique && length(distances) > 1L)
+  {
+    return("Suppose to have only one linkage")
+
+  }
+
+  if (is.vector(distances))
+  {
+    check <- checkCharacter(distances,
+                            min.len = 1L,
+                            any.missing = TRUE,
+                            all.missing = TRUE)
+
+    if (!isTRUE(check))
+      return(check)
+
+  }
+  else
+  {
+    check <- checkList(distances,
+                       types = c(character(1L), "function"),
+                       min.len = 1L,
+                       any.missing = TRUE,
+                       all.missing = TRUE)
+
+    if (!isTRUE(check))
+      return(check)
+  }
+
+  corresponding <- corresponding_d(distances, p = p, simplify = FALSE)
+
+  if (!is.function(corresponding))
+  {
+    nanMask <- vapply(corresponding, is.nan, logical(1L))
+
+    if (any(nanMask))
+      return("At least one element distance has not been recognized")
+  }
+
+  TRUE
+}
+
+checkElementDistance <-
+  function(distance, p = NULL) checkElementDistances(distance, p, unique = TRUE)
+
+#' @importFrom checkmate makeAssertionFunction
+assertElementDistance <- makeAssertionFunction(checkElementDistance)
 
 #' @importFrom checkmate assertFlag checkCharacter checkList
 checkLinkages <- function(linkages, unique = FALSE) # nolint: cyclocomp_linter

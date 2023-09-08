@@ -24,17 +24,16 @@ fusion constraints.
 fusion constraint modes.
 
 }}
-\examples{
-available_fusion_constraints()
-available_fusion_modes()
-}
 \seealso{
 Other available parameters: 
 \code{\link{available_criteria}()},
+\code{\link{available_elements_distances}()},
 \code{\link{available_linkages}()}
 
 Other available parameters: 
 \code{\link{available_criteria}()},
+\code{\link{available_elements_distances}()},
 \code{\link{available_linkages}()}
 }
 \concept{available parameters}
+\keyword{internal}
