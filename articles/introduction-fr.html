@@ -87,10 +87,10 @@
 principales fonctions du packages <code>c3t</code>.</p>
 <p>Commençons par créer une grille factice de taille 4L par 5 qui
 servira d’exemple pour l’utilisation des différentes fonctions. On peut
-via la fonction <code>grid_simulation</code> choisir le nombre
-d’individus présents sur la grille, si certaines cases doivent être
-vides et si certaines doivent être plus peuplées que les autres (être
-des métropoles).</p>
+via la fonction <code>gen_grid</code> choisir le nombre d’individus
+présents sur la grille, si certaines cases doivent être vides et si
+certaines doivent être plus peuplées que les autres (être des
+métropoles).</p>
 <p>Un contexte sera généra pour chaque individu. Le nombre de variables
 quantatitatives et qualitatives peut être choisi. Ici on choisit de
 prendre 2 variables normales centrées réduites.</p>
@@ -102,7 +102,7 @@ prendre 2 variables normales centrées réduites.</p>
 <span><span class="va">nbCasesVides</span> <span class="op">&lt;-</span> <span class="fl">3L</span></span>
 <span><span class="va">nbMetropolises</span> <span class="op">&lt;-</span> <span class="fl">2L</span></span>
 <span><span class="va">nbVariablesQuant</span> <span class="op">&lt;-</span> <span class="fl">2L</span></span>
-<span><span class="va">grille</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/grid_simulation.html">grid_simulation</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, nbIndividuals <span class="op">=</span> <span class="va">nbIndividuals</span>,</span>
+<span><span class="va">grille</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gen_grid.html">gen_grid</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, nbIndividuals <span class="op">=</span> <span class="va">nbIndividuals</span>,</span>
 <span>                          nbMinEmptyZones <span class="op">=</span> <span class="va">nbCasesVides</span>,</span>
 <span>                          nbMetropolises <span class="op">=</span> <span class="va">nbMetropolises</span>,</span>
 <span>                          nbQuantitatives <span class="op">=</span> <span class="va">nbVariablesQuant</span><span class="op">)</span></span>
@@ -212,13 +212,13 @@ fixons donc préalablement une graine aléatoire.</p>
 <span>              fusionConstraints <span class="op">=</span> <span class="fu"><a href="../reference/available_fusion_constraints.html">available_fusion_constraints</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>              fusionConstraintModes <span class="op">=</span> <span class="fu"><a href="../reference/available_fusion_constraints.html">available_fusion_modes</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>              parallele <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Starting time: 2023-09-08 06:57:15.522285</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Starting time: 2023-09-08 10:22:51.568695</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> 45 AHC to evaluate</span></span>
 <span><span class="co">#&gt; → 432 non-trivial regionalisations obtained</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 56 feasable partitions obtained</span></span>
 <span><span class="co">#&gt; → 18 redundancies have been removed.</span></span>
 <span><span class="co">#&gt; → Calculation of the CHI criterion</span></span>
-<span><span class="co">#&gt; → Execution time: 4.86588358879089</span></span></code></pre></div>
+<span><span class="co">#&gt; → Execution time: 5.57554388046265</span></span></code></pre></div>
 <p>La fonction renvoie une liste de 3 <code>tibble</code>. Les solutions
 faisables sont contenues dans <code>results</code> :</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">

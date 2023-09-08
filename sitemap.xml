@@ -79,6 +79,9 @@
     <loc>dzt/reference/available_criteria.html</loc>
   </url>
   <url>
+    <loc>dzt/reference/available_elements_distances.html</loc>
+  </url>
+  <url>
     <loc>dzt/reference/available_fusion_constraints.html</loc>
   </url>
   <url>
@@ -169,13 +172,10 @@
     <loc>dzt/reference/equivalent_partitions.html</loc>
   </url>
   <url>
+    <loc>dzt/reference/gen_grid.html</loc>
+  </url>
+  <url>
     <loc>dzt/reference/gen_initial_partition.html</loc>
-  </url>
-  <url>
-    <loc>dzt/reference/grid_simulation.html</loc>
-  </url>
-  <url>
-    <loc>dzt/reference/grids.html</loc>
   </url>
   <url>
     <loc>dzt/reference/index.html</loc>
@@ -200,6 +200,9 @@
   </url>
   <url>
     <loc>dzt/reference/merge_cc_partitions.html</loc>
+  </url>
+  <url>
+    <loc>dzt/reference/minkowski_distance.html</loc>
   </url>
   <url>
     <loc>dzt/reference/nbClusters.html</loc>
