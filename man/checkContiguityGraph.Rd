@@ -41,6 +41,13 @@ with contiguity graph properties, i.e. being simple and undirected.
 \details{
 Extension of the \code{checkmate} package.
 }
+\examples{
+require(igraph)
+
+graph <- make_graph(c(1,2, 2, 3, 3, 1), directed = FALSE)
+
+checkContiguityGraph(graph) # TRUE
+}
 \seealso{
 Other arguments checkers: 
 \code{\link{checkContiguityMatrix}()},

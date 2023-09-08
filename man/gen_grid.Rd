@@ -100,4 +100,7 @@ different sizes.
 \item \code{simple_grid()}: simpler version with "Queen" contiguity,
 
 }}
+\examples{
+simple_grid(2L, 3L, 100.0, 123L)
+}
 \keyword{internal}

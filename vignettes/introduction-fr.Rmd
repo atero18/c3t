@@ -34,9 +34,9 @@ nbCasesVides <- 3L
 nbMetropolises <- 2L
 nbVariablesQuant <- 2L
 grille <- gen_grid(x, y, nbIndividuals = nbIndividuals,
-                          nbMinEmptyZones = nbCasesVides,
-                          nbMetropolises = nbMetropolises,
-                          nbQuantitatives = nbVariablesQuant)
+                   nbMinEmptyZones = nbCasesVides,
+                   nbMetropolises = nbMetropolises,
+                   nbQuantitatives = nbVariablesQuant)
 
 data <- grille$context
 individus <- grille$repartition$nbIndividuals
@@ -212,7 +212,8 @@ clusters_sizes(regInfaisable, individus)
 
 ```{r}
 set.seed(123L)
-resolution <- resolve_unfeasible(contiguity = contiguite, sizes = individus,
+resolution <- resolve_unfeasible(contiguity = contiguite,
+                                 sizes = individus,
                                  data = data,
                                  d = d, m = m, M = M,
                                  regionalisation = regInfaisable,

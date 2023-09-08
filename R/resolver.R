@@ -12,7 +12,7 @@
 #' @param maxItTransfers positive integer indicating the maximum number
 #' of elements can be transferred.
 #' @param ... used for development.
-#  @aliases resolve solver regularisant regularisation
+#' @example inst/examples/resolve_unfeasible.R
 #' @export
 #' @importFrom checkmate assertFlag
 resolve_unfeasible <- function(distances = NULL, contiguity = NULL,

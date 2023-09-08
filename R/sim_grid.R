@@ -118,6 +118,7 @@ gen_grid <- function(x_int, y_int, contiguityType = "Queen",
 # quantitative variables with different means and variances
 #' @keywords internal
 #' @importFrom checkmate assertCount assertNumber
+#' @examples simple_grid(2L, 3L, 100.0, 123L)
 #' @export
 simple_grid <- function(x_int, y_int = x_int,
                         avgPersonsPerCell = 100.0,

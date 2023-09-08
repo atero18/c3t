@@ -304,6 +304,7 @@ testContiguityMatrix <- makeTestFunction(checkContiguityMatrix)
 #' @name checkContiguityGraph
 #' @rdname checkContiguityGraph
 #' @family arguments checkers
+#' @example inst/examples/checkContiguityGraph.R
 #' @export
 #' @importFrom igraph is_igraph is.simple is.directed gorder gsize
 checkContiguityGraph <- function(g, n = gorder(g))
@@ -492,6 +493,7 @@ testPartition <- makeTestFunction(checkPartition)
 #' @inherit check_general return
 #' @inherit check_general details
 #' @family arguments checkers
+#' @example inst/examples/checkRegionalisation.R
 #' @export
 #' @importFrom igraph gorder is_igraph
 checkRegionalisation <- function(regionalisation, contiguity)

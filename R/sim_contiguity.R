@@ -14,7 +14,6 @@ NULL
 
 
 #' @importFrom checkmate assertCount assertString assertChoice
-#' @importFrom Matrix sparseMatrix
 grid_contiguity_matrix <- function(x_int, y_int, # nolint: cyclocomp_linter
                                    contiguityType = "Queen")
 {
@@ -29,10 +28,8 @@ grid_contiguity_matrix <- function(x_int, y_int, # nolint: cyclocomp_linter
   noms_vec <- apply(expand.grid(seq_len(x_int), seq_len(y_int)), 1L,
                     function(r) paste0("(", r[1L], ",", r[2L], ")"))
 
-  # Création d'une matrice carrée creuse symétrique booléenne (package Matix)
-  M_mat <- sparseMatrix(1L, 1L,
-                        x = FALSE,
-                        dims = c(x_int * y_int, x_int * y_int),
+  # Création d'une matrice carrée symétrique booléenne (package Matix)
+  M_mat <- matrix(FALSE, nrow = x_int * y_int, ncol = x_int * y_int,
                         dimnames = list(noms_vec, noms_vec))
 
   # Pour chaque carré de la grille, recherche de ses voisins.
