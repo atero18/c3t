@@ -93,7 +93,6 @@ complete_contiguity_graph <- function(x)
   make_full_graph(n, directed = FALSE, loops = FALSE)
 }
 
-#' @importFrom methods setGeneric
 #' @importFrom igraph is_connected
 setGeneric("is_connected", igraph::is_connected)
 

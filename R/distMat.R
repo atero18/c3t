@@ -388,7 +388,6 @@ setReplaceMethod(
 )
 
 
-#' @importFrom methods setGeneric
 setGeneric("diag<-")
 
 #' @rdname abstractSymMat_replace_diag
@@ -403,7 +402,6 @@ setReplaceMethod(
   }
 )
 
-#' @importFrom methods setGeneric
 setGeneric("diag")
 
 #' Access to diagonal of a `DistMat` object. The result is constantly
@@ -447,7 +445,6 @@ setMethod("is.na", signature = "DistMat", function(x) is.na(x$distances))
 #' @returns TRUE if the target and current are equal, FALSE otherwise
 #' @name distMat_alleq
 #' @keywords internal
-#' @importFrom methods validObject
 all.equal.DistMat.Matrix <- function(target, current)
 {
   validObject(target)
@@ -481,7 +478,6 @@ setMethod(
 #' @param from A matrix
 #' @returns A `DistMat` object with distances stored as a symmetric matrix
 #' @noRd
-#' @importFrom methods as setAs
 setAs(
   "matrix", "DistMat",
   function(from)
@@ -496,7 +492,6 @@ setAs(
 #' @returns A `DistMat` object with distances stored as a vector
 #' @noRd
 #' @importFrom stats dist
-#' @importFrom methods setAs
 setAs(
   "dist", "DistMat",
   function(from)
@@ -510,7 +505,6 @@ setAs(
 #' Convert a `DistMat` object to a `dist` object
 #' @param from A `DistMat` object
 #' @returns A `dist` object with distances extracted from the `DistMat` object
-#' @importFrom methods as setAs
 #' @importFrom stats dist
 #' @name distMat_to_dist
 #' @noRd
@@ -522,7 +516,6 @@ setAs("DistMat", "dist", function(from) as(from$distances, "dist"))
 #' @param diag, upper, ... Additional parameters
 #' @noRd
 #' @importFrom stats as.dist
-#' @importFrom methods as
 setMethod(
   "as.dist",
   signature(m = "DistMat", diag = "ANY", upper = "ANY"),
@@ -565,7 +558,6 @@ setMethod(
 #' @returns A `DistMat` object representing the distance matrix.
 #' @keywords internal
 #' @name arguments_distMat
-#' @importFrom methods as
 #' @importFrom checkmate testString
 constructor_DistMat <- function(distances = NULL, d = NULL, data = NULL, # nolint: cyclocomp_linter
                                 standardQuant = FALSE, binarQual = FALSE,

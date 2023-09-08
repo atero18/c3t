@@ -122,7 +122,6 @@ verif_pbCon <- function(object)
 
 setValidity("pbCon", verif_pbCon)
 
-#' @importFrom methods validObject
 #' @importFrom checkmate assertFlag
 is_pbCon <- function(x, checkValidity = FALSE)
 {
@@ -284,7 +283,6 @@ pbCon$methods(
 )
 
 
-#' @importFrom methods setGeneric
 #' @importFrom igraph components
 setGeneric("components", igraph::components)
 
@@ -305,7 +303,6 @@ pbCon$methods(
   }
 )
 
-#' @importFrom methods setGeneric
 #' @importFrom igraph count_components
 setGeneric("count_components", igraph::count_components)
 
@@ -407,7 +404,6 @@ pbCon$methods(
 
 #' @rdname distMat-access
 #' @keywords internal
-#' @importFrom methods callNextMethod
 setMethod(
   "[",
   signature(x = "pbCon", i = "ANY", j = "ANY", drop = "ANY"),
@@ -517,7 +513,6 @@ pbCon$methods(
 
 #' @rdname abstractSymMat_replace
 #' @keywords internal
-#' @importFrom methods callNextMethod
 setReplaceMethod(
   "[",
   signature(x = "pbCon", i = "numeric", j = "numeric", value = "numeric"),
@@ -526,7 +521,6 @@ setReplaceMethod(
 
 #' @rdname abstractSymMat_replace
 #' @keywords internal
-#' @importFrom methods callNextMethod
 setReplaceMethod(
   "[",
   signature(x = "pbCon", i = "matrix", j = "missing", value = "numeric"),

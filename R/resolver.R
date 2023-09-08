@@ -49,7 +49,6 @@ resolve_unfeasible <- function(distances = NULL, contiguity = NULL,
 }
 
 
-#' @importFrom methods validObject
 #' @importFrom cli cli_alert cli_alert_danger
 #' @importFrom cli cli_alert_warning cli_alert_success
 #' @importFrom checkmate assertFlag assertNumber assertString

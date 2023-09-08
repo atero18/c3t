@@ -100,7 +100,6 @@ clusters_sizes <-
   tapply(sizes, partition, sum)
 }
 
-#' @importFrom methods setGeneric
 setGeneric("clusters_sizes", clusters_sizes)
 
 #' Clusters Too Small
@@ -121,7 +120,6 @@ clusters_trop_petits <- function(m_num, partition, sizes)
 }
 
 
-#' @importFrom methods setGeneric
 setGeneric("clusters_trop_petits", clusters_trop_petits)
 
 #' Number of Clusters Too Small
@@ -153,7 +151,6 @@ clusters_trop_gros <- function(M_num, partition, sizes)
 }
 
 
-#' @importFrom methods setGeneric
 setGeneric("clusters_trop_gros", clusters_trop_gros)
 
 #' Number of Clusters Too Large

@@ -14,3 +14,4 @@
 ^.covrignore$
 ^codecov\.yml$
 ^docs$
+^revdep$

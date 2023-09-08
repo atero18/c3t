@@ -41,7 +41,6 @@ nbClusters <- function(partition, components = NULL)
 
 }
 
-#' @importFrom methods setGeneric
 setGeneric(".nbClusters")
 
 #' @name nbClusters
@@ -60,7 +59,6 @@ nbSingletons <- function(partition)
   as.integer(sum(table(partition) == 1L))
 }
 
-#' @importFrom methods setGeneric
 setGeneric("nbSingletons")
 
 #' Standardize a partition
@@ -195,5 +193,4 @@ is_feasible_solution <- function(partition, contiguity = NULL,
   all(m <= clustersSizes & clustersSizes <= M)
 }
 
-#' @importFrom methods setGeneric
 setGeneric("is_feasible_solution")

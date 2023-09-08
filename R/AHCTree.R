@@ -105,7 +105,6 @@ setMethod(
 #' @describeIn AHCTree_properties Give the number of cluster with exactly
 #' one element in each partition contained in the tree
 #' @keywords internal
-#' @importFrom methods setMethod
 setMethod(
   "nbSingletons",
   signature(partition = "AHCTree"),
@@ -139,7 +138,6 @@ LISTCHECKFUNCTIONS <- c("checkContiguityConst",
                         "checkMinSizeConst",
                         "checkMaxSizeConst")
 nameFunction <- NULL
-#' @importFrom methods setMethod
 #' @importFrom rlang sym
 for (nameFunction in LISTCHECKFUNCTIONS)
 {
@@ -163,7 +161,6 @@ LISTSCOREFUNCTIONS <- c("scoreMinSizeConst",
                         "scoreMaxSizeConst",
                         "scoreSizeConsts")
 
-#' @importFrom methods setMethod
 #' @importFrom rlang sym
 for (nameFunction in LISTSCOREFUNCTIONS)
 {
@@ -265,7 +262,6 @@ setMethod(
 )
 
 
-#' @importFrom methods setGeneric
 loadNamespace("stats")
 setGeneric("cutree", stats::cutree)
 
@@ -306,7 +302,6 @@ setMethod(
 #' @returns A `tibble` representing the `AHCTree` object's partitions.
 #' @noRd
 #' @importFrom tibble as_tibble
-#' @importFrom methods setGeneric
 setGeneric("as_tibble", tibble::as_tibble)
 
 #' @importFrom tibble as_tibble

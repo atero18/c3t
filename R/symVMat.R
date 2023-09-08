@@ -35,9 +35,6 @@ position_element_symVMat <- function(x, i, j = NULL)
   if (any(masqueEchange))
     indexs[masqueEchange, c(1L, 2L)] <- indexs[masqueEchange, c(2L, 1L)]
 
-  ##indexs = cbind(pmin.int(indexs[, 1L], indexs[, 2L]),
-  ##               pmax.int(indexs[, 1L], indexs[, 2L]))
-
   pos <- integer(nrow(indexs))
 
   # Moving with the row
@@ -245,27 +242,30 @@ setReplaceMethod(
   }
 )
 
-#' @importFrom methods setAs
-setAs("dist", "SymVMat", function(from)
-{
-  dim <- as.integer((1L + sqrt(1L + 8L * length(from))) / 2L)
-  names <- names(from)
-  if (is.null(names))
-    names <- seq_len(dim)
+setAs(
+  "dist", "SymVMat",
+  function(from)
+  {
+    dim <- as.integer((1L + sqrt(1L + 8L * length(from))) / 2L)
+    names <- names(from)
+    if (is.null(names))
+      names <- seq_len(dim)
 
-  symVMat$new(values = from, dim = dim, names = names, defaultDiag = 0.0)
-})
+    symVMat$new(values = from, dim = dim, names = names, defaultDiag = 0.0)
+  }
+)
 
-#' @importFrom methods as setAs
 #' @importFrom stats as.dist
-setAs("matrix", "SymVMat", function(from)
-{
-  res <- as(as.dist(from), "SymVMat")
-  res$defaultDiag <- from[1L, 1L]
-  res
-})
+setAs(
+  "matrix", "SymVMat",
+  function(from)
+  {
+    res <- as(as.dist(from), "SymVMat")
+    res$defaultDiag <- from[1L, 1L]
+    res
+  }
+)
 
-#' @importFrom methods as
 setMethod(
   "sousMatCarree",
   signature(x = "SymVMat", indexs = "numeric"),
@@ -277,15 +277,14 @@ setMethod(
   }
 )
 
-#' @importFrom methods setAs
 #' @importFrom stats dist as.dist
 setAs(
   "SymVMat", "dist", # nolint: indentation_linter
   function(from)
   {
     if (inherits(from$values, "dist"))
-      return(from$values)
+      from$values
     else
-      return(as.dist(from[]))
+      as.dist(from[])
   }
 )

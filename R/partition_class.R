@@ -154,7 +154,6 @@ checkContiguityConst <- function(x)
   x$contraintes["connectivity"]
 }
 
-#' @importFrom methods setGeneric
 setGeneric("checkContiguityConst")
 
 #' @describeIn verif_cont_Partition Verify if the "min" constraint is
@@ -165,7 +164,6 @@ checkMinSizeConst <- function(x)
   x$contraintes["min"]
 }
 
-#' @importFrom methods setGeneric
 setGeneric("checkMinSizeConst")
 
 #' @describeIn verif_cont_Partition Verify if the "max" constraint is
@@ -176,7 +174,6 @@ checkMaxSizeConst <- function(x)
   x$contraintes["max"]
 }
 
-#' @importFrom methods setGeneric
 setGeneric("checkMaxSizeConst")
 
 #' Verify if constraints are satisfied for a `Partition` object
@@ -218,7 +215,6 @@ scoreMinSizeConst <- function(x)
   x$scoreSizeConsts["min"]
 }
 
-#' @importFrom methods setGeneric
 setGeneric("scoreMinSizeConst")
 
 #' @describeIn score_contraintes_Partition Get the max score.
@@ -228,7 +224,6 @@ scoreMaxSizeConst <- function(x)
   x$scoreSizeConsts["max"]
 }
 
-#' @importFrom methods setGeneric
 setGeneric("scoreMaxSizeConst")
 
 #' Get the scores for size constraints in the `Partition` object.
@@ -242,7 +237,6 @@ scoreSizeConsts <- function(x)
   x$scoreSizeConsts["total"]
 }
 
-#' @importFrom methods setGeneric
 setGeneric("scoreSizeConsts")
 
 #' Get the sizes of clusters of the `Partition` object.

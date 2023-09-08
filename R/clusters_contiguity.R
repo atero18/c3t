@@ -17,7 +17,6 @@
 #' are contiguous and i < j are stored.
 #'
 #' @importFrom igraph is_igraph
-#' @importFrom methods validObject
 #' @export
 clusters_contiguity_list <- function(partition, x)
 {

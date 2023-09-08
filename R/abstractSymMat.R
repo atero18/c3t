@@ -66,7 +66,6 @@ setMethod("length", signature(x = "AbstractSymMat"), function(x) x$dim^2L)
 #' @keywords internal
 setMethod("dim", signature(x = "AbstractSymMat"), function(x) c(x$dim, x$dim))
 
-#' @importFrom methods setGeneric
 setGeneric("nrow")
 
 # @describeIn abstractSymMat_properties Number of rows
@@ -74,7 +73,6 @@ setGeneric("nrow")
 #' @keywords internal
 setMethod("nrow", signature(x = "AbstractSymMat"), function(x) x$dim)
 
-#' @importFrom methods setGeneric
 setGeneric("ncol")
 
 # @describeIn abstractSymMat_properties Number of columns
@@ -89,7 +87,6 @@ setMethod("ncol", signature(x = "AbstractSymMat"), function(x) x$dim)
 #' @name abstractSymMat_replace_name
 #' @rdname abstractSymMat_replace_name
 #' @keywords internal
-#' @importFrom methods setReplaceMethod
 NULL
 
 #' @rdname abstractSymMat_replace_name
@@ -145,7 +142,6 @@ setMethod("is.matrix", signature(x = "AbstractSymMat"), function(x) TRUE)
 #' @keywords internal
 setMethod("anyNA", signature(x = "AbstractSymMat"), function(x) x$anyNA())
 
-#' @importFrom methods setGeneric
 setGeneric("diag")
 
 setMethod(
@@ -162,7 +158,6 @@ setMethod(
 setMethod("is.na", signature(x = "AbstractSymMat"), function(x) is.na(x$values))
 
 # Data access abstract rules
-#' @importFrom methods selectMethod
 accesMatriceR <-
   selectMethod(
     "[",
@@ -213,7 +208,6 @@ setMethod(
 )
 
 # Equality properties
-#' @importFrom methods validObject
 setMethod(
   "all.equal",
   signature(target = "AbstractSymMat", current = "matrix"),
@@ -224,7 +218,6 @@ setMethod(
   }
 )
 
-#' @importFrom methods validObject
 setMethod(
   "all.equal",
   signature(target = "matrix", current = "AbstractSymMat"),
@@ -311,7 +304,6 @@ data_indexs_pos_vers_matrice <-
 #' @noRd
 sousMatCarree <- function(x, indexs) x[indexs, indexs]
 
-#' @importFrom methods setGeneric
 setGeneric("sousMatCarree")
 
 #' @importFrom stats as.dist
@@ -321,5 +313,4 @@ setMethod(
   function(m, diag, upper) as(m, "dist"))
 
 #' @importFrom stats as.dist
-#' @importFrom methods setAs
 setAs("AbstractSymMat", "dist", function(from) as.dist(from[]))

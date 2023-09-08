@@ -10,7 +10,6 @@ fusionNode <-
                             nbClusters = "numeric"))
 
 
-#' @importFrom methods setAs
 setAs("FusionNode", "Partition",
       function(from)
       {
@@ -20,7 +19,6 @@ setAs("FusionNode", "Partition",
                   maxConstraint = TRUE)
       })
 
-#' @importFrom methods as setAs
 setAs("FusionNode", "AHCTree",
       function(from)
       {
@@ -73,7 +71,6 @@ setMethod(
 
 CHILDCHOICES <- c("random", "first_valid_node", "distance")
 
-#' @importFrom methods is
 create_child_node <- function(node,
                               k,
                               childChoice = "first_valid_node",
@@ -320,7 +317,6 @@ is_stopCriterion_checked <- function(tree)
 }
 
 #' @importFrom checkmate assertChoice assertFlag
-#' @importFrom methods validObject
 search_fusion_tree_pb <- function(pb, search = "DFS",
                                   stopCriterion = "first_valid_branch",
                                   childChoice = "distance",

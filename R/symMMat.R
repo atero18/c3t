@@ -177,7 +177,6 @@ setReplaceMethod(
 # nocov end
 
 # Conversions
-#' @importFrom methods setAs
 setAs(
   "matrix", "SymMMat",
   function(from)
@@ -191,7 +190,6 @@ setAs(
   }
 )
 
-#' @importFrom methods as setAs
 setAs(
   "dist", "SymMMat",
   function(from)
@@ -202,7 +200,6 @@ setAs(
   }
 )
 
-#' @importFrom methods as
 setMethod(
   "sousMatCarree",
   signature(x = "SymMMat", indexs = "numeric"),
