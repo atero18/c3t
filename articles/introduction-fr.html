@@ -103,9 +103,9 @@ prendre 2 variables normales centrées réduites.</p>
 <span><span class="va">nbMetropolises</span> <span class="op">&lt;-</span> <span class="fl">2L</span></span>
 <span><span class="va">nbVariablesQuant</span> <span class="op">&lt;-</span> <span class="fl">2L</span></span>
 <span><span class="va">grille</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gen_grid.html">gen_grid</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, nbIndividuals <span class="op">=</span> <span class="va">nbIndividuals</span>,</span>
-<span>                          nbMinEmptyZones <span class="op">=</span> <span class="va">nbCasesVides</span>,</span>
-<span>                          nbMetropolises <span class="op">=</span> <span class="va">nbMetropolises</span>,</span>
-<span>                          nbQuantitatives <span class="op">=</span> <span class="va">nbVariablesQuant</span><span class="op">)</span></span>
+<span>                   nbMinEmptyZones <span class="op">=</span> <span class="va">nbCasesVides</span>,</span>
+<span>                   nbMetropolises <span class="op">=</span> <span class="va">nbMetropolises</span>,</span>
+<span>                   nbQuantitatives <span class="op">=</span> <span class="va">nbVariablesQuant</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">grille</span><span class="op">$</span><span class="va">context</span></span>
 <span><span class="va">individus</span> <span class="op">&lt;-</span> <span class="va">grille</span><span class="op">$</span><span class="va">repartition</span><span class="op">$</span><span class="va">nbIndividuals</span></span>
@@ -212,13 +212,13 @@ fixons donc préalablement une graine aléatoire.</p>
 <span>              fusionConstraints <span class="op">=</span> <span class="fu"><a href="../reference/available_fusion_constraints.html">available_fusion_constraints</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>              fusionConstraintModes <span class="op">=</span> <span class="fu"><a href="../reference/available_fusion_constraints.html">available_fusion_modes</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>              parallele <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Starting time: 2023-09-08 10:22:51.568695</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Starting time: 2023-09-08 21:24:13.058243</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> 45 AHC to evaluate</span></span>
 <span><span class="co">#&gt; → 432 non-trivial regionalisations obtained</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 56 feasable partitions obtained</span></span>
 <span><span class="co">#&gt; → 18 redundancies have been removed.</span></span>
 <span><span class="co">#&gt; → Calculation of the CHI criterion</span></span>
-<span><span class="co">#&gt; → Execution time: 5.57554388046265</span></span></code></pre></div>
+<span><span class="co">#&gt; → Execution time: 4.40517830848694</span></span></code></pre></div>
 <p>La fonction renvoie une liste de 3 <code>tibble</code>. Les solutions
 faisables sont contenues dans <code>results</code> :</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -325,7 +325,8 @@ proposer une solution faisable, en augmentant la taille du premier
 cluster et en baissant la taille du dernier.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123L</span><span class="op">)</span></span>
-<span><span class="va">resolution</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/resolve_unfeasible.html">resolve_unfeasible</a></span><span class="op">(</span>contiguity <span class="op">=</span> <span class="va">contiguite</span>, sizes <span class="op">=</span> <span class="va">individus</span>,</span>
+<span><span class="va">resolution</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/resolve_unfeasible.html">resolve_unfeasible</a></span><span class="op">(</span>contiguity <span class="op">=</span> <span class="va">contiguite</span>,</span>
+<span>                                 sizes <span class="op">=</span> <span class="va">individus</span>,</span>
 <span>                                 data <span class="op">=</span> <span class="va">data</span>,</span>
 <span>                                 d <span class="op">=</span> <span class="va">d</span>, m <span class="op">=</span> <span class="va">m</span>, M <span class="op">=</span> <span class="va">M</span>,</span>
 <span>                                 regionalisation <span class="op">=</span> <span class="va">regInfaisable</span>,</span>
