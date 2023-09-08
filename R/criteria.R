@@ -283,6 +283,7 @@ get_list_name_criterion <- function(criterion)
 #' is installed.
 #' @family available parameters
 #' @export
+#' @examples available_criteria()
 available_criteria <- function()
 {
   CRITERIA$criterion

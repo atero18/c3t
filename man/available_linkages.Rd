@@ -17,6 +17,9 @@ If \code{description = TRUE} return will me bade invisibly.
 \description{
 Give the list of implemented linkages.
 }
+\examples{
+available_linkages()
+}
 \seealso{
 Other available parameters: 
 \code{\link{available_criteria}()},
