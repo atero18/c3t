@@ -30,7 +30,7 @@ grid_contiguity_matrix <- function(x_int, y_int, # nolint: cyclocomp_linter
 
   # Création d'une matrice carrée symétrique booléenne (package Matix)
   M_mat <- matrix(FALSE, nrow = x_int * y_int, ncol = x_int * y_int,
-                        dimnames = list(noms_vec, noms_vec))
+                  dimnames = list(noms_vec, noms_vec))
 
   # Pour chaque carré de la grille, recherche de ses voisins.
   for (i_int in seq_len(x_int))

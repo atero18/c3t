@@ -746,7 +746,7 @@ assertCompatibleCriterion <- makeAssertionFunction(checkCompatibleCriterion)
 testCompatibleCriterion <- makeTestFunction(checkCompatibleCriterion)
 
 #' @importFrom checkmate assertFlag checkCharacter checkList
- checkElementDistances <- function(distances, p = NULL, unique = FALSE)
+checkElementDistances <- function(distances, p = NULL, unique = FALSE)
 {
   if (is.function(distances))
     return(TRUE)
@@ -907,3 +907,6 @@ checkSizes <- function(sizes,
 
 #' @importFrom checkmate makeAssertionFunction
 assertSizes <- makeAssertionFunction(checkSizes)
+
+#' @importFrom checkmate makeTestFunction
+testSizes <- makeTestFunction(checkSizes)

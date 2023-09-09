@@ -10,36 +10,40 @@ fusionNode <-
                             nbClusters = "numeric"))
 
 
-setAs("FusionNode", "Partition",
-      function(from)
-      {
-        partition(pb = from$pb, partition = from$regionalisation,
-                  method = "fusionTree", contiguity = TRUE,
-                  minConstraint = from$checkMinSizeConst,
-                  maxConstraint = TRUE)
-      })
+setAs(
+  "FusionNode", "Partition",
+  function(from)
+  {
+    constructor_Partition(pb = from$pb, partition = from$regionalisation,
+                          method = "fusionTree", contiguity = TRUE,
+                          minConstraint = from$checkMinSizeConst,
+                          maxConstraint = TRUE)
+  }
+)
 
-setAs("FusionNode", "AHCTree",
-      function(from)
-      {
-        partitions <- list()
-        nbClusters <- from$nbClusters
+setAs(
+  "FusionNode", "AHCTree",
+  function(from)
+  {
+    partitions <- list()
+    nbClusters <- from$nbClusters
 
-        partitions[[as.character(nbClusters)]] <-
-          as(from$regionalisation, "Partition")
+    partitions[[as.character(nbClusters)]] <-
+      as(from$regionalisation, "Partition")
 
-        childNode <- from
-        while (!is.null(childNode$parentNode))
-        {
-          childNode <- childNode$parentNode
-          nbClusters  <- nbClusters + 1L
+    childNode <- from
+    while (!is.null(childNode$parentNode))
+    {
+      childNode <- childNode$parentNode
+      nbClusters  <- nbClusters + 1L
 
-          partitions[[as.character(nbClusters)]] <-
-            as(childNode$regionalisation, "Partition")
-        }
+      partitions[[as.character(nbClusters)]] <-
+        as(childNode$regionalisation, "Partition")
+    }
 
-        AHCTree$new(pb = from$pb, partitions = partitions)
-      })
+    AHCTree$new(pb = from$pb, partitions = partitions)
+  }
+)
 
 
 fusionTree <-

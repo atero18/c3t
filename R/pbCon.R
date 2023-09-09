@@ -4,7 +4,6 @@
 
 #' @keywords internal
 #' @importFrom igraph gorder
-
 setRefClass(
   "pbCon",
   fields = list(sizes = "numeric", N = "numeric",
@@ -24,21 +23,21 @@ setRefClass(
       if (is.null(distances))
         return()
 
-      .self$distances <<- distances
-      .self$d <- d
-      .self$data <- data
+      distances <<- distances # nolint: undesirable_operator_linter
+      d <<- d # nolint: undesirable_operator_linter
+      data <<- data # nolint: undesirable_operator_linter
 
-      .self$setContiguity(contiguity, contiguityMatrix, dataContiguity)
+      setContiguity(contiguity, contiguityMatrix, dataContiguity)
 
-      .self$setSizes(sizes)
+      setSizes(sizes)
 
-      .self$setSizeConstraints(m, M)
+      setSizeConstraints(m, M)
     },
     setSizes = function(sizes)
     {
       assertSizes(sizes)
-      .self$sizes <- sizes
-      .self$N <- sum(sizes)
+      sizes <<- sizes # nolint: undesirable_operator_linter
+      N <<- sum(sizes) # nolint: undesirable_operator_linter
 
     },
     #' @importFrom checkmate assertNumber
@@ -54,7 +53,7 @@ setRefClass(
         tempm <- simplify_minSizeConst(tempm, sizes)
       }
 
-      m <<- tempm
+      m <<- tempm # nolint: undesirable_operator_linter
 
 
       if (is.null(tempM) || (length(tempM) == 1L && is.na(tempM)))
@@ -67,7 +66,7 @@ setRefClass(
         tempM <- simplify_maxSizeConst(tempM, sizes)
       }
 
-      M <<- tempM
+      M <<- tempM # nolint: undesirable_operator_linter
     },
 
     setContiguity = function(newContGraph,
@@ -76,26 +75,28 @@ setRefClass(
     {
       if (is.null(newContGraph))
       {
-        newContGraph <- complete_contiguity_graph(nrow(.self))
-        newContMat <- complete_contiguity_matrix(nrow(.self))
+        newContGraph <- complete_contiguity_graph(n())
+        newContMat <- complete_contiguity_matrix(n())
       }
 
-      .self$contiguity <- newContGraph
+      # nolint start: undesirable_operator_linter
+      contiguity <<- newContGraph
 
-      .self$contiguityMatrix <- newContMat
+      contiguityMatrix <<- newContMat
 
-      .self$dataContiguity <- nouvDataContiguite
+      dataContiguity <<- nouvDataContiguite
+      # nolint end
     },
     setCompleteContiguity = function()
     {
-      .self$setContiguity(complete_contiguity_graph(.self), NULL,
-                          list(completementConnecte = TRUE))
+      setContiguity(complete_contiguity_graph(n()), NULL,
+                    list(completementConnecte = TRUE))
     },
     setOldContiguity = function(dataContiguity_list)
     {
-      .self$setContiguity(dataContiguity_list$contiguity,
-                          dataContiguity_list$contiguityMatrix,
-                          dataContiguity_list$dataContiguity)
+      setContiguity(dataContiguity_list$contiguity,
+                    dataContiguity_list$contiguityMatrix,
+                    dataContiguity_list$dataContiguity)
     }
   )
 ) -> pbCon # nolint : assignment_linter
@@ -114,7 +115,7 @@ pbCon$methods(
       return("`contiguity` must be an `igraph` object")
 
 
-    if (nrow(.self) != gorder(contiguity))
+    if (n() != gorder(contiguity))
       return(paste0("Number of elements differs between distance matrix and ",
                     "contiguity graph"))
 
@@ -157,11 +158,7 @@ pbCon$methods(
 # Gestion des tailles
 # -- Vérification
 pbCon$methods(
-  #' @importFrom checkmate testNumeric
-  valid_sizes = function(sizes = .self$sizes)
-  {
-    testNumeric(sizes, lower = 0.0, len = nrow(.self))
-  }
+  valid_sizes = function(sizes = .self$sizes) testSizes(sizes, len = n())
 )
 
 # Gestion des tailles
@@ -248,7 +245,7 @@ pbCon$methods(
                         mode = "all",
                         loops = FALSE,
                         normalized = FALSE)
-      fullyConnected <- all(degrees == nrow(.self) - 1L)
+      fullyConnected <- all(degrees == n() - 1L)
       setContiguityProperty("fullyConnected", fullyConnected)
       return(fullyConnected)
     }
@@ -290,14 +287,14 @@ pbCon$methods(
       return(getContiguityProperty("connectedComponents"))
 
     if (isFullyConnected(calcul = FALSE) || is.null(contiguity))
-      composantesConnexes <- rep(1L, nrow(.self))
+      connectedComp <- rep(1L, n())
 
     else
-      composantesConnexes <- components(contiguity, "weak")$membership
+      connectedComp <- components(contiguity, "weak")$membership
 
-    setContiguityProperty("connectedComponents", composantesConnexes)
+    setContiguityProperty("connectedComponents", connectedComp)
 
-    return(composantesConnexes)
+    return(connectedComp)
   }
 )
 
@@ -348,7 +345,7 @@ pbCon$methods(isConnected = function(calcul = TRUE)
 
 # Vérification des régionalisations
 pbCon$methods(
-  isPartition = function(partition) testPartition(partition, nrow(.self)),
+  isPartition = function(partition) testPartition(partition, n()),
   isRegionalisation = function(partition)
   {
     if (isFullyConnected(calcul = FALSE))
@@ -494,7 +491,7 @@ pbCon$methods(
     connectedComponents <- connected_components()
 
     # Create a problem for each connected component
-    tapply(seq_len(nrow(.self)), connectedComponents,
+    tapply(seq_len(n()), connectedComponents,
            function(listeElements) {
       grapheCont <- induced_subgraph(contiguity, listeElements)
       distM <- sousMatrice_distMat(.self, listeElements)
@@ -502,7 +499,7 @@ pbCon$methods(
                 contiguity = grapheCont, sizes = sizes[listeElements],
                 m = m, M = M,
                 dataContiguity =
-                  list(composantesConnexes = rep(1L, length(listeElements))))
+                  list(connectedComp = rep(1L, length(listeElements))))
            })
   }
 )

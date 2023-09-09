@@ -10,8 +10,8 @@ symMMat <- setRefClass("SymMMat",
 
 
 symMMat$methods(
-  which_na = function(subsetRow = seq_len(nrow(.self)),
-                      subsetCol = seq_len(nrow(.self)),
+  which_na = function(subsetRow = seq_len(n()),
+                      subsetCol = seq_len(n()),
                       nanIsNA = TRUE,
                       simplify = TRUE)
   {

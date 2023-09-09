@@ -21,6 +21,7 @@ setRefClass(
   fields = list(dim = "integer", names = "vector",
                 defaultDiag = "numericOrLogicalOrNULL"),
   methods = list(
+    n = function() dim,
     anyNA = function()
     {
       if (exists("anyNA_bool", envir = environment(anyNA)) &&
@@ -36,8 +37,8 @@ setRefClass(
         return(anyNA_bool)
       }
     },
-    which_na = function(subsetRow = seq_len(nrow(.self)),
-                        subsetCol = seq_len(nrow(.self)),
+    which_na = function(subsetRow = seq_len(n()),
+                        subsetCol = seq_len(n()),
                         nanIsNA = TRUE,
                         simplify = TRUE) NULL
   )

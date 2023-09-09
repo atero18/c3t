@@ -150,12 +150,12 @@ AHR_single2 <- function(pb, linkage = "saut_max", partitionInit = NULL, # nolint
   }
 
   partitionRef <-
-    partition(pb$m, partition = partition, methode = "RAH",
-              contiguite = TRUE,
-              contrainteMin = contrainteMinVerifiee,
-              contrainteMax = TRUE,
-              scoreMinSizeConst = scoreMinSizeConst,
-              scoreMaxSizeConst = 0.0)
+    constructor_Partition(pb$m, partition = partition, methode = "RAH",
+                          contiguite = TRUE,
+                          contrainteMin = contrainteMinVerifiee,
+                          contrainteMax = TRUE,
+                          scoreMinSizeConst = scoreMinSizeConst,
+                          scoreMaxSizeConst = 0.0)
 
 
   # Classe ArbreCAH stockant les partitions

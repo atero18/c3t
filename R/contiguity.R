@@ -79,9 +79,6 @@ complete_contiguity_graph <- function(x)
   if (testCount(x, positive = TRUE))
     n <- x
 
-  else if (is_pbCon(x))
-    n <- nrow(x)
-
   else if (is.matrix(x))
     n <- nrow(x)
 

@@ -180,7 +180,7 @@ test_that("Linkage distances do not depend of storage mode",
     equality <- distancesToCalc[, 1L] == distancesToCalc[, 2L]
 
     if (any(equality))
-      distancesToCalc <- distancesToCalc[!equality,, drop = FALSE]
+      distancesToCalc <- distancesToCalc[!equality, , drop = FALSE]
 
     for (mode in cppModes)
     {
@@ -192,7 +192,7 @@ test_that("Linkage distances do not depend of storage mode",
                                          distancesToCalc,
                                          mode)
 
-      expect_equal(resVec, resMat, tolerance = 10^-6L)
+      expect_equal(resVec, resMat, tolerance = 10L^-6L)
 
     }
 

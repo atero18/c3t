@@ -7,36 +7,39 @@
 #' @keywords internal
 
 Partition <-
-  setRefClass("Partition",
-              fields = list(pb = "pbCon", partition = "numeric",
-                            contraintes = "logical",
-                            method = "character",
-                            scoreSizeConsts = "numeric",
-                            methodDetails = "list",
-                            criteria = "list"),
-              methods = list(
-                #' Initialize a new Partition object.
-                initialize = function(pb = NULL, partition = NULL,
-                                      contraintes = NULL,
-                                      scoreSizeConsts = NULL,
-                                      contiguity = FALSE,
-                                      method = "unk",
-                                      methodDetails = list(),
-                                      criteria = list())
-                {
-                  if (is.null(pb))
-                    return()
+  setRefClass(
+    "Partition",
+    fields = list(pb = "pbCon", partition = "numeric",
+                  contraintes = "logical",
+                  method = "character",
+                  scoreSizeConsts = "numeric",
+                  methodDetails = "list",
+                  criteria = "list"),
+    methods = list(
+      #' Initialize a new Partition object.
+      initialize = function(pb = NULL, partition = NULL,
+                            contraintes = NULL,
+                            scoreSizeConsts = NULL,
+                            contiguity = FALSE,
+                            method = "unk",
+                            methodDetails = list(),
+                            criteria = list())
+      {
+        if (is.null(pb))
+          return()
 
-                  .self$pb <- pb
-                  .self$partition <- partition
+        # nolint start: undesirable_operator_linter
+        pb <<- pb
+        partition <<- partition
+        contraintes <<- contraintes
+        method <<- method
+        methodDetails <<- methodDetails
+        criteria <<- criteria
+        # nolint end
 
-                  .self$contraintes <- contraintes
-                  .self$method <- method
-                  .self$methodDetails <- methodDetails
-                  .self$criteria <- criteria
-
-                }
-              ))
+      }
+    )
+)
 
 
 #' Verify the integrity of the `Partition` object.
@@ -44,7 +47,7 @@ Partition <-
 #' @returns A character vector with an error message,
 #' if any integrity check fails.
 #' @noRd
-#' @importFrom checkmate testString
+#' @importFrom checkmate testString testLogical
 verif_partition <- function(object)
 {
 
@@ -84,11 +87,12 @@ verif_partition <- function(object)
 #' @returns A new Partition object.
 #' @keywords internal
 #' @importFrom checkmate assertClass assertFlag assertNumber
-partition <- function(pb, partition, method, methodDetails = list(),
-                      contiguity = NA, minConstraint = NA_real_,
-                      maxConstraint = NA_real_,
-                      scoreMinSizeConst = NA_real_,
-                      scoreMaxSizeConst = NA_real_, criteria = list())
+constructor_Partition <-
+  function(pb, partition, method, methodDetails = list(),
+           contiguity = NA, minConstraint = NA_real_,
+           maxConstraint = NA_real_,
+           scoreMinSizeConst = NA_real_,
+           scoreMaxSizeConst = NA_real_, criteria = list())
 {
 
   # Handling constraints (validation or not)
