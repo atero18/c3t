@@ -139,6 +139,9 @@
     <loc>dzt/reference/connected_components.html</loc>
   </url>
   <url>
+    <loc>dzt/reference/constructor_Partition.html</loc>
+  </url>
+  <url>
     <loc>dzt/reference/cpp_nearest_neighbor.html</loc>
   </url>
   <url>
@@ -217,9 +220,6 @@
     <loc>dzt/reference/optimal_partitions.html</loc>
   </url>
   <url>
-    <loc>dzt/reference/partition.html</loc>
-  </url>
-  <url>
     <loc>dzt/reference/partition_length.html</loc>
   </url>
   <url>
@@ -235,6 +235,9 @@
     <loc>dzt/reference/search_fusion_tree.html</loc>
   </url>
   <url>
+    <loc>dzt/reference/simp_cont.html</loc>
+  </url>
+  <url>
     <loc>dzt/reference/standardize_partition.html</loc>
   </url>
   <url>
@@ -248,6 +251,9 @@
   </url>
   <url>
     <loc>dzt/reference/update_dunn_index.html</loc>
+  </url>
+  <url>
+    <loc>dzt/reference/valid_cont.html</loc>
   </url>
   <url>
     <loc>dzt/reference/variance_tools.html</loc>

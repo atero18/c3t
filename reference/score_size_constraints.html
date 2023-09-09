@@ -66,19 +66,31 @@ do not respect the constraint size.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">score_constraints_min</span><span class="op">(</span><span class="va">pb</span>, clustersSizes <span class="op">=</span> <span class="cn">NULL</span>, partition <span class="op">=</span> <span class="cn">NULL</span>, f <span class="op">=</span> <span class="va">identity</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">score_constraints_min</span><span class="op">(</span></span>
+<span>  clustersSizes <span class="op">=</span> <span class="fu"><a href="clusters_sizes.html">clusters_sizes</a></span><span class="op">(</span><span class="va">partition</span>, <span class="va">sizes</span><span class="op">)</span>,</span>
+<span>  m <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  sizes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  partition <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  f <span class="op">=</span> <span class="va">identity</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">.score_constraints_min</span><span class="op">(</span><span class="va">pb</span>, <span class="va">clustersSizes</span>, f <span class="op">=</span> <span class="va">identity</span><span class="op">)</span></span>
+<span><span class="fu">.score_constraints_min</span><span class="op">(</span><span class="va">m</span>, <span class="va">clustersSizes</span>, f <span class="op">=</span> <span class="va">identity</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">score_constraints_max</span><span class="op">(</span><span class="va">pb</span>, clustersSizes <span class="op">=</span> <span class="cn">NULL</span>, partition <span class="op">=</span> <span class="cn">NULL</span>, f <span class="op">=</span> <span class="va">identity</span><span class="op">)</span></span>
+<span><span class="fu">score_constraints_max</span><span class="op">(</span></span>
+<span>  clustersSizes <span class="op">=</span> <span class="fu"><a href="clusters_sizes.html">clusters_sizes</a></span><span class="op">(</span><span class="va">partition</span>, <span class="va">sizes</span><span class="op">)</span>,</span>
+<span>  M <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  partition <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  f <span class="op">=</span> <span class="va">identity</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">.score_constraints_max</span><span class="op">(</span><span class="va">pb</span>, <span class="va">clustersSizes</span>, f <span class="op">=</span> <span class="va">identity</span><span class="op">)</span></span>
+<span><span class="fu">.score_constraints_max</span><span class="op">(</span><span class="va">M</span>, <span class="va">clustersSizes</span>, f <span class="op">=</span> <span class="va">identity</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">score_constraints_table</span><span class="op">(</span><span class="va">scoreContraintesMin</span>, <span class="va">scoreContraintesMax</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">score_constraints</span><span class="op">(</span></span>
-<span>  <span class="va">pb</span>,</span>
-<span>  clustersSizes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  clustersSizes <span class="op">=</span> <span class="fu"><a href="clusters_sizes.html">clusters_sizes</a></span><span class="op">(</span><span class="va">partition</span>, <span class="va">sizes</span><span class="op">)</span>,</span>
+<span>  m <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  M <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  partition <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  f <span class="op">=</span> <span class="va">identity</span>,</span>
 <span>  details <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -87,11 +99,7 @@ do not respect the constraint size.</p>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>pb</dt>
-<dd><p>A <code>pbCon</code> object.</p></dd>
-
-
-<dt>clustersSizes</dt>
+    <dl><dt>clustersSizes</dt>
 <dd><p>the size of the different clusters. If equals to <code>NULL</code>
 (default) sizes will be calculated.</p></dd>
 
@@ -111,7 +119,20 @@ negative and positive otherwise.</p></dd>
 <dd><p>flag indicating if details must be given or only
 the final score.</p></dd>
 
+
+<dt>pb</dt>
+<dd><p>A <code>pbCon</code> object.</p></dd>
+
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>a positive double value indicating how much the partition
+respect the size constraint(s). If it is equals to 0 then all constraint
+are respected by each cluster. The higher the score is the less the
+constraint(s) are respected. (positive double value)</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
