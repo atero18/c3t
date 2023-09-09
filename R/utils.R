@@ -139,6 +139,9 @@ match_str <- function(x, choices,
 which_na <- function(mat, removeSymmetry = TRUE, removeDiagonal = TRUE)
 {
   assertFlag(removeSymmetry)
+
+  removeSymmetry <- removeSymmetry && isSymmetric(mat)
+
   assertFlag(removeDiagonal)
 
   maskNA <- is.na(mat)
@@ -164,8 +167,11 @@ which_na <- function(mat, removeSymmetry = TRUE, removeDiagonal = TRUE)
   {
     maskEquality <- whichNA[, 1L] == whichNA[, 2L]
 
-    if (any(maskEquality))
-      whichNA <- whichNA[!maskEquality, drop = FALSE]
+    if (all(maskEquality))
+      return(whichNA[0L, , drop = FALSE])
+
+    else if (any(maskEquality))
+      whichNA <- whichNA[!maskEquality, 1L:2L , drop = FALSE]
   }
 
   whichNA
