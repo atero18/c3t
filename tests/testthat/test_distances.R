@@ -29,3 +29,18 @@ test_that("Complete linkage",
   expect_identical(complete_linkage(distances_mat[1L:3L, ][, 4L:6L]),
                    max(distances_mat[1L:3L, ][, 4L:6L])) # nolint: spaces_inside_linter
 })
+
+test_that("Simulation",
+{
+  n <- 4L
+  M <- gen_distances(n)
+
+  expect_matrix(M, mode = "numeric",
+                any.missing = FALSE, all.missing = FALSE,
+                nrows = n, ncols = n)
+
+  expect_identical(diag(M), numeric(n))
+  expect_true(all(M >= 0.0))
+  expect_true(isSymmetric(M))
+
+})

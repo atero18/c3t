@@ -24,6 +24,41 @@ NULL
 #' @keywords internal
 is.na.not.nan <- function(x) is.na(x) & !is.nan(x)
 
+#' @importFrom checkmate assertFlag checkVector checkNumeric
+checkNumericVector <- function(x, lower = -Inf, upper = Inf, finite = FALSE,
+                               any.missing = TRUE, all.missing = TRUE,
+                               len = NULL, min.len = NULL, max.len = NULL,
+                               unique = FALSE, sorted = FALSE,
+                               names = NULL, typed.missing = FALSE,
+                               null.ok = FALSE)
+{
+  assertFlag(null.ok)
+  if (null.ok && is.null(x))
+    return(TRUE)
+
+  vectorCheck <- checkVector(x,
+                             len = len,
+                             min.len = min.len,
+                             max.len = max.len,
+                             null.ok = FALSE)
+
+  if (!isTRUE(vectorCheck))
+    return(vectorCheck)
+
+  checkNumeric(x,
+               any.missing = any.missing, all.missing = all.missing,
+               lower = lower, upper = upper, finite = finite,
+               unique = unique, sorted = sorted,
+               names = names, typed.missing = typed.missing,
+               null.ok = FALSE)
+
+}
+
+#' @importFrom checkmate makeAssertionFunction
+assertNumericVector <- makeAssertionFunction(checkNumericVector)
+
+#' @importFrom checkmate makeTestFunction
+testNumericVector <- makeTestFunction(checkNumericVector)
 #' @keywords internal
 #' @importFrom checkmate assertFlag
 checkInf <- function(x, positiveOnly = FALSE)
@@ -711,7 +746,7 @@ assertCompatibleCriterion <- makeAssertionFunction(checkCompatibleCriterion)
 testCompatibleCriterion <- makeTestFunction(checkCompatibleCriterion)
 
 #' @importFrom checkmate assertFlag checkCharacter checkList
-checkElementDistances <- function(distances, p = NULL, unique = FALSE)
+ checkElementDistances <- function(distances, p = NULL, unique = FALSE)
 {
   if (is.function(distances))
     return(TRUE)
@@ -830,3 +865,45 @@ checkLinkage <-
 assertLinkage <- makeAssertionFunction(checkLinkage)
 #' @importFrom checkmate makeTestFunction
 testLinkage <- makeTestFunction(checkLinkage)
+
+#' @importFrom checkmate assertNumber assertFlag assertCount checkDouble
+checkSizes <- function(sizes,
+                       min.len = 1L, len = NULL,
+                       upper = Inf, M = Inf, finite = TRUE)
+{
+  LOWER <- 0.0
+
+  if (is.null(M))
+    M <- Inf
+  else
+    assertNumber(M, lower = LOWER, finite = FALSE)
+
+  # sizes can be infinite only if there is no maximum
+  # size constraint (i.e. M = Inf)
+  if (is.infinite(M))
+    assertFlag(finite)
+  else
+    finite <- TRUE
+
+  assertCount(len, null.ok = TRUE)
+
+  if (!is.null(len))
+    min.len <- NULL
+  else
+    assertCount(min.len)
+
+  assertNumber(upper, lower = LOWER, null.ok = FALSE)
+
+  # Each size must be inferior to M otherwise there will be no
+  # feasible solution
+  upper <- min(upper, M)
+
+  checkNumericVector(sizes,
+                     lower = LOWER, upper = upper, finite = finite,
+                     min.len = min.len, len = len,
+                     null.ok = FALSE)
+
+}
+
+#' @importFrom checkmate makeAssertionFunction
+assertSizes <- makeAssertionFunction(checkSizes)

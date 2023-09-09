@@ -127,11 +127,11 @@ partition <- function(pb, partition, method, methodDetails = list(),
   # Handling score for size constraints
   if (!minConstraint && is.na(scoreMinSizeConst))
     scoreMinSizeConst <-
-    score_constraints_min(pb, partition = partition)
+    score_constraints_min(pb$m, partition = partition)
 
   if (!maxConstraint && is.na(scoreMaxSizeConst))
     scoreMaxSizeConst <-
-    score_constraints_max(pb, partition = partition)
+    score_constraints_max(pb$m, partition = partition)
 
 
   scoreSizeConsts <-

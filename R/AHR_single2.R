@@ -146,11 +146,11 @@ AHR_single2 <- function(pb, linkage = "saut_max", partitionInit = NULL, # nolint
   else
   {
     scoreMinSizeConst <-
-      score_constraints_min(pb, clustersSizes = clustersSizes)
+      score_constraints_min(pb$m, clustersSizes = clustersSizes)
   }
 
   partitionRef <-
-    partition(pb, partition = partition, methode = "RAH",
+    partition(pb$m, partition = partition, methode = "RAH",
               contiguite = TRUE,
               contrainteMin = contrainteMinVerifiee,
               contrainteMax = TRUE,

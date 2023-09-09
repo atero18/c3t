@@ -24,7 +24,7 @@ setRefClass(
       if (is.null(distances))
         return()
 
-      .self$distances <- distances
+      .self$distances <<- distances
       .self$d <- d
       .self$data <- data
 
@@ -36,6 +36,7 @@ setRefClass(
     },
     setSizes = function(sizes)
     {
+      assertSizes(sizes)
       .self$sizes <- sizes
       .self$N <- sum(sizes)
 
@@ -43,18 +44,30 @@ setRefClass(
     #' @importFrom checkmate assertNumber
     setSizeConstraints = function(tempm = 0.0, tempM = Inf)
     {
-      assertNumber(tempm, lower = 0.0, finite = TRUE,
-                   null.ok = TRUE, na.ok = TRUE)
+      if (is.null(tempm) || (length(tempm) == 1L && is.na(tempm)))
+         tempm <- 0.0
+      else
+      {
+        if (!m_valid(tempm))
+          stop("Incorrect value for m")
 
-      tempm <- simplificationContrainteMin(tempm, sizes)
+        tempm <- simplify_minSizeConst(tempm, sizes)
+      }
 
-      .self$m <- ifelse(is.null(tempm) || is.na(tempm), 0.0, tempm)
+      m <<- tempm
 
-      assertNumber(tempM, lower = tempM, finite = FALSE,
-                   null.ok = TRUE, na.ok = TRUE)
 
-      tempM <- simplificationContrainteMax(tempM, sizes)
-      .self$M <- ifelse(is.null(tempM) || is.na(tempM), Inf, tempM)
+      if (is.null(tempM) || (length(tempM) == 1L && is.na(tempM)))
+        tempM <- Inf
+      else
+      {
+        if (!M_valid(tempM))
+          stop("Incrorrect value for M")
+
+        tempM <- simplify_maxSizeConst(tempM, sizes)
+      }
+
+      M <<- tempM
     },
 
     setContiguity = function(newContGraph,
@@ -135,10 +148,11 @@ is_pbCon <- function(x, checkValidity = FALSE)
   TRUE
 }
 
-pbCon$methods(hasMinConstraint = function() m > min(sizes),
-              hasMaxConstraint = function() M < N,
-              hasSizeConstraint = function()
-                hasMinConstraint()  || hasMaxConstraint())
+pbCon$methods(
+  hasMinConstraint = function() m > 0.0,
+  hasMaxConstraint = function() is.finite(M),
+  hasSizeConstraint = function() hasMinConstraint()  || hasMaxConstraint()
+)
 
 # Gestion des tailles
 # -- Vérification
@@ -155,11 +169,11 @@ pbCon$methods(
 pbCon$methods(
   m_valid = function(m = .self$m)
   {
-    length(m) == 1L && contrainteMinValide(m, sizes, connected_components())
+    testMinSizeConstraints(m, sizes, connected_components(), len = 1L)
   },
   M_valid = function(M = .self$M)
   {
-    length(m) == 1L && contrainteMaxValide(M, sizes)
+    testMaxSizeConstraints(M, sizes, len = 1L)
   }
 )
 
@@ -168,11 +182,11 @@ pbCon$methods(
 pbCon$methods(
   simplify_min_constraint = function(m_vec)
   {
-    simplificationContrainteMin(m_vec, sizes)
+    simplify_minSizeConst(m_vec, sizes)
   },
   simplify_max_constraint = function(M_vec)
   {
-    simplificationContrainteMax(M_vec, sizes, connected_components())
+    simplify_maxSizeConst(M_vec, sizes, connected_components())
   }
 )
 
@@ -222,6 +236,7 @@ pbCon$methods(
 
 
 pbCon$methods(
+  #' @importFrom igraph degree
   isFullyConnected = function(calcul = TRUE)
   {
     if (isContiguityPropertyCalculated("fullyConnected"))
@@ -229,9 +244,13 @@ pbCon$methods(
 
     if (calcul)
     {
-      completementConnecte <- all(degres() == nrow(.self) - 1L)
-      setContiguityProperty("fullyConnected", completementConnecte)
-      return(completementConnecte)
+      degrees <- degree(contiguity,
+                        mode = "all",
+                        loops = FALSE,
+                        normalized = FALSE)
+      fullyConnected <- all(degrees == nrow(.self) - 1L)
+      setContiguityProperty("fullyConnected", fullyConnected)
+      return(fullyConnected)
     }
 
     else
@@ -327,20 +346,6 @@ pbCon$methods(isConnected = function(calcul = TRUE)
 
 # -- Recherche du nombre de voisins
 
-#' @importFrom igraph degree
-pbCon$methods(degres = function(elements = seq_len(nrow(.self)))
-{
-  if (isFullyConnected(calcul = FALSE))
-    return(rep(nrow(.self) - 1L, length(elements)))
-
-  else
-    return(degree(contiguity,
-                  v = elements,
-                  mode = "all",
-                  loops = FALSE,
-                  normalized = FALSE))
-})
-
 # Vérification des régionalisations
 pbCon$methods(
   isPartition = function(partition) testPartition(partition, nrow(.self)),
@@ -401,15 +406,6 @@ pbCon$methods(
     contiguiteClasses
   }
 )
-
-#' @rdname distMat-access
-#' @keywords internal
-setMethod(
-  "[",
-  signature(x = "pbCon", i = "ANY", j = "ANY", drop = "ANY"),
-  function(x, i, j, drop) callNextMethod()
-)
-
 
 #' @inheritParams arguments_distMat
 #' @param contiguity A contiguity matrix or an `igraph` contiguity graph. If not
@@ -509,14 +505,6 @@ pbCon$methods(
                   list(composantesConnexes = rep(1L, length(listeElements))))
            })
   }
-)
-
-#' @rdname abstractSymMat_replace
-#' @keywords internal
-setReplaceMethod(
-  "[",
-  signature(x = "pbCon", i = "numeric", j = "numeric", value = "numeric"),
-  function(x, i, j, value) callNextMethod()
 )
 
 #' @rdname abstractSymMat_replace

@@ -21,74 +21,94 @@ NEEDCLUSTERSIZESORPART <- "clusters sizes or partition must be given."
 
 #' @rdname score_size_constraints
 #' @keywords internal
-score_constraints_min <- function(pb, clustersSizes = NULL,
+#' @importFrom checkmate assertNumber assertFunction
+score_constraints_min <- function(clustersSizes =
+                                    clusters_sizes(partition, sizes),
+                                  m = 0.0,
+                                  sizes = NULL,
                                   partition = NULL,
                                   f = identity)
 {
-  if (is.null(clustersSizes) && is.null(partition))
+  assertNumber(m, lower = 0.0, finite = TRUE, null.ok = FALSE)
+  assertFunction(f)
+
+  if (!"clustersSizes" %in% names(as.list(match.call())))
   {
-    stop(NEEDCLUSTERSIZESORPART)
+    if (is.null(sizes) || is.null(partition))
+    {
+      stop(NEEDCLUSTERSIZESORPART)
+    }
+    assertPartition(partition)
+    n <- length(partition)
+    assertSizes(sizes, len = n)
+    clustersSizes <- clusters_sizes(partition, sizes)
   }
 
-  if (is.null(clustersSizes))
-    clustersSizes <- clusters_sizes(partition, pb$sizes)
 
-  .score_constraints_min(pb, clustersSizes, f)
+  .score_constraints_min(m, clustersSizes, f)
 }
 
 #' @rdname score_size_constraints
 #' @keywords internal
 #' @importFrom checkmate assertNumber
-.score_constraints_min <- function(pb, clustersSizes, f = identity)
+.score_constraints_min <- function(m, clustersSizes, f = identity)
 {
-  if (!pb$hasMinConstraint())
-    return(0.)
+  if (m == 0.0)
+    return(0.0)
 
-  petitsClusters <- clustersSizes < pb$m
+  petitsClusters <- clustersSizes < m
 
   if (any(petitsClusters))
   {
-    score <- sum(f(pb$m - clustersSizes[petitsClusters]))
+    score <- sum(f(m - clustersSizes[petitsClusters]))
     assertNumber(score, lower = 0.0)
-    return(score)
+    return(as.double(score))
   }
 
   else
-    return(0.)
+    return(0.0)
 }
 
 #' @rdname score_size_constraints
 #' @keywords internal
-score_constraints_max <- function(pb, clustersSizes = NULL,
+#' @importFrom checkmate assertNumber assertFunction
+score_constraints_max <- function(clustersSizes =
+                                    clusters_sizes(partition, sizes),
+                                  M = Inf,
                                   partition = NULL,
                                   f = identity)
 {
-  if (is.null(clustersSizes) && is.null(partition))
+  assertNumber(M, lower = 0.0, finite = FALSE, null.ok = FALSE)
+  assertFunction(f)
+  if (!"clustersSizes" %in% names(as.list(match.call())))
   {
-    stop(NEEDCLUSTERSIZESORPART)
+    if (is.null(sizes) || is.null(partition))
+    {
+      stop(NEEDCLUSTERSIZESORPART)
+    }
+    assertPartition(partition)
+    n <- length(partition)
+    assertSizes(sizes, len = n, M = M)
+    clustersSizes <- clusters_sizes(partition, sizes)
   }
-
-  if (is.null(clustersSizes))
-    clustersSizes <- clusters_sizes(partition, pb$sizes)
-
-  .score_constraints_max(pb, clustersSizes, f)
+  .score_constraints_max(M, clustersSizes, f)
 }
 
 #' @rdname score_size_constraints
 #' @keywords internal
 #' @importFrom checkmate assertNumber
-.score_constraints_max <- function(pb, clustersSizes, f = identity)
+.score_constraints_max <- function(M, clustersSizes, f = identity)
 {
-  if (!pb$hasMaxConstraint())
+  if (is.infinite(M))
     return(0.0)
 
-  grosClusters <- clustersSizes > pb$M
+  grosClusters <- clustersSizes > M
 
   if (any(grosClusters))
   {
-    score <- sum(f(clustersSizes[grosClusters] - pb$M))
+    score <- sum(f(clustersSizes[grosClusters] - M))
     assertNumber(score, lower = 0.0)
-    return(score)
+    return(as.double(score))
   }
 
   return(0.0)
@@ -113,22 +133,27 @@ score_constraints_table <- function(scoreContraintesMin,
 #' the final score.
 #' @keywords internal
 #' @importFrom checkmate assertFlag
-score_constraints <- function(pb, clustersSizes = NULL,
+score_constraints <- function(clustersSizes = clusters_sizes(partition, sizes),
+                              m = 0.0, M = Inf,
                               partition = NULL,
                               f = identity, details = FALSE)
 {
   assertFlag(details)
 
-  if (is.null(clustersSizes) && is.null(partition))
+  if (!"clustersSizes" %in% names(as.list(match.call())))
   {
-    stop(NEEDCLUSTERSIZESORPART)
+    if (is.null(sizes) || is.null(partition))
+    {
+      stop(NEEDCLUSTERSIZESORPART)
+    }
+    assertPartition(partition)
+    n <- length(partition)
+    assertSizes(sizes, len = n, M = M)
+    clustersSizes <- clusters_sizes(partition, sizes)
   }
 
-  if (is.null(clustersSizes))
-    clustersSizes <- clusters_sizes(partition, pb$sizes)
-
-  scoreContraintesMin <- .score_constraints_min(pb, clustersSizes, f)
-  scoreContraintesMax <- .score_constraints_max(pb, clustersSizes, f)
+  scoreContraintesMin <- .score_constraints_min(m, clustersSizes, f)
+  scoreContraintesMax <- .score_constraints_max(M, clustersSizes, f)
 
 
   if (details)

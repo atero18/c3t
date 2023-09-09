@@ -646,29 +646,23 @@ calculDistancesInter_Cpp <- function(x, partition,
   comp_str <- get_Cppmode_linkage(comp_str)
 
   if (inherits(x, "DistMat"))
+    x <- x$distances
+
+  if (inherits(x, "SymMMat"))
   {
-    if (inherits(x$distances, "SymMMat"))
-    {
-      return(distanceInterSymMMat(x$distances$values, partition,
-                                  indexs_mat, comp_str))
-    }
-
-    else if (inherits(x$distances, "SymVMat"))
-    {
-      aDefautDiag <-  !is.null(pb$distances$defaultDiag)
-      defaultDiag <- ifelse(aDefautDiag, pb$distances$defaultDiag, 0.0)
-
-      return(distanceInterSymVMat(pb$distances$values, partition,
-                                  indexs_mat, pb$n(),
-                                  aDefautDiag, defaultDiag, comp_str))
-    }
-    else
-    {
-      stop("Actually this function doesn't work for other type of data")
-    }
-
+    return(distanceInterSymMMat(x$values, partition,
+                                indexs_mat, comp_str))
   }
 
+  else if (inherits(x, "SymVMat"))
+  {
+    aDefautDiag <-  !is.null(x$defaultDiag)
+    defaultDiag <- ifelse(aDefautDiag, x$defaultDiag, 0.0)
+
+    return(distanceInterSymVMat(x$values, partition,
+                                indexs_mat, nrow(x),
+                                aDefautDiag, defaultDiag, comp_str))
+  }
   else if (is.matrix(x))
   {
     return(distanceInterSymMMat(x, partition,

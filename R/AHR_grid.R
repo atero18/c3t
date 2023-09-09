@@ -130,10 +130,8 @@ AHR <- function(distances = NULL, contiguity = NULL, sizes = NULL,
 {
 
   # Checking arguments
-  m <- as.double(m)
-  assertDouble(m, lower = 0.0, any.missing = FALSE, all.missing = FALSE)
-  M <- as.double(M)
-  assertDouble(M, lower = 0.0, any.missing = FALSE, all.missing = FALSE)
+  assertNumericVector(m, lower = 0.0, any.missing = FALSE, all.missing = FALSE)
+  assertNumericVector(M, lower = 0.0, any.missing = FALSE, all.missing = FALSE)
   assertFlag(parallele)
   assertFlag(verbose)
   assertFlag(splitConnectedComponents)

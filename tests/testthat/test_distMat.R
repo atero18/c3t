@@ -155,3 +155,47 @@ test_that("Comparison for function calculation with existing",
   M <- constructor_DistMat(d = d, data = dataVals)
   expect_identical(M[], as.matrix(dist(dataVals)))
 })
+
+test_that("Linkage distances do not depend of storage mode",
+{
+  cppModes <- LINKAGES$cppMode
+  cppModes <- cppModes[!is.na(cppModes)]
+  set.seed(123L)
+  for (n in seq(10L, 100L, 10L))
+  {
+    distances <- gen_distances(n)
+    distances_vec <- as(distances, "SymVMat")
+    distances_mat <- as(distances, "SymMMat")
+
+    partition <- sample(seq_len(n), replace = TRUE, size = n)
+    partition <- standardize_partition(partition)
+    k <- nbClusters(partition)
+
+    nbTries <- sample(seq_len(n), size = 1L)
+
+    distancesToCalc <-
+      matrix(sample(seq_len(k), replace = TRUE, size = 2L * nbTries),
+             nrow = nbTries, ncol = 2L)
+
+    equality <- distancesToCalc[, 1L] == distancesToCalc[, 2L]
+
+    if (any(equality))
+      distancesToCalc <- distancesToCalc[!equality,, drop = FALSE]
+
+    for (mode in cppModes)
+    {
+      resVec <- calculDistancesInter_Cpp(distances_vec, partition,
+                                         distancesToCalc,
+                                         mode)
+
+      resMat <- calculDistancesInter_Cpp(distances_mat, partition,
+                                         distancesToCalc,
+                                         mode)
+
+      expect_equal(resVec, resMat, tolerance = 10^-6L)
+
+    }
+
+  }
+
+})

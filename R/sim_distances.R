@@ -12,8 +12,7 @@ gen_distances <- function(n, mean = 1.0, sd = 1.0)
 
   distances_mat <- matrix(0.0, nrow = n, ncol = n)
 
-  distances_mat[lower.tri(distances_mat, diag = FALSE)] <-
-    distances_mat[upper.tri(distances_mat, diag = FALSE)] <- distances_vec
+  distances_mat[lower.tri(distances_mat, diag = FALSE)] <- distances_vec
 
-  distances_mat
+  distances_mat + t(distances_mat)
 }

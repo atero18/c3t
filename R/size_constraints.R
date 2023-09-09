@@ -1,7 +1,9 @@
+# Checking size constraints arguments -------------------------------------
+
 #' Validate Size Constraints
 #' @param sizes A numeric vector representing the sizes
 #' of elements.
-#' @param composantesConnexes_vec An optional numeric vector specifying
+#' @param connectedComponents An optional numeric vector specifying
 #' the connected components.
 #' @name valid_cont
 #' @noRd
@@ -13,30 +15,99 @@ NULL
 #'
 #' @param m_vec A numeric vector with min constraints values to be tested.
 #' @keywords internal
-#' @noRd
-#' @importFrom checkmate testNumeric
-contrainteMinValide <-
-  function(m_vec, sizes,
-           composantesConnexes_vec = rep(1L, length(sizes)))
+#' @importFrom checkmate assertFlag assertVector checkNumeric assertCount
+checkMinSizeConstraints <- function(m_vec, sizes, connectedComponents = NULL,
+                                    authorizeNegative = FALSE,
+                                    len = NULL)
 {
-  tailleComposantesConnexes <-
-    tapply(sizes, composantesConnexes_vec, sum, simplify = TRUE)
 
-  testNumeric(m_vec, upper = min(tailleComposantesConnexes),
-              any.missing = FALSE, all.missing = FALSE)
+  assertCount(len, positive = TRUE, null.ok = TRUE)
+
+  if (!is.null(connectedComponents))
+  {
+    assertVector(connectedComponents, min.len = 1L,
+                 any.missing = FALSE, all.missing = FALSE,
+                 null.ok = FALSE)
+
+    assertSizes(sizes, len = length(connectedComponents))
+
+    nbComponents <- length(unique(connectedComponents))
+
+  }
+  else
+  {
+    assertSizes(sizes)
+    nbComponents <- 1L
+  }
+
+
+  if (nbComponents == 1L)
+    upper <- sum(sizes)
+
+  else
+  {
+
+    sizesConnectedComp <-
+      connectedComponents_sizes(connectedComponents, sizes)
+
+    upper <- min(sizesConnectedComp)
+  }
+
+  assertFlag(authorizeNegative)
+  lower <- ifelse(authorizeNegative, -Inf, 0.0)
+
+  checkNumeric(m_vec, min.len = 1L,
+               lower = lower, upper = upper, finite = FALSE,
+               null.ok = FALSE, len = len)
 }
+
+#' @importFrom checkmate makeAssertionFunction
+assertMinSizeConstraints <- makeAssertionFunction(checkMinSizeConstraints)
+
+#' @importFrom checkmate makeTestFunction
+testMinSizeConstraints <- makeTestFunction(checkMinSizeConstraints)
 
 #' @describeIn valid_cont Verifies the maximum size constraint
 #' for a given vector.
 #' @param M_vec A numeric vector with max constraints to be tested.
 #' @keywords internal
-#' @noRd
-#' @importFrom checkmate testNumeric
-contrainteMaxValide <- function(M_vec, sizes)
+#' @importFrom checkmate assertFlag assertVector checkNumeric assertCount
+checkMaxSizeConstraints <- function(M_vec, sizes, len = NULL)
 {
-  testNumeric(M_vec, lower = max(sizes),
-              any.missing = FALSE, all.missing = FALSE)
+  assertCount(len, positive = TRUE, null.ok = TRUE)
+  assertSizes(sizes)
+  checkType <- checkDouble(M_vec,
+                           min.len = 1L, len = len,
+                           lower = 0.0, finite = FALSE,
+                           any.missing = FALSE, all.missing = FALSE,
+                           null.ok = FALSE)
+
+  if (!isTRUE(checkType))
+    return(checkType)
+
+
+
+  tooLowValues <- vapply(M_vec, function(M) any(sizes > M), logical(1L))
+  if (any(tooLowValues))
+  {
+    return(paste("following maximum constraints values are too low:",
+                 unique(M_vec[tooLowValues])))
+  }
+
+  TRUE
+
 }
+
+#' @importFrom checkmate makeAssertionFunction
+assertMaxSizeConstraints <- makeAssertionFunction(checkMaxSizeConstraints)
+
+#' @importFrom checkmate makeTestFunction
+testMaxSizeConstraints <- makeTestFunction(checkMaxSizeConstraints)
+
+
+
+# Simplify size constraint values -----------------------------------------
+
 
 #' Simplify Minimum Size Constraint
 #'
@@ -46,12 +117,22 @@ contrainteMaxValide <- function(M_vec, sizes)
 #' @inheritParams valid_cont
 #' @name simp_cont
 #' @keywords internal
-#' @noRd
-simplificationContrainteMin <- function(m_vec, sizes)
+simplify_minSizeConst <- function(m_vec, sizes = NULL)
 {
-  masqueContrainteInutile <- m_vec <= min(sizes)
-  if (any(masqueContrainteInutile))
-    m_vec[masqueContrainteInutile] <- 0.0
+  if (is.null(m_vec))
+    return(0.0)
+
+  if (anyNA(m_vec))
+    m_vec[is.na(m_vec)] <- 0.0
+
+  if (!is.null(sizes))
+  {
+    masqueContrainteInutile <- m_vec <= min(sizes)
+    if (any(masqueContrainteInutile))
+      m_vec[masqueContrainteInutile] <- 0.0
+  }
+
+
   m_vec
 }
 
@@ -63,18 +144,29 @@ simplificationContrainteMin <- function(m_vec, sizes)
 #' @param M_vec A numeric vector with max constraints values to be simplified.
 #' @inheritParams valid_cont
 #' @keywords internal
-#' @noRd
-simplificationContrainteMax <-
-  function(M_vec, sizes,
-           composantesConnexes_vec = rep(1L, length(sizes)))
+simplify_maxSizeConst <- function(M_vec, sizes, connectedComponents = NULL)
 {
-  tailleComposantesConnexes <-
-    tapply(sizes, composantesConnexes_vec, sum, simplify = TRUE)
-  masqueContrainteInutile <- M_vec >= max(tailleComposantesConnexes)
-  if (any(masqueContrainteInutile))
-    M_vec[masqueContrainteInutile] <- Inf
+  if (is.null(M_vec))
+    return(Inf)
+
+  if (is.null(connectedComponents))
+    upper <- sum(sizes)
+
+  else
+  {
+    sizeConnectedComp <- connectedComponents_sizes(connectedComponents, sizes)
+    upper <- max(sizeConnectedComp)
+  }
+
+  maskUselessConstraint <- M_vec >= upper
+  if (any(maskUselessConstraint))
+    M_vec[maskUselessConstraint] <- Inf
+
   M_vec
 }
+
+
+# Clusters sizes ----------------------------------------------------------
 
 #' Cluster Sizes
 #'
@@ -98,6 +190,11 @@ clusters_sizes <-
                 len = length(partition), any.missing = FALSE)
 
   tapply(sizes, partition, sum)
+}
+
+connectedComponents_sizes <- function(components, sizes)
+{
+  tapply(sizes, components, sum, simplify = TRUE)
 }
 
 setGeneric("clusters_sizes", clusters_sizes)

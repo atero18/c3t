@@ -262,7 +262,7 @@ AHR_single <- function(pb, linkage = "complete", partitionInit = NULL, # nolint:
   else
   {
     scoreMinSizeConst <-
-      score_constraints_min(pb, clustersSizes = V(grapheClasses)$size)
+      score_constraints_min(pb$m, clustersSizes = V(grapheClasses)$size)
   }
 
 
@@ -369,7 +369,7 @@ AHR_single <- function(pb, linkage = "complete", partitionInit = NULL, # nolint:
     else
     {
       partitionArbre$scoreSizeConsts[c("min", "total")] <-
-        score_constraints_min(pb, clustersSizes = V(grapheClasses)$size)
+        score_constraints_min(pb$m, clustersSizes = V(grapheClasses)$size)
     }
 
     # Add of the new contiguities to the merged cluster
