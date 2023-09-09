@@ -115,6 +115,7 @@ distance_Hausdorff <- function(elemsDistances)
       max(apply(elemsDistances, 2L, min)))
 }
 
+# nocov start
 #' What linkages are available?
 #'
 #' Give the list of implemented linkages.
@@ -145,6 +146,7 @@ available_linkages <- function(description = FALSE)
 
   LINKAGES$linkage
 }
+# nocov end
 
 #' @importFrom checkmate assertFlag
 corresponding_linkage <- function(linkages, simplify = TRUE)
@@ -307,28 +309,6 @@ get_Cppmode_linkage <- function(linkage)
   ifelse(testString(cppMode), cppMode, FALSE)
 }
 
-
-#' @importFrom checkmate assertClass assertMatrix assertIntegerish
-calcul_distances_inter <- function(pb, partition, distancesACalculer,
-                                   linkage, Cpp = TRUE, modeEval = 2L, ...)
-{
-  # Checking arguments
-  assertClass(pb, "pbCon")
-  validObject(pb)
-  Cpp <- !isFALSE(Cpp)
-
-  assertPartition(partition)
-
-  assertMatrix(distancesACalculer[, 1L:2L, drop = FALSE])
-  assertIntegerish(distancesACalculer[, 1L:2L, drop = FALSE],
-                   lower = 1L,
-                   upper = max(partition),
-                   any.missing = FALSE,
-                   all.missing = FALSE)
-
-  .calcul_distances_inter(pb, partition, distancesACalculer, linkage,
-                          Cpp, modeEval, ...)
-}
 
 .calcul_distances_inter <- function(pb, partition, distancesACalculer, # nolint: cyclocomp_linter
                                     linkage, Cpp = TRUE, modeEval = 2L, ...)

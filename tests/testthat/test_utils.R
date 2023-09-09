@@ -9,7 +9,7 @@ test_that("which_na returns the correct indices of NA values",
   expect_matrix(result1, nrows = 0L, ncols = 2L)
 
   # Test case 2: mat with NA values, removeSymmetry = TRUE,
-  # removeDiagonal = TRUE
+  # and removeDiagonal = TRUE
   mat2 <- matrix(c(1.0,  NA, 3.0,
                    4.0, 5.0, 6.0,
                     NA, 8.0, 9.0),
@@ -21,7 +21,7 @@ test_that("which_na returns the correct indices of NA values",
   expect_identical(result2[1L, ], c(3L, 1L))
 
   # Test case 3: mat with NA values, removeSymmetry = FALSE,
-  # removeDiagonal = TRUE
+  # and removeDiagonal = TRUE
 
   result3 <- unname(which_na(mat2,
                              removeSymmetry = FALSE, removeDiagonal = TRUE))

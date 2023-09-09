@@ -161,11 +161,17 @@ test_that("Update ICH - Case when donor still has elements",
                                         givenElements,
                                         partition, data)
 
+  # Update with pbCon
+  pb <- constructor_pbCon(d = "euclidean", data = data)
+  updateICH2 <- pb$update_quality_partition(partition, "CHI", initialICH,
+                                            donor, receiver, givenElements)
+
   partition[givenElements] <- receiver
   withoutUpdateICH <- calinski_harabasz(data, partition, valueOnly = FALSE)
 
-  expect_identical(updateICH, withoutUpdateICH)
 
+  expect_identical(updateICH, withoutUpdateICH)
+  expect_identical(updateICH, updateICH2)
 })
 
 test_that("Update ICH - Case when donor no longer has elements",

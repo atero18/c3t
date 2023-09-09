@@ -132,16 +132,16 @@ merge_cc_partitions <- function(components, partitions)
   # components, and each element is a vector
   assertList(partitions, len = length(unique(components)), types = "vector")
 
-  # If there is only one partition, return it after changing the IDs
-  if (length(partitions) == 1L)
-    return(standardize_partition(partitions[[1L]]))
-
   # Check if each partition has the same number of elements as the
   # corresponding connected component
   if (!all(table(components) == lengths(partitions)))
   {
     stop("Each partition should have a number of elements corresponding to the connected components") # nolint: line_length_linter
   }
+
+  # If there is only one partition, return it after changing the IDs
+  if (length(partitions) == 1L)
+    return(standardize_partition(partitions[[1L]]))
 
   # Change IDs within each partition vector
   partitions <- lapply(partitions, standardize_partition)

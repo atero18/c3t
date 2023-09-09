@@ -198,6 +198,7 @@ gen_pb <- function(x_int, y_int, m = 0.0, M = Inf,
 
 }
 
+# nocov start
 survey_simulation <- function(x_int, y_int, nbIndividuals_int)
 {
   assertCount(x_int, positive = TRUE)
@@ -228,6 +229,7 @@ survey_simulation <- function(x_int, y_int, nbIndividuals_int)
               context = context_df))
 
 }
+# nocov end
 
 
 #' Simulation of a survey
