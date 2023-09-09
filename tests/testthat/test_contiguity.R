@@ -1,5 +1,28 @@
 rm(list = ls())
 
+# Test cases for is_connected function
+test_that("is_connected returns expected results",
+{
+  # Test case 1: Empty matrix should return TRUE
+  empty_graph <- matrix(nrow = 0L, ncol = 0L)
+  expect_true(is_connected(empty_graph))
+
+  # Test case 2: Single element matrix should return TRUE
+  single_element_graph <- matrix(FALSE, nrow = 1L, ncol = 1L)
+  expect_true(is_connected(single_element_graph))
+
+  # Test case 3: Non-empty matrix should return the result from igraph::is_connected
+  non_empty_graph <- matrix(c(FALSE, TRUE,
+                              TRUE, FALSE), nrow = 2L, ncol = 2L)
+  graph <- contiguity_matrix_to_graph(non_empty_graph)
+  expect_equal(is_connected(non_empty_graph), is_connected(graph, mode = 'weak'))
+})
+
+test_that("is_connected throws an error for invalid input",
+{
+  # Test case 1: Non-matrix input should throw an error
+  expect_error(is_connected(list()))
+})
 
 # Checking the contiguity matrix for a simple grid
 # 2x2 Grid

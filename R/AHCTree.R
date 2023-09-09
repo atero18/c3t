@@ -84,93 +84,12 @@ setMethod(
 #' @keywords internal
 setMethod("names", signature(x = "AHCTree"), function(x) names(x$partitions))
 
-#' @describeIn AHCTree_properties Give the number of cluster in each partition
-#' @keywords internal
-setMethod(
-  ".nbClusters",
-  signature(partition = "AHCTree"),
-  function(partition)
-  {
-    if (length(partition) == 0L)
-      return(NULL)
-
-    else if (!is.null(names(partition)))
-      return(as.numeric(names(partition)))
-
-    else
-      return(vapply(partition$partitions, .nbClusters, integer(1L)))
-  }
-)
-
-#' @describeIn AHCTree_properties Give the number of cluster with exactly
-#' one element in each partition contained in the tree
-#' @keywords internal
-setMethod(
-  "nbSingletons",
-  signature(partition = "AHCTree"),
-  function(partition)
-  {
-    if (length(partition) == 0L)
-      return(NULL)
-
-    else
-      return(vapply(partition$partition, nbSingletons, integer(1L)))
-  }
-)
-
-
 #' Does partitions of a `AHCTree` verifies constraints?
 #' @param x A `AHCTree`
 #' @name AHCTree_check_constraints
 #' @rdname AHCTree_check_constraints
 #' @keywords internal
 NULL
-
-.checkConstAHR <- function(x, constraint)
-{
-  if (length(x) == 0L)
-    return(NULL)
-
-  vapply(x$partitions, constraint, logical(1L))
-}
-
-LISTCHECKFUNCTIONS <- c("checkContiguityConst",
-                        "checkMinSizeConst",
-                        "checkMaxSizeConst")
-nameFunction <- NULL
-#' @importFrom rlang sym
-for (nameFunction in LISTCHECKFUNCTIONS)
-{
-  fun <- sym(nameFunction)
-  setMethod(nameFunction, signature(x = "AHCTree"),
-            function(x) .checkConstAHR(x, fun))
-}
-
-rm(LISTCHECKFUNCTIONS)
-
-
-.getScoreAHC <- function(x, scoreFUN)
-{
-  if (length(x) == 0L)
-    return(NULL)
-
-  vapply(x$partitions, scoreFUN, numeric(1L))
-}
-
-LISTSCOREFUNCTIONS <- c("scoreMinSizeConst",
-                        "scoreMaxSizeConst",
-                        "scoreSizeConsts")
-
-#' @importFrom rlang sym
-for (nameFunction in LISTSCOREFUNCTIONS)
-{
-  fun <- sym(nameFunction)
-  setMethod(nameFunction, signature(x = "AHCTree"),
-            function(x) .getScoreAHC(x, fun) # nolint: object_usage_linter
-  )
-}
-
-rm(LISTSCOREFUNCTIONS)
 
 #' Access to the partitions of a `AHCTree`
 #' @name AHCTree_access
@@ -239,28 +158,6 @@ setMethod(
   signature(x = "AHCTree", i = "missing"),
   function(x, i) x$partitions
 )
-
-#' Clusters sizes of a AHC tree partitions.
-#' Return in a list the sizes of the clusters of each partition
-#' of an `AHCTree`.
-#' @inheritParams clusters_sizes
-#' @param partition An `AHCTree`.
-#' @returns a list with for each partition of the `AHCTree`
-#' a vector containing the size of each cluster.
-#' @keywords internal
-setMethod(
-  "clusters_sizes", # nolint: indentation_linter
-  signature(partition = "AHCTree", sizes = "ANY"), # nolint: indentation_linter
-  function(partition, sizes)
-  {
-    if (length(partition) == 0L)
-      return(NULL)
-
-    else
-      return(lapply(partition$partitions, clusters_sizes))
-  }
-)
-
 
 loadNamespace("stats")
 setGeneric("cutree", stats::cutree)
