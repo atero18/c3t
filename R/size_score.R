@@ -15,7 +15,7 @@
 #' @returns a positive double value indicating how much the partition
 #' respect the size constraint(s). If it is equals to 0 then all constraint
 #' are respected by each cluster. The higher the score is the less the
-#' contraint(s) are respected. (positive double value)
+#' constraint(s) are respected. (positive double value)
 #' @keywords internal
 #' @name score_size_constraints
 #' @rdname score_size_constraints

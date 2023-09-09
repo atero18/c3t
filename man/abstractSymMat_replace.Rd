@@ -3,7 +3,6 @@
 %   R/symVMat.R
 \name{abstractSymMat_replace}
 \alias{abstractSymMat_replace}
-\alias{[<-,pbCon,numeric,numeric,numeric-method}
 \alias{[<-,pbCon,matrix,missing,numeric-method}
 \alias{[<-,SymMMat,numeric,numeric,numeric-method}
 \alias{[<-,SymMMat,numeric,missing,numeric-method}
@@ -14,8 +13,6 @@
 \alias{[<-,SymVMat,matrix,missing,numeric-method}
 \title{Replace value of a \code{AbstractSymMat} object or subclasses}
 \usage{
-\S4method{[}{pbCon,numeric,numeric,numeric}(x, i, j) <- value
-
 \S4method{[}{pbCon,matrix,missing,numeric}(x, i, j) <- value
 
 \S4method{[}{SymMMat,numeric,numeric,numeric}(x, i, j) <- value

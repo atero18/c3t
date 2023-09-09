@@ -6,7 +6,6 @@
 #' @param connectedComponents An optional numeric vector specifying
 #' the connected components.
 #' @name valid_cont
-#' @noRd
 NULL
 
 

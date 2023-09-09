@@ -150,10 +150,10 @@ AHR_single2 <- function(pb, linkage = "saut_max", partitionInit = NULL, # nolint
   }
 
   partitionRef <-
-    constructor_Partition(pb$m, partition = partition, methode = "RAH",
-                          contiguite = TRUE,
-                          contrainteMin = contrainteMinVerifiee,
-                          contrainteMax = TRUE,
+    constructor_Partition(pb$m, partition = partition, method = "RAH",
+                          contiguity = TRUE,
+                          minConstraint = contrainteMinVerifiee,
+                          maxConstraint = TRUE,
                           scoreMinSizeConst = scoreMinSizeConst,
                           scoreMaxSizeConst = 0.0)
 

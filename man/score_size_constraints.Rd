@@ -10,27 +10,37 @@
 \alias{score_constraints}
 \title{Give a score of constraint size respect}
 \usage{
-score_constraints_min(pb, clustersSizes = NULL, partition = NULL, f = identity)
+score_constraints_min(
+  clustersSizes = clusters_sizes(partition, sizes),
+  m = 0,
+  sizes = NULL,
+  partition = NULL,
+  f = identity
+)
 
-.score_constraints_min(pb, clustersSizes, f = identity)
+.score_constraints_min(m, clustersSizes, f = identity)
 
-score_constraints_max(pb, clustersSizes = NULL, partition = NULL, f = identity)
+score_constraints_max(
+  clustersSizes = clusters_sizes(partition, sizes),
+  M = Inf,
+  partition = NULL,
+  f = identity
+)
 
-.score_constraints_max(pb, clustersSizes, f = identity)
+.score_constraints_max(M, clustersSizes, f = identity)
 
 score_constraints_table(scoreContraintesMin, scoreContraintesMax)
 
 score_constraints(
-  pb,
-  clustersSizes = NULL,
+  clustersSizes = clusters_sizes(partition, sizes),
+  m = 0,
+  M = Inf,
   partition = NULL,
   f = identity,
   details = FALSE
 )
 }
 \arguments{
-\item{pb}{A \code{pbCon} object.}
-
 \item{clustersSizes}{the size of the different clusters. If equals to \code{NULL}
 (default) sizes will be calculated.}
 
@@ -43,6 +53,14 @@ negative and positive otherwise.}
 
 \item{details}{flag indicating if details must be given or only
 the final score.}
+
+\item{pb}{A \code{pbCon} object.}
+}
+\value{
+a positive double value indicating how much the partition
+respect the size constraint(s). If it is equals to 0 then all constraint
+are respected by each cluster. The higher the score is the less the
+constraint(s) are respected. (positive double value)
 }
 \description{
 Those functions give a score that indicates if a partition respects
