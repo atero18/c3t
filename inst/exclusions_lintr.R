@@ -18,5 +18,19 @@ make_exclusions_lintr <- function()
     exclusions_list[[pathFile]] <- list(indentation_linter = Inf)
   }
 
+  exampleFilenames <- list.files(file.path("inst/examples"), pattern = ".R$")
+
+
+  # Remove some linters for example files
+  for (exampleFile in exampleFilenames)
+  {
+    pathFile <- file.path("inst/examples/", exampleFile)
+    exclusions_list[[pathFile]] <- list(implicit_integer_linter = Inf,
+                                        commented_code_linter = Inf,
+                                        undesirable_function_linter = Inf)
+  }
+
+
+
   exclusions_list
 }

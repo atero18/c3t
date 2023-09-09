@@ -53,7 +53,6 @@ notRegionalisation <- c(1L, 2L, 1L,
                         1L, 2L, 1L)
 
 checkRegionalisation(notRegionalisation, contiguity) # message
-
 }
 \seealso{
 Other arguments checkers: 

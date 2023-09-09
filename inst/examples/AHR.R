@@ -9,7 +9,7 @@ M <- 800.0
 
 d <- "euclidean"
 
-criterion <- 'CHI'
+criterion <- "CHI"
 
 AHR(contiguity = contiguity,
     d = d, data = data,
