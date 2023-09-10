@@ -1,4 +1,7 @@
 
+# Find information about fusion constraints -------------------------------
+
+
 #' Available fusion constraints
 #'
 #' What parameters are available for fusion constraints?
@@ -74,7 +77,7 @@ simplify_fusion_constraints <- function(fusionConstraints, pb = NULL,
   if (inherits(pb, "pbCon") &&
       any(fusionConstraints %in% uselessMode) &&
       (!pb$hasMinConstraint() ||
-       (!is.null(partition) && all(clusters_sizes(partition, pb$sizes) >=
+       (!is.null(partition) && all(.clusters_sizes(partition, pb$sizes) >=
                                    pb$m))))
   {
     fusionConstraints <- setdiff(fusionConstraints, uselessMode)

@@ -137,7 +137,7 @@ enhancer_pb <- function(pb, regionalisation, criterion = "Dunn", # nolint: cyclo
   regionalisation <- standardize_partition(regionalisation)
 
   # Retrieving the sizes of each region
-  regionsSizes <- clusters_sizes(regionalisation, pb$sizes)
+  regionsSizes <- .clusters_sizes(regionalisation, pb$sizes)
   regionsCardinals <- table(regionalisation)
 
   t0 <- Sys.time()

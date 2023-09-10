@@ -1,6 +1,10 @@
 #' @include partition_class.R
 #' @include pbCon.R
 
+
+# `AHCTree` class definition ----------------------------------------------
+
+
 #' An `AHCTree` class representing a hierarchical clustering tree.
 #'
 #' This class contains fields representing a hierarchical clustering tree and
@@ -16,7 +20,6 @@ AHCTree <- setRefClass(
                 partitions = "list")
 )
 
-# ... (Rest of the class methods with appropriate roxygen comments)
 
 #' Create an `AHCTree` object.
 #'
@@ -34,7 +37,7 @@ AHCTree <- setRefClass(
 #' and partitions.
 #' @keywords internal
 #' @importFrom checkmate assertClass assertList assertInt
-AHCTree_constructor <- function(pb, partitions = list(), n = NULL)
+constructor_AHCTree <- function(pb, partitions = list(), n = NULL)
 {
   assertClass(pb, "pbCon")
   if (is.list(partitions))
@@ -90,6 +93,10 @@ setMethod("names", signature(x = "AHCTree"), function(x) names(x$partitions))
 #' @rdname AHCTree_check_constraints
 #' @keywords internal
 NULL
+
+
+# Access to AHCTree data --------------------------------------------------
+
 
 #' Access to the partitions of a `AHCTree`
 #' @name AHCTree_access
@@ -166,6 +173,8 @@ setMethod("cutree",
           signature(tree = "AHCTree", k = "numeric", h = "ANY"),
           function(tree, k, h) tree[[k]]$partition)
 
+# Definition of equality with other types of objects ----------------------
+
 setMethod(
   "all.equal",
   signature(target = "AHCTree", current = "AHCTree"),
@@ -187,6 +196,10 @@ setMethod(
     all.equal(targetPartitions, currentPartitions)
   }
 )
+
+
+# Conversion --------------------------------------------------------------
+
 
 #' Convert an `AHCTree` object to a `tibble`.
 #'

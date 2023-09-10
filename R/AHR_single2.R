@@ -51,7 +51,7 @@ AHR_single2 <- function(pb, linkage = "saut_max", partitionInit = NULL, # nolint
   nbSingletons <- sum(nbElementsClusters == 1L)
   remainingClusters <- rep(TRUE, nbClusters)
 
-  clustersSizes <- clusters_sizes(partition, pb$sizes)
+  clustersSizes <- .clusters_sizes(partition, pb$sizes)
 
   # Vérification de la contrainte minimale
   nbClustersMin <- pb$nbTooSmallClusters(partition)
@@ -159,7 +159,7 @@ AHR_single2 <- function(pb, linkage = "saut_max", partitionInit = NULL, # nolint
 
 
   # Classe ArbreCAH stockant les partitions
-  arbreCAH <- AHCTree_constructor(pb, partitionRef)
+  arbreCAH <- constructor_AHCTree(pb, partitionRef)
   rm(partitionRef)
 
   nbClusters <- nbClusters - 1L

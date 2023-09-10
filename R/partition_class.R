@@ -3,9 +3,11 @@
 #' @include size_constraints.R
 #' @include partition_tools.R
 
-#' Create a reference class for representing a Partition.
-#' @keywords internal
 
+# Creation of the `Partition` class ---------------------------------------
+
+
+#' @keywords internal
 Partition <-
   setRefClass(
     "Partition",
@@ -148,6 +150,10 @@ constructor_Partition <-
                 criteria = criteria)
 }
 
+
+# Checking constraints validity -------------------------------------------
+
+
 #' @describeIn verif_cont_Partition Verify if the contiguity
 #' constraint is satisfied.
 #' @returns A logical value indicating if the constraint is satisfied.
@@ -192,6 +198,10 @@ verifContraintes <- function(x)
   all(x$contraintes)
 }
 
+
+# Properties about the partition ------------------------------------------
+
+
 setMethod(
   ".nbClusters",
   signature(partition = "Partition"),
@@ -211,6 +221,39 @@ setMethod(
   signature(partition = "Partition"),
   function(partition) nbSingletons(partition$partition)
 )
+
+#' Get the sizes of clusters of the `Partition` object.
+#' @inheritParams clusters_sizes
+#' @param partition A Partition object.
+#' @returns A numeric vector representing the sizes of clusters.
+#' @keywords internal
+setMethod(
+  "clusters_sizes",
+  signature(partition = "Partition", sizes = "ANY"),
+  function(partition, sizes)
+  {
+    clusters_sizes(partition$partition,
+                   sizes = partition$pb$sizes)
+  }
+)
+
+#' Number of elements in a partition
+#'
+#' Give the number of elements in a partition
+#' @param x A `Partition` object
+#' @returns the number of elements in the partition. (positive integer)
+#' @name partition_length
+#' @rdname partition_length
+#' @keywords internal
+NULL
+
+#' @rdname partition_length
+#' @keywords internal
+setMethod("length", signature(x = "Partition"), function(x) length(x$partition))
+
+
+# Size constraints scores -------------------------------------------------
+
 
 #' @describeIn score_contraintes_Partition Get the min score.
 #' @noRd
@@ -243,20 +286,8 @@ scoreSizeConsts <- function(x)
 
 setGeneric("scoreSizeConsts")
 
-#' Get the sizes of clusters of the `Partition` object.
-#' @inheritParams clusters_sizes
-#' @param partition A Partition object.
-#' @returns A numeric vector representing the sizes of clusters.
-#' @keywords internal
-setMethod(
-  "clusters_sizes",
-  signature(partition = "Partition", sizes = "ANY"),
-  function(partition, sizes)
-  {
-    clusters_sizes(partition$partition,
-                   sizes = partition$pb$sizes)
-  }
-)
+
+# Definition of equality with other types of objects and conversion--------
 
 
 setMethod(
@@ -265,19 +296,6 @@ setMethod(
   function(target, current) all.equal(target$partition, current$partition)
 )
 
-#' Number of elements in a partition
-#'
-#' Give the number of elements in a partition
-#' @param x A `Partition` object
-#' @returns the number of elements in the partition. (positive integer)
-#' @name partition_length
-#' @rdname partition_length
-#' @keywords internal
-NULL
-
-#' @rdname partition_length
-#' @keywords internal
-setMethod("length", signature(x = "Partition"), function(x) length(x$partition))
 
 #' Convert a list of partitions to a [tibble][tibble::tibble-package]
 #' @param partitions A list of `Partition` objects.

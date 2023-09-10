@@ -17,7 +17,7 @@ gen_initial_partition <- function(pb, mode = "unitary", nbFusions = 1L)
   n <- pb$n()
 
   partition <- seq_len(n)
-  clustersSizes <- clusters_sizes(partition, pb$sizes)
+  clustersSizes <- .clusters_sizes(partition, pb$sizes)
 
   # If "unitary" mode, return the initial partition without any fusion
   if (mode == "unitary")

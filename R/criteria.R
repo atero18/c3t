@@ -3,6 +3,10 @@
 #' @include calinski_harabasz.R
 #' @include dunn_index.R
 
+
+# Find information about criteria -----------------------------------------
+
+
 #' @importFrom tibble tibble
 CRITERIA <- tibble(criterion = c("CHI", "Dunn"), # nolint: object_name_linter
                    package = "c3t",
@@ -354,6 +358,10 @@ criteria_linkages_grid <- function(criteria, linkages)
 
   grid
 }
+
+
+# Find optimality ---------------------------------------------------------
+
 
 #' Evaluating quality of partitions
 #'

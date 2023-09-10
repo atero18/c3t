@@ -1,6 +1,7 @@
 #' @include pbCon.R
 NULL
 
+
 #' Find articulation points
 #'
 #' @description find articulation points of a partition.
@@ -13,6 +14,7 @@ NULL
 NULL
 
 
+# Check is an alement is an articulation point ----------------------------
 
 #' @describeIn articulation_points Indicates whether a point in a
 #' set is an articulation point or not. Based on a BFS
@@ -174,6 +176,10 @@ is_articulation_pt_cluster <- function(x, contiguity, partition)
     return(is_articulation_pt(posX, contiguityMatrixRegionX))
   }
 }
+
+
+# Find all articulation points --------------------------------------------
+
 
 #' @describeIn articulation_points Returns the list of articulation points
 #' in a cluster resulting from a partition.

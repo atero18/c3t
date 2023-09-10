@@ -4,7 +4,7 @@
 \alias{clusters_sizes,Partition-method}
 \title{Get the sizes of clusters of the \code{Partition} object.}
 \usage{
-\S4method{clusters_sizes}{Partition}(partition, sizes = rep(1, length(partition)))
+\S4method{clusters_sizes}{Partition}(partition, sizes = NULL)
 }
 \arguments{
 \item{partition}{A Partition object.}

@@ -1,6 +1,9 @@
 #' @include abstractSymMat.R
 
 
+# Creation of the `DistMat` class -----------------------------------------
+
+
 #' Create a reference class for `DistMat`, representing the distance matrix
 #'
 #' @field distances An `AbstractSymMat` object representing the distance matrix.
@@ -54,409 +57,6 @@ distMat$methods(
 
     distances$which_na(subsetRow, subsetCol, nanIsNA = FALSE, simplify = TRUE)
   }
-)
-
-#' @rdname abstractSymMat_properties
-#' @keywords internal
-setMethod("names", signature = "DistMat", function(x) names(x$distances))
-# Few shortcuts to access to the property of the distances values
-
-#' @rdname abstractSymMat_properties
-#' @keywords internal
-setMethod("length", signature = "DistMat", function(x) length(x$distances))
-
-#' @rdname abstractSymMat_properties
-#' @keywords internal
-setMethod("dim", signature = "DistMat", function(x) dim(x$distances))
-
-#' @rdname abstractSymMat_properties
-#' @keywords internal
-setMethod("nrow", signature = "DistMat", function(x) nrow(x$distances))
-
-#' @rdname abstractSymMat_properties
-#' @keywords internal
-setMethod("ncol", signature = "DistMat", function(x) ncol(x$distances))
-
-distMat$methods(
-  #' Check if the function `d` is present to calculate distance values
-  #' @returns TRUE if the function d is present, FALSE otherwise
-  #' @noRd
-  distanceExists = function() !is.null(d),
-  calcul_needed_distances = function(subsetRow, subsetCol = NULL)
-  {
-    na <- which_na(subsetRow, subsetCol)
-
-    if (nrow(na) == 0L)
-      return(invisible(TRUE))
-
-    .self[na] <- calculate_distances(na, d, data)
-
-    invisible(TRUE)
-  },
-  calcul_missing_distances = function()
-  {
-    na <- which_na()
-
-    if (nrow(na) == 0L)
-      return(invisible(TRUE))
-
-    .self[na] <- calculate_distances(na, d, data)
-
-    invisible(TRUE)
-  }
-)
-
-#' Access to `DistMat` data`
-#'
-#' Rules are the following :
-#' * when rows and columns are given a submatrix is returned with the
-#' asked rows and columns
-#' * when only rows (resp. columns are given) a submatrix is return with
-#' the asked rows (resp. columns) and the entire columns (resp. rows)
-#' * When rows and columns are missing the entire matrix is sent back.
-#' Depending on `drop` (a flag) is there is only one row and / or
-#' one column given the result will be simplified in a vector form or not.
-#' If some values are missing they will be calculated if possible with the `d`
-#' distance function with the `data` data frame.
-#' @name distMat-access
-#' @rdname distMat-access
-#' @param i A vector composed of the indices of the wished rows.
-#' @param j A vector composed of the indices of the wished columns
-#' @param x An `AbstractSymMat` or inheriting object
-#' @returns Depending on `drop` and the dimensions of `i` and `j`, a matrix or
-#' a vector.
-NULL
-
-#' @rdname distMat-access
-#' @keywords internal
-setMethod(
-  "[",
-  signature(x = "DistMat", i = "matrix", j = "missing", drop = "ANY"),
-  function(x, i, j, drop)
-  {
-    if (missing(drop))
-      drop <- TRUE
-    else
-      drop <- isTRUE(drop)
-
-    res <- x$distances[i, drop = drop]
-
-    posNA <- is.na(res)
-    if (any(posNA))
-    {
-      naIndexes <- i[posNA, , drop = FALSE]
-      naDistances <- calculate_distances(naIndexes,
-                                         x$d, x$data)
-
-      x[naIndexes] <- naDistances
-      res[posNA] <- naDistances
-    }
-
-    res
-
-  }
-)
-
-distMat_vectorial_access <- function(x, i, j, drop)
-{
-  drop <- ifelse(missing(drop), TRUE, isTRUE(drop))
-
-  if (missing(i))
-    i <- seq_len(nrow(x))
-
-  if (missing(j))
-    j <- seq_len(nrow(x))
-
-  res <- x$distances[i, j, drop = drop]
-
-  if (x$distanceExists())
-  {
-    posNA <- is.na(res)
-    if (any(posNA))
-    {
-
-      if (length(res) == 1L)
-        res <- calculate_distances(matrix(c(i, j), ncol = 2L),
-                                   x$d, x$data)
-
-      else
-      {
-        if (length(i) == 1L || length(j) == 1L)
-        {
-          posNA <- is.na(res)
-          indexs <- matrix(NA, nrow = sum(posNA), ncol = 2L)
-          if (length(i) == 1L)
-          {
-            indexs[, 1L] <- i
-            indexs[, 2L] <- j[posNA]
-          }
-          else
-          {
-            indexs[, 1L] <- j
-            indexs[, 2L] <- i[posNA]
-          }
-        }
-        else
-        {
-          posNA  <- which(is.na(res), arr.ind = TRUE)
-          indexs <- matrix(NA, nrow = nrow(posNA), ncol = 2L)
-          indexs[, 1L] <- i[posNA[, 1L]]
-          indexs[, 2L] <- j[posNA[, 2L]]
-        }
-
-        naDistances <- calculate_distances(indexs, x$d, x$data)
-        x[indexs] <- naDistances
-        res[posNA] <- naDistances
-      }
-    }
-  }
-
-  return(res)
-}
-
-#' @rdname distMat-access
-#' @keywords internal
-setMethod(
-  "[",
-  signature(x = "DistMat", i = "numericOrMissing",
-            j = "numericOrMissing", drop = "ANY"),
-  distMat_vectorial_access
-)
-
-#' @rdname distMat-access
-#' @keywords internal
-setMethod(
-  "[",
-  signature(x = "DistMat", i = "list", j = "missing", drop = "ANY"),
-  function(x, i, j, drop)
-  {
-    drop <- ifelse(missing(drop), TRUE, isTRUE(drop))
-
-    k <- length(i)
-    distances <- x$distances$values
-    presenceNA <- anyNA(distances)
-
-    matrices <- lapply(i, function(l) distances[l$i, l$j, drop = FALSE])
-
-    if (presenceNA)
-    {
-      elementsNA <-
-        lapply(matrices, function(sM) which(is.na(sM), arr.ind = TRUE))
-
-      sousMatricesAvecNA <- which(lengths(elementsNA) > 0L)
-      for (k in sousMatricesAvecNA)
-      {
-        indexs <- elementsNA[[k]]
-        indexs[, 1L] <- (i[[k]]$i)[indexs[, 1L]]
-        indexs[, 2L] <- (i[[k]]$j)[indexs[, 2L]]
-        naDistances <- calculate_distances(indexs, x$d, x$data)
-        x[indexs] <- naDistances
-        matrices[[k]][elementsNA[[k]]] <- naDistances
-      }
-    }
-
-    return(matrices)
-  }
-)
-
-#' `DistMat` values replacement
-#' Call the `AbstractSymMat` replacement method. Check that values
-#' are all positive and if `NA` replace them by `NA_real_`
-#' @keywords internal
-#' @name distMat_replace_values
-NULL
-
-#' @describeIn distMat_replace_values case when `i` and `j` are vectors.
-#' Might be missing.
-#' @keywords internal
-#' @importFrom checkmate assertDouble
-setReplaceMethod(
-  "[",
-  signature(x = "DistMat",
-            i = "numericOrMissing", j = "numericOrMissing",
-            value = "numeric"),
-  function(x, i, j, value)
-  {
-    assertNumeric(value, lower = 0.0,
-                  any.missing = TRUE,
-                  all.missing = TRUE)
-
-    if (anyNA(value) &&
-        sum(is.na(value) & !is.nan(value)) > 0L)
-    {
-      value[is.na(value) & !is.nan(value)] <- NA_real_
-    }
-
-    if (missing(i) && missing(j))
-      x$distances[,] <- value
-    else if (missing(i))
-      x$distancs[, j] <- value
-    else if (missing(j))
-      x$distances[i, ] <- value
-    else
-      x$distances[i, j] <- value
-
-
-    return(x)
-  }
-)
-
-#' @describeIn distMat_replace_values case when indexes are given
-#' by pairs in a matrix
-#' @keywords internal
-#' @importFrom checkmate assertDouble
-setReplaceMethod(
-  "[",
-  signature(x = "DistMat", i = "matrix", j = "missing", value = "numeric"),
-  function(x, i, j, value)
-  {
-    assertNumeric(value, lower = 0.0,
-                  any.missing = TRUE,
-                  all.missing = TRUE)
-
-    if (anyNA(value) &&
-        sum(is.na(value) & !is.nan(value)) > 0L)
-    {
-      value[is.na(value) & !is.nan(value)] <- NA_real_
-    }
-
-    x$distances[i] <- value
-    return(x)
-  }
-)
-
-setGeneric("diag<-")
-
-#' @rdname abstractSymMat_replace_diag
-#' @keywords internal
-setReplaceMethod(
-  "diag",
-  signature(x = "DistMat", value = "ANY"),
-  function(x, value)
-  {
-    diag(x$distances) <- value
-    return(x)
-  }
-)
-
-setGeneric("diag")
-
-#' Access to diagonal of a `DistMat` object. The result is constantly
-#' a double vector of length the number of elements.
-#' @keywords internal
-#' @name distMat_access_diag
-setMethod("diag", signature(x = "DistMat"), function(x) double(nrow(x)))
-
-#' @rdname abstractSymMat_properties
-#' @keywords internal
-setMethod("isSymmetric", signature = "DistMat", function(object, ...) TRUE)
-
-#' @rdname abstractSymMat_properties
-#' @keywords internal
-setMethod("is.matrix", signature = "DistMat", function(x) TRUE)
-
-#' @rdname abstractSymMat_properties
-#' @keywords internal
-setMethod("is.numeric", signature = "DistMat", function(x) TRUE)
-
-
-#' Is there missing values in the distance matrix ?
-#' @param x a `DistMat` object
-#' @name distMat_NA
-#' @rdname distMat_NA
-#' @keywords internal
-NULL
-
-#' @describeIn distMat_NA Check if the `DistMat` object contains any NA values
-#' @keywords internal
-setMethod("anyNA", signature = "DistMat", function(x) anyNA(x$distances))
-
-#' @describeIn distMat_NA Check what values are NA
-#' @keywords internal
-setMethod("is.na", signature = "DistMat", function(x) is.na(x$distances))
-
-
-
-#' Custom all.equal method for comparing `DistMat` objects with matrices
-#' @param target,current two variables, one of them at least being a `DistMat`.
-#' @returns TRUE if the target and current are equal, FALSE otherwise
-#' @name distMat_alleq
-#' @keywords internal
-all.equal.DistMat.Matrix <- function(target, current)
-{
-  validObject(target)
-  all(target[] == current)
-}
-
-#' @name distMat_alleq
-#' @keywords internal
-setMethod(
-  "all.equal",
-  signature(target = "DistMat", current = "matrix"),
-  all.equal.DistMat.Matrix
-)
-
-#' @describeIn distMat_alleq matrix + `DistMat`
-setMethod(
-  "all.equal",
-  signature(target = "matrix", current = "DistMat"),
-  function(target, current, ...) all.equal.DistMat.Matrix(current, target)
-)
-
-#' @describeIn distMat_alleq `DistMat` + `DistMat`
-#' @keywords internal
-setMethod(
-  "all.equal",
-  signature(target = "DistMat", current = "DistMat"),
-  function(target, current, ...) all.equal(target$distances, current$distances)
-)
-
-#' Convert a matrix to a `DistMat` object
-#' @param from A matrix
-#' @returns A `DistMat` object with distances stored as a symmetric matrix
-#' @noRd
-setAs(
-  "matrix", "DistMat",
-  function(from)
-  {
-    distances <- as(from, "SymMMat")
-    distMat$new(distances = distances, d = NULL, data = NULL)
-  }
-)
-
-#' Convert a `dist` object to a `DistMat` object
-#' @param from A `dist` object
-#' @returns A `DistMat` object with distances stored as a vector
-#' @noRd
-#' @importFrom stats dist
-setAs(
-  "dist", "DistMat",
-  function(from)
-  {
-    distances <- as(from, "SymVMat")
-    distMat$new(distances = distances, d = NULL, data = NULL)
-  }
-)
-
-
-#' Convert a `DistMat` object to a `dist` object
-#' @param from A `DistMat` object
-#' @returns A `dist` object with distances extracted from the `DistMat` object
-#' @importFrom stats dist
-#' @name distMat_to_dist
-#' @noRd
-setAs("DistMat", "dist", function(from) as(from$distances, "dist"))
-
-#' @describeIn distMat_to_dist Convert a `DistMat` object to a dist object
-#' with options for diag and upper.
-#' @param m A `DistMat` object
-#' @param diag, upper, ... Additional parameters
-#' @noRd
-#' @importFrom stats as.dist
-setMethod(
-  "as.dist",
-  signature(m = "DistMat", diag = "ANY", upper = "ANY"),
-  function(m, diag, upper) as(m, "dist")
 )
 
 #' Constructor function for creating a `DistMat` object
@@ -581,6 +181,208 @@ constructor_DistMat <- function(distances = NULL, d = NULL, data = NULL, # nolin
   return(distMat$new(distances = distances, d = d, data = data))
 }
 
+# Definition for simple `DistMat` properties ------------------------------
+
+
+#' @rdname abstractSymMat_properties
+#' @keywords internal
+setMethod("names", signature = "DistMat", function(x) names(x$distances))
+# Few shortcuts to access to the property of the distances values
+
+#' @rdname abstractSymMat_properties
+#' @keywords internal
+setMethod("length", signature = "DistMat", function(x) length(x$distances))
+
+#' @rdname abstractSymMat_properties
+#' @keywords internal
+setMethod("dim", signature = "DistMat", function(x) dim(x$distances))
+
+#' @rdname abstractSymMat_properties
+#' @keywords internal
+setMethod("nrow", signature = "DistMat", function(x) nrow(x$distances))
+
+#' @rdname abstractSymMat_properties
+#' @keywords internal
+setMethod("ncol", signature = "DistMat", function(x) ncol(x$distances))
+
+setGeneric("diag")
+
+#' Access to diagonal of a `DistMat` object. The result is constantly
+#' a double vector of length the number of elements.
+#' @keywords internal
+#' @name distMat_access_diag
+setMethod("diag", signature(x = "DistMat"), function(x) double(nrow(x)))
+
+#' @rdname abstractSymMat_properties
+#' @keywords internal
+setMethod("isSymmetric", signature = "DistMat", function(object, ...) TRUE)
+
+#' @rdname abstractSymMat_properties
+#' @keywords internal
+setMethod("is.matrix", signature = "DistMat", function(x) TRUE)
+
+#' @rdname abstractSymMat_properties
+#' @keywords internal
+setMethod("is.numeric", signature = "DistMat", function(x) TRUE)
+
+
+# Calculation of missing and needed distances -----------------------------
+
+#' Is there missing values in the distance matrix ?
+#' @param x a `DistMat` object
+#' @name distMat_NA
+#' @rdname distMat_NA
+#' @keywords internal
+NULL
+
+#' @describeIn distMat_NA Check if the `DistMat` object contains any NA values
+#' @keywords internal
+setMethod("anyNA", signature = "DistMat", function(x) anyNA(x$distances))
+
+#' @describeIn distMat_NA Check what values are NA
+#' @keywords internal
+setMethod("is.na", signature = "DistMat", function(x) is.na(x$distances))
+
+
+distMat$methods(
+  #' Check if the function `d` is present to calculate distance values
+  #' @returns TRUE if the function d is present, FALSE otherwise
+  #' @noRd
+  distanceExists = function() !is.null(d),
+  calcul_needed_distances = function(subsetRow, subsetCol = NULL)
+  {
+    na <- which_na(subsetRow, subsetCol)
+
+    if (nrow(na) == 0L)
+      return(invisible(TRUE))
+
+    .self[na] <- calculate_distances(na, d, data)
+
+    invisible(TRUE)
+  },
+  calcul_missing_distances = function()
+  {
+    na <- which_na()
+
+    if (nrow(na) == 0L)
+      return(invisible(TRUE))
+
+    .self[na] <- calculate_distances(na, d, data)
+
+    invisible(TRUE)
+  }
+)
+
+# Data access -------------------------------------------------------------
+
+
+#' Access to `DistMat` data`
+#'
+#' Rules are the following :
+#' * when rows and columns are given a submatrix is returned with the
+#' asked rows and columns
+#' * when only rows (resp. columns are given) a submatrix is return with
+#' the asked rows (resp. columns) and the entire columns (resp. rows)
+#' * When rows and columns are missing the entire matrix is sent back.
+#' Depending on `drop` (a flag) is there is only one row and / or
+#' one column given the result will be simplified in a vector form or not.
+#' If some values are missing they will be calculated if possible with the `d`
+#' distance function with the `data` data frame.
+#' @name distMat-access
+#' @rdname distMat-access
+#' @param i A vector composed of the indices of the wished rows.
+#' @param j A vector composed of the indices of the wished columns
+#' @param x An `AbstractSymMat` or inheriting object
+#' @returns Depending on `drop` and the dimensions of `i` and `j`, a matrix or
+#' a vector.
+NULL
+
+#' @rdname distMat-access
+#' @keywords internal
+setMethod(
+  "[",
+  signature(x = "DistMat", i = "matrix", j = "missing", drop = "ANY"),
+  function(x, i, j, drop)
+  {
+    if (missing(drop))
+      drop <- TRUE
+    else
+      drop <- isTRUE(drop)
+
+    res <- x$distances[i, drop = drop]
+
+    posNA <- is.na(res)
+    if (any(posNA))
+    {
+      naIndexes <- i[posNA, , drop = FALSE]
+      naDistances <- calculate_distances(naIndexes,
+                                         x$d, x$data)
+
+      x[naIndexes] <- naDistances
+      res[posNA] <- naDistances
+    }
+
+    res
+
+  }
+)
+
+distMat_vectorial_access <- function(x, i, j, drop)
+{
+  drop <- ifelse(missing(drop), TRUE, isTRUE(drop))
+
+  if (missing(i))
+    i <- seq_len(nrow(x))
+
+  if (missing(j))
+    j <- seq_len(nrow(x))
+
+  res <- x$distances[i, j, drop = drop]
+
+  if (x$distanceExists())
+  {
+    posNA <- is.na(res)
+    if (any(posNA))
+    {
+
+      if (length(res) == 1L)
+        res <- calculate_distances(matrix(c(i, j), ncol = 2L),
+                                   x$d, x$data)
+
+      else
+      {
+        if (length(i) == 1L || length(j) == 1L)
+        {
+          posNA <- is.na(res)
+          indexs <- matrix(NA, nrow = sum(posNA), ncol = 2L)
+          if (length(i) == 1L)
+          {
+            indexs[, 1L] <- i
+            indexs[, 2L] <- j[posNA]
+          }
+          else
+          {
+            indexs[, 1L] <- j
+            indexs[, 2L] <- i[posNA]
+          }
+        }
+        else
+        {
+          posNA  <- which(is.na(res), arr.ind = TRUE)
+          indexs <- matrix(NA, nrow = nrow(posNA), ncol = 2L)
+          indexs[, 1L] <- i[posNA[, 1L]]
+          indexs[, 2L] <- j[posNA[, 2L]]
+        }
+
+        naDistances <- calculate_distances(indexs, x$d, x$data)
+        x[indexs] <- naDistances
+        res[posNA] <- naDistances
+      }
+    }
+  }
+
+  return(res)
+}
 
 #' Extract a sub-matrix in `DistMat` type from a `DistMat` object
 #' based on given indices
@@ -608,3 +410,219 @@ sousMatrice_distMat <- function(x, indices)
   distMat$new(distances = distances, d = d, data = data)
 
 }
+
+#' @rdname distMat-access
+#' @keywords internal
+setMethod(
+  "[",
+  signature(x = "DistMat", i = "numericOrMissing",
+            j = "numericOrMissing", drop = "ANY"),
+  distMat_vectorial_access
+)
+
+#' @rdname distMat-access
+#' @keywords internal
+setMethod(
+  "[",
+  signature(x = "DistMat", i = "list", j = "missing", drop = "ANY"),
+  function(x, i, j, drop)
+  {
+    drop <- ifelse(missing(drop), TRUE, isTRUE(drop))
+
+    k <- length(i)
+    distances <- x$distances$values
+    presenceNA <- anyNA(distances)
+
+    matrices <- lapply(i, function(l) distances[l$i, l$j, drop = FALSE])
+
+    if (presenceNA)
+    {
+      elementsNA <-
+        lapply(matrices, function(sM) which(is.na(sM), arr.ind = TRUE))
+
+      sousMatricesAvecNA <- which(lengths(elementsNA) > 0L)
+      for (k in sousMatricesAvecNA)
+      {
+        indexs <- elementsNA[[k]]
+        indexs[, 1L] <- (i[[k]]$i)[indexs[, 1L]]
+        indexs[, 2L] <- (i[[k]]$j)[indexs[, 2L]]
+        naDistances <- calculate_distances(indexs, x$d, x$data)
+        x[indexs] <- naDistances
+        matrices[[k]][elementsNA[[k]]] <- naDistances
+      }
+    }
+
+    return(matrices)
+  }
+)
+
+
+# Values replacement ------------------------------------------------------
+
+
+#' `DistMat` values replacement
+#' Call the `AbstractSymMat` replacement method. Check that values
+#' are all positive and if `NA` replace them by `NA_real_`
+#' @keywords internal
+#' @name distMat_replace_values
+NULL
+
+#' @describeIn distMat_replace_values case when `i` and `j` are vectors.
+#' Might be missing.
+#' @keywords internal
+#' @importFrom checkmate assertDouble
+setReplaceMethod(
+  "[",
+  signature(x = "DistMat",
+            i = "numericOrMissing", j = "numericOrMissing",
+            value = "numeric"),
+  function(x, i, j, value)
+  {
+    assertNumeric(value, lower = 0.0,
+                  any.missing = TRUE,
+                  all.missing = TRUE)
+
+    if (anyNA(value) &&
+        sum(is.na(value) & !is.nan(value)) > 0L)
+    {
+      value[is.na(value) & !is.nan(value)] <- NA_real_
+    }
+
+    if (missing(i) && missing(j))
+      x$distances[, ] <- value
+    else if (missing(i))
+      x$distancs[, j] <- value
+    else if (missing(j))
+      x$distances[i, ] <- value
+    else
+      x$distances[i, j] <- value
+
+
+    return(x)
+  }
+)
+
+#' @describeIn distMat_replace_values case when indexes are given
+#' by pairs in a matrix
+#' @keywords internal
+#' @importFrom checkmate assertDouble
+setReplaceMethod(
+  "[",
+  signature(x = "DistMat", i = "matrix", j = "missing", value = "numeric"),
+  function(x, i, j, value)
+  {
+    assertNumeric(value, lower = 0.0,
+                  any.missing = TRUE,
+                  all.missing = TRUE)
+
+    if (anyNA(value) &&
+        sum(is.na(value) & !is.nan(value)) > 0L)
+    {
+      value[is.na(value) & !is.nan(value)] <- NA_real_
+    }
+
+    x$distances[i] <- value
+    return(x)
+  }
+)
+
+setGeneric("diag<-")
+
+#' @rdname abstractSymMat_replace_diag
+#' @keywords internal
+setReplaceMethod(
+  "diag",
+  signature(x = "DistMat", value = "ANY"),
+  function(x, value)
+  {
+    diag(x$distances) <- value
+    return(x)
+  }
+)
+
+
+# Definition of equality with other types of objects and conversion--------
+
+
+
+#' Custom all.equal method for comparing `DistMat` objects with matrices
+#' @param target,current two variables, one of them at least being a `DistMat`.
+#' @returns TRUE if the target and current are equal, FALSE otherwise
+#' @name distMat_alleq
+#' @keywords internal
+all.equal.DistMat.Matrix <- function(target, current)
+{
+  validObject(target)
+  all(target[] == current)
+}
+
+#' @name distMat_alleq
+#' @keywords internal
+setMethod(
+  "all.equal",
+  signature(target = "DistMat", current = "matrix"),
+  all.equal.DistMat.Matrix
+)
+
+#' @describeIn distMat_alleq matrix + `DistMat`
+setMethod(
+  "all.equal",
+  signature(target = "matrix", current = "DistMat"),
+  function(target, current, ...) all.equal.DistMat.Matrix(current, target)
+)
+
+#' @describeIn distMat_alleq `DistMat` + `DistMat`
+#' @keywords internal
+setMethod(
+  "all.equal",
+  signature(target = "DistMat", current = "DistMat"),
+  function(target, current, ...) all.equal(target$distances, current$distances)
+)
+
+#' Convert a matrix to a `DistMat` object
+#' @param from A matrix
+#' @returns A `DistMat` object with distances stored as a symmetric matrix
+#' @noRd
+setAs(
+  "matrix", "DistMat",
+  function(from)
+  {
+    distances <- as(from, "SymMMat")
+    distMat$new(distances = distances, d = NULL, data = NULL)
+  }
+)
+
+#' Convert a `dist` object to a `DistMat` object
+#' @param from A `dist` object
+#' @returns A `DistMat` object with distances stored as a vector
+#' @noRd
+#' @importFrom stats dist
+setAs(
+  "dist", "DistMat",
+  function(from)
+  {
+    distances <- as(from, "SymVMat")
+    distMat$new(distances = distances, d = NULL, data = NULL)
+  }
+)
+
+
+#' Convert a `DistMat` object to a `dist` object
+#' @param from A `DistMat` object
+#' @returns A `dist` object with distances extracted from the `DistMat` object
+#' @importFrom stats dist
+#' @name distMat_to_dist
+#' @noRd
+setAs("DistMat", "dist", function(from) as(from$distances, "dist"))
+
+#' @describeIn distMat_to_dist Convert a `DistMat` object to a dist object
+#' with options for diag and upper.
+#' @param m A `DistMat` object
+#' @param diag, upper, ... Additional parameters
+#' @noRd
+#' @importFrom stats as.dist
+setMethod(
+  "as.dist",
+  signature(m = "DistMat", diag = "ANY", upper = "ANY"),
+  function(m, diag, upper) as(m, "dist")
+)

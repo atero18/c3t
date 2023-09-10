@@ -15,7 +15,9 @@ min_distance <- function(distances, nearestNeighbor = NULL)
   which(distances == min, arr.ind = TRUE)[1L, ]
 }
 
-# Distances between elements ----------------------------------------------
+
+# Definition of elements distance functions -------------------------------
+
 
 
 #' @importFrom rlang arg_match
@@ -254,6 +256,9 @@ diameter_cluster <- function(distances, indices)
 {
   max(distances[indices, indices])
 }
+
+
+# Calculate distances between elements ------------------------------------
 
 #' @importFrom stats dist
 #' @importFrom checkmate assertNumeric

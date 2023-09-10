@@ -188,7 +188,7 @@ is_feasible_solution <- function(partition, contiguity = NULL,
 
   assertNumber(m, lower = 0.0, finite = TRUE)
   assertNumber(M, lower = m, finite = FALSE)
-  clustersSizes <- clusters_sizes(partition, sizes)
+  clustersSizes <- .clusters_sizes(partition, sizes)
 
   all(m <= clustersSizes & clustersSizes <= M)
 }

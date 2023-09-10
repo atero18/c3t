@@ -6,8 +6,8 @@ expect_matrix_boundary <- function(x, nrows = 0L,
 {
   assertCount(nrows)
 
-  any.missing <- ifelse(nrows == 0L, TRUE, FALSE)
-  all.missing <- ifelse(nrows == 0L, TRUE, FALSE)
+  any.missing <- nrows == 0L
+  all.missing <- nrows == 0L
   ncols <- length(COLNAMES)
   expect_matrix(x,
                 mode = "integer",
@@ -19,8 +19,8 @@ expect_matrix_boundary <- function(x, nrows = 0L,
 
   if (nrow(x) > 0L && !is.null(cluster_int))
   {
-    expect_all(x[, 3L] == cluster_int | x[, 4L])
-    expect_xor(partition[x[, 1L]] == cluster_int,
+    expect_all(x[, 3L] == cluster_int | x[, 4L]) # nolint: object_usage_linter
+    expect_xor(partition[x[, 1L]] == cluster_int, # nolint: object_usage_linter
                partition[x[, 2L]] == cluster_int)
   }
 

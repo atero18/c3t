@@ -11,7 +11,7 @@
 \title{Give a score of constraint size respect}
 \usage{
 score_constraints_min(
-  clustersSizes = clusters_sizes(partition, sizes),
+  clustersSizes = NULL,
   m = 0,
   sizes = NULL,
   partition = NULL,
@@ -21,8 +21,9 @@ score_constraints_min(
 .score_constraints_min(m, clustersSizes, f = identity)
 
 score_constraints_max(
-  clustersSizes = clusters_sizes(partition, sizes),
+  clustersSizes = NULL,
   M = Inf,
+  sizes = NULL,
   partition = NULL,
   f = identity
 )
@@ -32,9 +33,10 @@ score_constraints_max(
 score_constraints_table(scoreContraintesMin, scoreContraintesMax)
 
 score_constraints(
-  clustersSizes = clusters_sizes(partition, sizes),
+  clustersSizes = NULL,
   m = 0,
   M = Inf,
+  sizes = NULL,
   partition = NULL,
   f = identity,
   details = FALSE

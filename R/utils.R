@@ -171,7 +171,7 @@ which_na <- function(mat, removeSymmetry = TRUE, removeDiagonal = TRUE)
       return(whichNA[0L, , drop = FALSE])
 
     else if (any(maskEquality))
-      whichNA <- whichNA[!maskEquality, 1L:2L , drop = FALSE]
+      whichNA <- whichNA[!maskEquality, 1L:2L, drop = FALSE]
   }
 
   whichNA

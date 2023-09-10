@@ -50,7 +50,9 @@ VignetteBuilder:
 ByteCompile: true
 Config/potools/style: base
 Config/testthat/edition: 3
-Config/testthat/load-all: list(export_all = TRUE, helpers = FALSE)
+Config/testthat/load-all: list(export_all = TRUE, helpers = TRUE)
+Config/testthat/parallel: true
+Config/testthat/start-first: AHR, calinski-harabasz
 Encoding: UTF-8
 Language: en-US
 LazyData: true

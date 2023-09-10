@@ -4,7 +4,7 @@
 \alias{clusters_sizes}
 \title{Cluster Sizes}
 \usage{
-clusters_sizes(partition, sizes = rep(1, length(partition)))
+clusters_sizes(partition, sizes = NULL)
 }
 \arguments{
 \item{partition}{A numeric vector representing the partition of

@@ -1,5 +1,7 @@
 #' @include abstractSymMat.R
 
+# Creation of the `SymVMat` class -----------------------------------------
+
 #' @keywords internal
 symVMat <- setRefClass(
   "SymVMat",
@@ -18,6 +20,11 @@ symVMat$methods(
     defaultDiag <<- defautD # nolint: undesirable_operator_linter
   }
 )
+
+
+# Localisation of elements ------------------------------------------------
+
+
 position_element_symVMat <- function(x, i, j = NULL)
 {
   if (is.null(j))
@@ -69,6 +76,9 @@ indexs_elements_symVMat <- function(x, pos)
   return(indexs)
 
 }
+
+# Data access -------------------------------------------------------------
+
 
 #' @rdname abstractSymMat_access
 #' @keywords internal
@@ -153,7 +163,8 @@ setMethod(
   }
 )
 
-# Data affectation
+# Values replacement ------------------------------------------------------
+
 #' @importFrom checkmate assertNumber
 assignationSimple_symVMat <- function(x, i, j, value)
 {
@@ -254,6 +265,9 @@ setAs(
     symVMat$new(values = from, dim = dim, names = names, defaultDiag = 0.0)
   }
 )
+
+# Definition of equality with other types of objects and conversion--------
+
 
 #' @importFrom stats as.dist
 setAs(

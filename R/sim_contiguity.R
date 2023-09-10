@@ -112,3 +112,30 @@ grid_contiguity_matrix <- function(x_int, y_int, # nolint: cyclocomp_linter
   return(M_mat)
 
 }
+
+#' @importFrom checkmate assertCount assertFlag
+#' @examples closest_neighbor_contiguity(3L)
+#' @keywords internal
+closest_neighbor_contiguity <- function(n = 4L, loop = FALSE)
+{
+  assertCount(n)
+
+  if (n == 0L)
+    return(matrix(nrow = 0L, ncol = 0L))
+  else if (n == 1L)
+    return(matrix(FALSE, nrow = 1L, ncol = 1L))
+
+  assertFlag(loop)
+  contiguity <- matrix(FALSE, nrow = n, ncol = n)
+
+  indices <- cbind(seq_len(n - 1L), seq(2L, n))
+  indices <- rbind(indices,
+                   indices[, 2L:1L, drop = FALSE])
+
+  contiguity[indices] <- TRUE
+
+  if (loop)
+    contiguity[1L, n] <- contiguity[n, 1L] <- TRUE
+
+  contiguity
+}

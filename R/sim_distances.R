@@ -16,3 +16,15 @@ gen_distances <- function(n, mean = 1.0, sd = 1.0)
 
   distances_mat + t(distances_mat)
 }
+
+#' @importFrom checkmate assertCount assertFlag
+#' @keywords internal
+empty_distance_matrix <- function(n, madeofNA = FALSE)
+{
+  assertCount(n)
+  assertFlag(madeofNA)
+
+  value <- ifelse(madeofNA, NA_real_, 0.0)
+
+  matrix(value, nrow = n, ncol = n)
+}

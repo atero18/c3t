@@ -21,13 +21,27 @@
 #' @rdname score_size_constraints
 NULL
 
-NEEDCLUSTERSIZESORPART <- "clusters sizes or partition must be given."
+
+.calculateClustersSizes <- function(clustersSizes, partition, sizes)
+{
+  if (!is.null(clustersSizes))
+    return(clustersSizes)
+
+
+  if (is.null(sizes) || is.null(partition))
+  {
+    stop("clusters sizes or partition must be given.")
+  }
+  assertPartition(partition)
+  n <- length(partition)
+  assertSizes(sizes, len = n)
+  clusters_sizes(partition, sizes)
+}
 
 #' @rdname score_size_constraints
 #' @keywords internal
 #' @importFrom checkmate assertNumber assertFunction
-score_constraints_min <- function(clustersSizes =
-                                    clusters_sizes(partition, sizes),
+score_constraints_min <- function(clustersSizes = NULL,
                                   m = 0.0,
                                   sizes = NULL,
                                   partition = NULL,
@@ -36,17 +50,7 @@ score_constraints_min <- function(clustersSizes =
   assertNumber(m, lower = 0.0, finite = TRUE, null.ok = FALSE)
   assertFunction(f)
 
-  if (!"clustersSizes" %in% names(as.list(match.call())))
-  {
-    if (is.null(sizes) || is.null(partition))
-    {
-      stop(NEEDCLUSTERSIZESORPART)
-    }
-    assertPartition(partition)
-    n <- length(partition)
-    assertSizes(sizes, len = n)
-    clustersSizes <- clusters_sizes(partition, sizes)
-  }
+  clustersSizes <- .calculateClustersSizes(clustersSizes, sizes, partition)
 
 
   .score_constraints_min(m, clustersSizes, f)
@@ -76,25 +80,15 @@ score_constraints_min <- function(clustersSizes =
 #' @rdname score_size_constraints
 #' @keywords internal
 #' @importFrom checkmate assertNumber assertFunction
-score_constraints_max <- function(clustersSizes =
-                                    clusters_sizes(partition, sizes),
+score_constraints_max <- function(clustersSizes = NULL,
                                   M = Inf,
+                                  sizes = NULL,
                                   partition = NULL,
                                   f = identity)
 {
   assertNumber(M, lower = 0.0, finite = FALSE, null.ok = FALSE)
   assertFunction(f)
-  if (!"clustersSizes" %in% names(as.list(match.call())))
-  {
-    if (is.null(sizes) || is.null(partition))
-    {
-      stop(NEEDCLUSTERSIZESORPART)
-    }
-    assertPartition(partition)
-    n <- length(partition)
-    assertSizes(sizes, len = n, M = M)
-    clustersSizes <- clusters_sizes(partition, sizes)
-  }
+  clustersSizes <- .calculateClustersSizes(clustersSizes, sizes, partition)
   .score_constraints_max(M, clustersSizes, f)
 }
 
@@ -137,24 +131,15 @@ score_constraints_table <- function(scoreContraintesMin,
 #' the final score.
 #' @keywords internal
 #' @importFrom checkmate assertFlag
-score_constraints <- function(clustersSizes = clusters_sizes(partition, sizes),
+score_constraints <- function(clustersSizes = NULL,
                               m = 0.0, M = Inf,
+                              sizes = NULL,
                               partition = NULL,
                               f = identity, details = FALSE)
 {
   assertFlag(details)
 
-  if (!"clustersSizes" %in% names(as.list(match.call())))
-  {
-    if (is.null(sizes) || is.null(partition))
-    {
-      stop(NEEDCLUSTERSIZESORPART)
-    }
-    assertPartition(partition)
-    n <- length(partition)
-    assertSizes(sizes, len = n, M = M)
-    clustersSizes <- clusters_sizes(partition, sizes)
-  }
+  clustersSizes <- .calculateClustersSizes(clustersSizes, sizes, partition)
 
   scoreContraintesMin <- .score_constraints_min(m, clustersSizes, f)
   scoreContraintesMax <- .score_constraints_max(M, clustersSizes, f)

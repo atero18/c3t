@@ -167,6 +167,12 @@ simplify_maxSizeConst <- function(M_vec, sizes, connectedComponents = NULL)
 
 # Clusters sizes ----------------------------------------------------------
 
+.clusters_sizes <- function(partition, sizes)
+{
+  tapply(sizes, partition, sum, simplify = TRUE)
+}
+
+
 #' Cluster Sizes
 #'
 #' @description Determines the sizes of clusters for a given
@@ -178,25 +184,30 @@ simplify_maxSizeConst <- function(M_vec, sizes, connectedComponents = NULL)
 #' individual elements.
 #' @name clusters_sizes
 #' @export
-#' @importFrom checkmate assertNumeric
 clusters_sizes <-
-  function(partition, sizes = rep(1.0, length(partition)))
+  function(partition, sizes = NULL)
 {
+
   # Argument verification
   assertPartition(partition)
-  assertNumeric(sizes, lower = 0.0,
-                finite = TRUE,
-                len = length(partition), any.missing = FALSE)
+  n <- length(partition)
+  if (is.null(sizes))
+    sizes <- one_person_per_case(n, "integer")
+  else
+    assertSizes(sizes, len = n)
 
-  tapply(sizes, partition, sum)
-}
-
-connectedComponents_sizes <- function(components, sizes)
-{
-  tapply(sizes, components, sum, simplify = TRUE)
+  .clusters_sizes(partition, sizes)
 }
 
 setGeneric("clusters_sizes", clusters_sizes)
+
+
+#' @importFrom checkmate assertVector
+connectedComponents_sizes <- function(components, sizes = NULL)
+{
+  clusters_sizes(components, sizes)
+}
+
 
 #' Clusters Too Small
 #'
@@ -207,7 +218,7 @@ setGeneric("clusters_sizes", clusters_sizes)
 #' cluster size constraint.
 #' @keywords internal
 #' @noRd
-clusters_trop_petits <- function(m_num, partition, sizes)
+too_small_clusters <- function(m_num, partition, sizes)
 {
   taillesClusters <- clusters_sizes(partition, sizes)
   tooSmallClusters <- names(taillesClusters)[taillesClusters < m_num]
@@ -216,7 +227,7 @@ clusters_trop_petits <- function(m_num, partition, sizes)
 }
 
 
-setGeneric("clusters_trop_petits", clusters_trop_petits)
+setGeneric("too_small_clusters", too_small_clusters)
 
 #' Number of Clusters Too Small
 #'
@@ -224,7 +235,7 @@ setGeneric("clusters_trop_petits", clusters_trop_petits)
 #' are too small based on a given size constraint.
 #' @keywords internal
 #' @noRd
-nb_clusters_trop_petits <- function(m_num, partition, sizes)
+nb_too_small_clusters <- function(m_num, partition, sizes)
 {
   as.integer(sum(clusters_sizes(partition, sizes) < m_num))
 }
@@ -238,7 +249,7 @@ nb_clusters_trop_petits <- function(m_num, partition, sizes)
 #' size constraint.
 #' @keywords internal
 #' @noRd
-clusters_trop_gros <- function(M_num, partition, sizes)
+too_big_clusters <- function(M_num, partition, sizes)
 {
   taillesClusters <- clusters_sizes(partition, sizes)
   tooBigClusters <- names(taillesClusters)[taillesClusters > M_num]
@@ -247,7 +258,7 @@ clusters_trop_gros <- function(M_num, partition, sizes)
 }
 
 
-setGeneric("clusters_trop_gros", clusters_trop_gros)
+setGeneric("too_big_clusters", too_big_clusters)
 
 #' Number of Clusters Too Large
 #'
@@ -255,7 +266,7 @@ setGeneric("clusters_trop_gros", clusters_trop_gros)
 #' too large based on a given size constraint.
 #' @keywords internal
 #' @noRd
-nb_clusters_trop_gros <- function(M_num, partition, sizes)
+nb_too_big_clusters <- function(M_num, partition, sizes)
 {
   as.integer(sum(clusters_sizes(partition, sizes) > M_num))
 }

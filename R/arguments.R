@@ -1,4 +1,7 @@
-# Class unions
+
+# Class unions ------------------------------------------------------------
+
+
 #' @importFrom methods setClassUnion
 setClassUnion("numericOrMissing", members = c("numeric", "missing"))
 setClassUnion("functionOrNULL", members = c("function", "NULL"))
@@ -9,6 +12,10 @@ setClassUnion("numericOrLogical", members = c("numeric", "logical"))
 setClassUnion("matriceOrNULL", members = c("matrix", "NULL"))
 setClassUnion("numericOrNULL", members = c("numeric", "NULL"))
 setClassUnion("logicalOrNULL", members = c("logical", "NULL"))
+
+
+# General checks ----------------------------------------------------------
+
 
 #' @name check_general
 #' @param .var.name Name of the checked object to print in assertions.
@@ -256,6 +263,11 @@ assertStringChoice <- makeAssertionFunction(checkStringChoice)
 #' @importFrom checkmate makeTestFunction
 testStringChoice <- makeTestFunction(checkStringChoice)
 
+
+# Contiguity checks -------------------------------------------------------
+
+
+
 #' Check if an argument is a contiguity matrix
 #'
 #' Check if an argument is a matrix with contiguity matrix properties.
@@ -378,6 +390,12 @@ assertContiguityGraph <- makeAssertionFunction(checkContiguityGraph)
 #' @importFrom checkmate makeTestFunction
 testContiguityGraph <- makeTestFunction(checkContiguityGraph)
 
+
+
+# Distance matrix checks --------------------------------------------------
+
+
+
 #' Check if an argument is a distance matrix
 #'
 #' @param x Matrix to be tested
@@ -461,6 +479,9 @@ assertDistanceMatrix <- makeAssertionFunction(checkDistanceMatrix)
 #' @export
 #' @importFrom checkmate makeTestFunction
 testDistanceMatrix <- makeTestFunction(checkDistanceMatrix)
+
+
+# Partition checks --------------------------------------------------------
 
 
 #' Check if an argument is a partition
@@ -562,6 +583,11 @@ assertRegionalisation <- makeAssertionFunction(checkRegionalisation)
 #' @export
 #' @importFrom checkmate makeTestFunction
 testRegionalisation <- makeTestFunction(checkRegionalisation)
+
+
+
+# Parameters checks -------------------------------------------------------
+
 
 #' Checking is an argument is a criterion
 

@@ -1,3 +1,4 @@
+#' @include arguments.R
 #' @include AHR_single.R
 #' @include criteria.R
 

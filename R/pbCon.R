@@ -194,28 +194,28 @@ pbCon$methods(
     if (!hasMinConstraint())
       return(integer(0L))
 
-    clusters_trop_petits(m, partition, sizes)
+    too_small_clusters(m, partition, sizes)
   },
   nbTooSmallClusters = function(partition)
   {
     if (!hasMinConstraint())
       return(0L)
 
-    nb_clusters_trop_petits(m, partition, sizes)
+    nb_too_small_clusters(m, partition, sizes)
   },
   tooBigClusters = function(partition)
   {
     if (!hasMaxConstraint())
       return(integer(0L))
 
-    clusters_trop_gros(M, partition, sizes)
+    too_big_clusters(M, partition, sizes)
   },
   nbTooBigClusters = function(partition)
   {
     if (!hasMaxConstraint())
       return(0L)
 
-    nb_clusters_trop_gros(M, partition, sizes)
+    nb_too_big_clusters(M, partition, sizes)
   }
 )
 
@@ -378,8 +378,8 @@ pbCon$methods(
     if (hasMaxConstraint() || withFusionSize)
     {
       tailleFusion <-
-        size_after_fusion(contiguiteClasses, clusters_sizes(partition,
-                                                            sizes))
+        size_after_fusion(contiguiteClasses, .clusters_sizes(partition,
+                                                             sizes))
     }
 
     if (hasMaxConstraint())
@@ -448,7 +448,7 @@ constructor_pbCon <- function(distances = NULL, contiguity = NULL,
     assertContiguityGraph(contiguity)
 
   if (is.null(sizes))
-    sizes <- rep(1.0, n)
+    sizes <- one_person_per_case(n)
 
   pbCon$new(distances = mat$distances, d = mat$d, data = mat$data,
             contiguity = contiguity,

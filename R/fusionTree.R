@@ -351,7 +351,7 @@ search_fusion_tree_pb <- function(pb, search = "DFS",
     contiguities <- cbind(contiguities, NA)
     colnames(contiguities)[3L] <- "fusionSize"
 
-    clustersSizes  <- clusters_sizes(regionalisation, pb$sizes)
+    clustersSizes  <- .clusters_sizes(regionalisation, pb$sizes)
 
     if (any(clustersSizes > pb$M))
     {

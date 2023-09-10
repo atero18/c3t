@@ -124,7 +124,7 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
 
   # Regions sizes
   initialRegionsSizes <- regionsSizes <-
-    clusters_sizes(regionalisation, pb$sizes)
+    .clusters_sizes(regionalisation, pb$sizes)
 
   regionsCardinals <- table(regionalisation)
   nbClustersInit <- length(regionsCardinals)
@@ -228,12 +228,14 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
   # Gestion de la fusion des clusters
   if (allowFusions && length(smallRegions) > 0L)
   {
+    # nocov start
     if (verbose)
     {
       alert <- gettext("Clusters fusion")
       cli_alert(alert)
 
     }
+    # nocov end
 
     fusion <- FALSE
     clustersVoisins <-
@@ -280,11 +282,13 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
       if (nrow(clustersVoisins) > 0L)
       {
         itFusions <- itFusions + 1L
+        # nocov start
         if (verbose && (itFusions == 1L || itFusions %% 10L == 0L))
         {
           alert <- gettext("Fusion {itFusions} (max: {maxItFusions})")
           cli_alert(alert)
         }
+        # nocov end
 
 
 
@@ -338,13 +342,15 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
       elementsTransferables <- calcul_elementsTransferables()
   }
 
+  # nocov start
   if (verbose && itFusions > 0L)
   {
     alert <- gettext("Number of iterations (fusions) : {itFusions}")
     cli_alert(alert)
   }
+  # nocov end
 
-
+  # nocov start
   # Transferts are made while there is at least one region which doesn't
   # check size constraints and there exists transferable elements
   if (allowTransferts && verbose)
@@ -352,11 +358,14 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
     ALERT <- gettext("Transfert of elements one-by-one")
     cli_alert(ALERT)
   }
+  # nocov end
 
   while (allowTransferts &&
         length(smallRegions) + length(bigRegions) > 0L &&
         length(elementsTransferables) > 0L)
   {
+    itTransfers <- itTransfers + 1L
+
     # We take the first element in the permuted set that is transferable
     x1 <- listeElements_vec[listeElements_vec %in% elementsTransferables][1L]
 
@@ -404,14 +413,16 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
     if (length(smallRegions) + length(bigRegions) > 0L)
       elementsTransferables <- calcul_elementsTransferables()
 
-    itTransfers <- itTransfers + 1L
+
   }
 
+  # nocov start
   if (verbose && itFusions > 0L)
   {
     alert <- gettext("Number of iterations (transferts) : {itTransfers}")
     cli_alert(alert)
   }
+  # nocov end
 
 
   if (is.null(status))
@@ -426,6 +437,7 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
       status <- "fully_resolved"
   }
 
+  # nocov start
   if (verbose)
   {
     message <-
@@ -441,6 +453,7 @@ resolve_regionalisation_pb <- # nolint: cyclocomp_linter
            fully_resolved = cli_alert_success(message)
     )
   }
+  # nocov end
 
   pb$m <- m
   pb$M <- M

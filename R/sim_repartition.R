@@ -102,3 +102,12 @@ gen_repartition <- function(nbElements_int,
 
   return(df_repartition)
 }
+
+#' @importFrom checkmate assertCount assertChoice
+one_person_per_case <- function(n, type = "double")
+{
+  assertCount(n)
+  assertChoice(type, c("double", "integer"))
+  value <- ifelse(type == "double", 1.0, 1L)
+  rep(value, n)
+}

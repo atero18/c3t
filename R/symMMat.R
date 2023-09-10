@@ -1,6 +1,8 @@
 #' @include abstractSymMat.R
 
-# Création de la classe
+
+# Creation of the `SymMMat` class -----------------------------------------
+
 
 #' @keywords internal
 symMMat <- setRefClass("SymMMat",
@@ -44,6 +46,9 @@ symMMat$methods(
   }
 )
 
+# Data access -------------------------------------------------------------
+
+
 #' @rdname abstractSymMat_access
 #' @keywords internal
 setMethod(
@@ -77,7 +82,7 @@ setMethod(
 )
 
 
-# Assignation des données
+# Values replacement ------------------------------------------------------
 
 assignation_symMat <- function(x, indexs, values)
 {
@@ -176,7 +181,8 @@ setReplaceMethod(
 
 # nocov end
 
-# Conversions
+# Definition of equality with other types of objects and conversion--------
+
 setAs(
   "matrix", "SymMMat",
   function(from)

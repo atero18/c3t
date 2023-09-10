@@ -1,6 +1,10 @@
 #' @include distances_elements.R
 #' @include pbCon.R
-#'
+
+
+# Define linkage distances functions --------------------------------------
+
+
 #' Distance inter-clusters de saut
 #'
 #' Mesure de ressemblance entre deux classes en appliquant une fonction
@@ -114,6 +118,10 @@ distance_Hausdorff <- function(elemsDistances)
   max(max(apply(elemsDistances, 1L, min)),
       max(apply(elemsDistances, 2L, min)))
 }
+
+
+# Information about linkages ----------------------------------------------
+
 
 # nocov start
 #' What linkages are available?
@@ -308,6 +316,10 @@ get_Cppmode_linkage <- function(linkage)
 
   ifelse(testString(cppMode), cppMode, FALSE)
 }
+
+
+
+# Calculate linkage distances ---------------------------------------------
 
 
 .calcul_distances_inter <- function(pb, partition, distancesACalculer, # nolint: cyclocomp_linter

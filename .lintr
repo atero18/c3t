@@ -2,6 +2,8 @@
 linters: all_linters(
     # { can be on an empty line and { + } on a same line
     brace_linter = NULL,
+    # Update cyclocomplexity from 15 to 30
+    cyclocomp_linter = cyclocomp_linter(30L),
     # $ operator can be used instead of [[
     # (useful when there are ReFClasses for instance)
     extraction_operator_linter = NULL,

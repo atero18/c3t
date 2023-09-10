@@ -7,6 +7,10 @@
 #' @importFrom stats dist
 setOldClass("dist", where = environment())
 
+
+# Creation of the abstract class `AbstractSymMat` -------------------------
+
+
 #' @title Abstract Class: `AbstractSymMat`
 #' @description A class handling the storage of a symmetric square matrix.
 #'
@@ -43,6 +47,11 @@ setRefClass(
                         simplify = TRUE) NULL
   )
 )
+
+
+
+# Definition for simple `AbstractSymMat` properties -----------------------
+
 
 #' Access properties of a `AbstractSymMat` object or subclasses
 #' @param x An `AbstractSymMat` object.
@@ -158,7 +167,12 @@ setMethod(
 #' @keywords internal
 setMethod("is.na", signature(x = "AbstractSymMat"), function(x) is.na(x$values))
 
-# Data access abstract rules
+
+
+# Data access -------------------------------------------------------------
+
+
+
 accesMatriceR <-
   selectMethod(
     "[",
@@ -208,7 +222,14 @@ setMethod(
   function(x, i, j, drop) (x[seq_len(x$dim), seq_len(x$dim)])
 )
 
-# Equality properties
+
+
+
+# Definition of equality with other types of objects and conversio --------
+
+
+
+
 setMethod(
   "all.equal",
   signature(target = "AbstractSymMat", current = "matrix"),
