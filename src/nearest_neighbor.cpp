@@ -51,14 +51,13 @@ Rcpp::NumericVector nearest_neighbor_matrix(const Rcpp::NumericMatrix& distances
   // Check if there is a contiguity constraint or not
   bool contiguityConstraint = contiguity.size() > 0;
 
-  unsigned int point = 0;
-  double minDist = 0.0;
+
   unsigned int noNeighbor = 0;
   unsigned int nn = noNeighbor;
   for(unsigned int k = 0; k < nbPoints; ++k)
   {
-    point = subsetPoints(k) - 1;
-    minDist = R_PosInf;
+    unsigned int point = subsetPoints(k) - 1;
+    double minDist = R_PosInf;
     for(auto j: subsetNeighbors)
     {
       --j;

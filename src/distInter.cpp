@@ -27,14 +27,13 @@ Rcpp::NumericVector distanceInterSymVMat(const arma::vec& values,
 {
   const unsigned int nbDistances = indexs.nrow();
   Rcpp::NumericVector distancesInter(nbDistances);
-  unsigned int cluster1, cluster2;
   for (unsigned int k = 0; k < nbDistances; k++)
   {
 
-    cluster1 = indexs(k, 0);
+    const unsigned int cluster1 = indexs(k, 0);
     arma::uvec elementsCluster1 = find(partition == cluster1);
 
-    cluster2 = indexs(k, 1);
+    const unsigned int cluster2 = indexs(k, 1);
     arma::uvec elementsCluster2 = find(partition == cluster2);
 
     distancesInter[k] = compSMSymVMat(values, dim, elementsCluster1,
@@ -132,7 +131,6 @@ float compSMSymVMat(const arma::vec& values,
                     const bool& aDefautDiag,
                     const double& defaultDiag)
 {
-  unsigned int posElement = 0;
   float valeurElement = 0.0;
 
   if (comp == "min" || comp == "max")
@@ -153,7 +151,7 @@ float compSMSymVMat(const arma::vec& values,
           valeurElement = defaultDiag;
         else
         {
-          posElement = posElementSymVMat(i, j, dim, aDefautDiag);
+          const unsigned int posElement = posElementSymVMat(i, j, dim, aDefautDiag);
           valeurElement = values(posElement);
         }
 
@@ -183,7 +181,7 @@ float compSMSymVMat(const arma::vec& values,
           valeur = defaultDiag;
         else
         {
-          posElement = posElementSymVMat(i, j, dim, aDefautDiag);
+          const unsigned int posElement = posElementSymVMat(i, j, dim, aDefautDiag);
           valeurElement = values(posElement);
         }
         valeur += valeurElement;
@@ -200,10 +198,9 @@ float compSMSymVMat(const arma::vec& values,
     // Maximum sur les lignes
     float maxLignes = -1.0;
 
-    float minLigne;
     for(const auto& i: lignes)
     {
-      minLigne = INFINITY;
+      float minLigne = INFINITY;
 
       for (const auto& j: colonnes)
       {
@@ -212,7 +209,7 @@ float compSMSymVMat(const arma::vec& values,
 
         else
         {
-          posElement = posElementSymVMat(i, j, dim, aDefautDiag);
+          const unsigned int posElement = posElementSymVMat(i, j, dim, aDefautDiag);
           valeurElement = values(posElement);
         }
 
@@ -227,17 +224,16 @@ float compSMSymVMat(const arma::vec& values,
     // Maximum sur les colonnes
     float maxColonnes = -1.0;
 
-    float minColonne;
     for(const auto& j: colonnes)
     {
-      minColonne = INFINITY;
+      float minColonne = INFINITY;
       for(const auto& i: lignes)
       {
         if(aDefautDiag && i == j)
           valeurElement = defaultDiag;
         else
         {
-          posElement = posElementSymVMat(i, j, dim, aDefautDiag);
+          const unsigned int posElement = posElementSymVMat(i, j, dim, aDefautDiag);
           valeurElement = values(posElement);
         }
 
