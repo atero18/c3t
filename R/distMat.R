@@ -266,31 +266,8 @@ setMethod(
 #' @name distMat_replace_values
 NULL
 
-
-setReplaceMethod(
-  "[",
-  signature(x = "DistMat", i = "numeric", j = "numeric", value = "numeric"),
-  function(x, i, j, value) {
-    assertDouble(value, lower = 0.0,
-                 any.missing = TRUE,
-                 all.missing = TRUE)
-
-    if (anyNA(value) &&
-        sum(is.na(value) & !is.nan(value)) > 0L)
-    {
-      value[is.na(value) & !is.nan(value)] <- NA_real_
-    }
-
-    x$distances[i, j] <- value
-
-
-    return(x)
-  }
-)
-
-
-#' @describeIn distMat_replace_values case when row(s) and column(s)
-#' are given
+#' @describeIn distMat_replace_values case when `i` and `j` are vectors.
+#' Might be missing.
 #' @keywords internal
 #' @importFrom checkmate assertDouble
 setReplaceMethod(
@@ -300,16 +277,15 @@ setReplaceMethod(
             value = "numeric"),
   function(x, i, j, value)
   {
-    assertDouble(value, lower = 0.0,
-                 any.missing = TRUE,
-                 all.missing = TRUE)
+    assertNumeric(value, lower = 0.0,
+                  any.missing = TRUE,
+                  all.missing = TRUE)
 
     if (anyNA(value) &&
         sum(is.na(value) & !is.nan(value)) > 0L)
     {
       value[is.na(value) & !is.nan(value)] <- NA_real_
     }
-
 
     if (missing(i) && missing(j))
       x$distances[,] <- value
@@ -334,9 +310,9 @@ setReplaceMethod(
   signature(x = "DistMat", i = "matrix", j = "missing", value = "numeric"),
   function(x, i, j, value)
   {
-    assertDouble(value, lower = 0.0,
-                 any.missing = TRUE,
-                 all.missing = TRUE)
+    assertNumeric(value, lower = 0.0,
+                  any.missing = TRUE,
+                  all.missing = TRUE)
 
     if (anyNA(value) &&
         sum(is.na(value) & !is.nan(value)) > 0L)

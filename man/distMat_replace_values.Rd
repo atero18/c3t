@@ -2,24 +2,15 @@
 % Please edit documentation in R/distMat.R
 \name{distMat_replace_values}
 \alias{distMat_replace_values}
-\alias{[<-,DistMat,numeric,numeric,numeric-method}
-\alias{[<-,DistMat,numeric,missing,numeric-method}
-\alias{[<-,DistMat,missing,numeric,numeric-method}
+\alias{[<-,DistMat,numericOrMissing,numericOrMissing,numeric-method}
 \alias{[<-,DistMat,matrix,missing,numeric-method}
-\alias{[<-,DistMat,missing,missing,matrix-method}
 \title{\code{DistMat} values replacement
 Call the \code{AbstractSymMat} replacement method. Check that values
 are all positive and if \code{NA} replace them by \code{NA_real_}}
 \usage{
-\S4method{[}{DistMat,numeric,numeric,numeric}(x, i, j) <- value
-
-\S4method{[}{DistMat,numeric,missing,numeric}(x, i, j) <- value
-
-\S4method{[}{DistMat,missing,numeric,numeric}(x, i, j) <- value
+\S4method{[}{DistMat,numericOrMissing,numericOrMissing,numeric}(x, i, j) <- value
 
 \S4method{[}{DistMat,matrix,missing,numeric}(x, i, j) <- value
-
-\S4method{[}{DistMat,missing,missing,matrix}(x, i, j) <- value
 }
 \description{
 \code{DistMat} values replacement
@@ -28,19 +19,11 @@ are all positive and if \code{NA} replace them by \code{NA_real_}
 }
 \section{Functions}{
 \itemize{
-\item \code{`[`(x = DistMat, i = numeric, j = numeric) <- value}: case when row(s) and column(s)
-are given
-
-\item \code{`[`(x = DistMat, i = numeric, j = missing) <- value}: case when only row(s) are
-given
-
-\item \code{`[`(x = DistMat, i = missing, j = numeric) <- value}: case when only columns are given
+\item \code{`[`(x = DistMat, i = numericOrMissing, j = numericOrMissing) <- value}: case when \code{i} and \code{j} are vectors.
+Might be missing.
 
 \item \code{`[`(x = DistMat, i = matrix, j = missing) <- value}: case when indexes are given
 by pairs in a matrix
-
-\item \code{`[`(x = DistMat, i = missing, j = missing) <- value}: when the entire distance matrix is
-replaced by another matrix
 
 }}
 \keyword{internal}
