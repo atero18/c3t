@@ -69,34 +69,20 @@ are all positive and if <code>NA</code> replace them by <code>NA_real_</code></p
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre><code># S4 method for DistMat,numeric,numeric,numeric
-[(x, i, j) &lt;- value
-
-# S4 method for DistMat,numeric,missing,numeric
-[(x, i, j) &lt;- value
-
-# S4 method for DistMat,missing,numeric,numeric
+    <div class="sourceCode"><pre><code># S4 method for DistMat,numericOrMissing,numericOrMissing,numeric
 [(x, i, j) &lt;- value
 
 # S4 method for DistMat,matrix,missing,numeric
-[(x, i, j) &lt;- value
-
-# S4 method for DistMat,missing,missing,matrix
 [(x, i, j) &lt;- value</code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
     
-<ul><li><p><code>`[`(x = DistMat, i = numeric, j = numeric) &lt;- value</code>: case when row(s) and column(s)
-are given</p></li>
-<li><p><code>`[`(x = DistMat, i = numeric, j = missing) &lt;- value</code>: case when only row(s) are
-given</p></li>
-<li><p><code>`[`(x = DistMat, i = missing, j = numeric) &lt;- value</code>: case when only columns are given</p></li>
+<ul><li><p><code>`[`(x = DistMat, i = numericOrMissing, j = numericOrMissing) &lt;- value</code>: case when <code>i</code> and <code>j</code> are vectors.
+Might be missing.</p></li>
 <li><p><code>`[`(x = DistMat, i = matrix, j = missing) &lt;- value</code>: case when indexes are given
 by pairs in a matrix</p></li>
-<li><p><code>`[`(x = DistMat, i = missing, j = missing) &lt;- value</code>: when the entire distance matrix is
-replaced by another matrix</p></li>
 </ul></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
