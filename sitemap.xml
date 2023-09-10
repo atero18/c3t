@@ -37,9 +37,6 @@
     <loc>dzt/reference/AHCTree_check_constraints.html</loc>
   </url>
   <url>
-    <loc>dzt/reference/AHCTree_constructor.html</loc>
-  </url>
-  <url>
     <loc>dzt/reference/AHCTree_properties.html</loc>
   </url>
   <url>
@@ -134,6 +131,9 @@
   </url>
   <url>
     <loc>dzt/reference/connected_components.html</loc>
+  </url>
+  <url>
+    <loc>dzt/reference/constructor_AHCTree.html</loc>
   </url>
   <url>
     <loc>dzt/reference/constructor_Partition.html</loc>
