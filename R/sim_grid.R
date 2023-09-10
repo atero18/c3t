@@ -165,6 +165,7 @@ gen_pb_from_grid <- function(grid, m = 0.0, M = Inf,
 
   pb <- constructor_pbCon(data = data,
                           sizes = grid$repartition$nbIndividuals,
+                          contiguity = grid$contiguity,
                           m = m, M = M,
                           d = d,
                           standardQuant = standardQuant,

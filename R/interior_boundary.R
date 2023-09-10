@@ -8,12 +8,19 @@ interior_boundary_cluster <- function(contiguity,
                                       partition,
                                       removeSymmetry = TRUE)
 {
+  COLNAMES <- c("x1", "x2", "cluster1", "cluster2")
+  EMPTYCONTIGUITIES <- matrix(nrow = 0L, ncol = 4L,
+                              dimnames = list(NULL, COLNAMES))
+
   # Identify which elements belong to our cluster
   masque <-  partition == cluster_int
 
   # If the cluster is empty / does not exist, there is no boundary
   if (!any(masque))
-    return(NULL)
+  {
+    warning("There is no element which are in `cluster_int`")
+    return(EMPTYCONTIGUITIES)
+  }
 
   if (is_pbCon(contiguity))
     contiguity <- getmatContPbCon(contiguity)
@@ -50,16 +57,19 @@ interior_boundary_cluster <- function(contiguity,
   }
 
   if (nrow(contiguites) > 0L)
+  {
     contiguites <- cbind(contiguites, cluster_int,
                          partition[contiguites[, 2L]])
 
+    rownames(contiguites) <- NULL
+    colnames(contiguites) <- COLNAMES
+  }
   else
-    contiguites <- matrix(nrow = 0L, ncol = 4L)
+    contiguites <- EMPTYCONTIGUITIES
 
-  rownames(contiguites) <- NULL
-  colnames(contiguites) <- c("x1", "x2", "cluster1", "cluster2")
 
-  return(contiguites)
+
+  contiguites
 }
 
 

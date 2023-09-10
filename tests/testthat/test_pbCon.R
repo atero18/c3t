@@ -57,28 +57,39 @@ test_that("Constraints must have correct values",
                                  M = max(sizes) + 1.0))
 })
 
+
 # Presence of Constraints Verification
 test_that("Check for the presence of constraints",
 {
+  expect_constraints <- function(pb, hasMin = FALSE, hasMax = FALSE)
+  {
+    if (hasMin)
+      expect_true(pb$hasMinConstraint())
+    else
+      expect_false(pb$hasMinConstraint())
+
+    if (hasMax)
+      expect_true(pb$hasMaxConstraint())
+    else
+      expect_false(pb$hasMaxConstraint())
+
+    if (hasMin || hasMax)
+      expect_true(pb$hasSizeConstraint())
+    else
+      expect_false(pb$hasSizeConstraint())
+  }
+
   pb <- constructor_pbCon(X, contiguity)
-  expect_false(pb$hasMinConstraint())
-  expect_false(pb$hasMaxConstraint())
-  expect_false(pb$hasSizeConstraint())
+  expect_constraints(pb, FALSE, FALSE)
 
   pb <- constructor_pbCon(X, contiguity, m = 2.0)
-  expect_true(pb$hasMinConstraint())
-  expect_false(pb$hasMaxConstraint())
-  expect_true(pb$hasSizeConstraint())
+  expect_constraints(pb, TRUE, FALSE)
 
   pb <- constructor_pbCon(X, contiguity, M = 2.0)
-  expect_false(pb$hasMinConstraint())
-  expect_true(pb$hasMaxConstraint())
-  expect_true(pb$hasSizeConstraint())
+  expect_constraints(pb, FALSE, TRUE)
 
   pb <- constructor_pbCon(X, contiguity, m = 1.0, M = 2.0)
-  expect_false(pb$hasMinConstraint())
-  expect_true(pb$hasMaxConstraint())
-  expect_true(pb$hasSizeConstraint())
+  expect_constraints(pb, FALSE, TRUE)
 })
 
 # Testing problem splitting into connected subproblems

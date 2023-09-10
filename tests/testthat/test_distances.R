@@ -40,7 +40,7 @@ test_that("Simulation",
                 nrows = n, ncols = n)
 
   expect_identical(diag(M), numeric(n))
-  expect_true(all(M >= 0.0))
-  expect_true(isSymmetric(M))
+  expect_all(M >= 0.0)
+  expect_symmetric(M)
 
 })

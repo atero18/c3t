@@ -171,21 +171,20 @@ setMethod(
   signature(target = "AHCTree", current = "AHCTree"),
   function(target, current)
   {
-    nbClustersTarget <- nbClusters(target)
-    nbClustersCurrent <- nbClusters(current)
 
-    if (!setequal(nbClustersCurrent, nbClustersTarget))
+    targetPartitions <- lapply(target$partitions, function(p) p$partition)
+    currentPartitions <- lapply(current$partitions, function(p) p$partition)
+
+    nbClustersTarget <- vapply(targetPartitions, nbClusters, integer(1L))
+    nbClustersCurrent <- vapply(currentPartitions, nbClusters, integer(1L))
+
+    if (length(targetPartitions) != length(currentPartitions))
       return(FALSE)
 
-    compPartitions <-
-      vapply(seq_along(nbClustersCurrent),
-             function(i)
-             {
-               all.equal(target$partitions[[i]],
-                        current$partitions[[i]]) # nolint: indentation_linter
-             },
-             logical(1L))
-    all(compPartitions)
+    names(targetPartitions) <- nbClustersTarget
+    names(currentPartitions) <- nbClustersCurrent
+
+    all.equal(targetPartitions, currentPartitions)
   }
 )
 

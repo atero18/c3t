@@ -23,7 +23,7 @@ test_that("Repartition of individuals",
                                       "nbIndividuals"]), 0L)
   expect_gte(sum(repartition$nbIndividuals == 0L), nbEmptyZones)
   expect_identical(sum(repartition$metropolis), nbMetropolises)
-  expect_false(any(repartition$emptyFixedZone & repartition$metropolis))
+  expect_none(repartition$emptyFixedZone & repartition$metropolis)
 })
 
 test_that("Context generation",

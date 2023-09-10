@@ -11,8 +11,7 @@ test_that("3 elements",
                 2.0, 3.0, 0.0), nrow = n)
 
   nn <- nearest_neighbor(M, inner = TRUE)
-  expect_true(is.vector(nn))
-  expect_length(nn, n)
+  expect_vector(nn, size = n)
   expect_named(nn, as.character(seq_len(n)))
   expect_equal(nn, c(2L, 1L, 1L), ignore_attr = TRUE)
 })
@@ -28,8 +27,7 @@ test_that("3 elements with names",
   colnames(M) <- c("x", "y", "z")
 
   nn <- nearest_neighbor(M, inner = TRUE)
-  expect_true(is.vector(nn))
-  expect_length(nn, n)
+  expect_vector(nn, size = n)
   expect_named(nn, rownames(M))
   expect_equal(nn, colnames(M)[c(2L, 1L, 1L)], ignore_attr = TRUE)
 })
@@ -46,14 +44,12 @@ test_that("5 elements with subset",
   # nolint end
 
   nn <- nearest_neighbor(M, inner = TRUE, subsetPoints = 2L:4L)
-  expect_true(is.vector(nn))
-  expect_length(nn, 3L)
+  expect_vector(nn, size = 3L)
   expect_named(nn, as.character(2L:4L))
   expect_equal(nn, c(1L, 1L, 1L), ignore_attr = TRUE)
 
   nn <- nearest_neighbor(M, inner = TRUE, subsetNeighbors = 2L:4L)
-  expect_true(is.vector(nn))
-  expect_length(nn, n)
+  expect_vector(nn, size = n)
   expect_named(nn, as.character(seq_len(n)))
   expect_equal(nn, c(2L, 3L, 2L, 2L, 2L), ignore_attr = TRUE)
 })
@@ -66,8 +62,7 @@ test_that("Vector",
                 2.0, 3.0, 0.0), nrow = n)
 
   nn <- nearest_neighbor(M[1L, ], inner = FALSE, subsetNeighbors = 2L:3L)
-  expect_true(is.vector(nn))
-  expect_length(nn, 1L)
+  expect_vector(nn, size = 1L)
   expect_named(nn, "1")
   expect_equal(nn, 2L, ignore_attr = TRUE)
 })
@@ -87,8 +82,7 @@ test_that("Contiguity Constraint",
   # nolint end
 
   nn <- nearest_neighbor(M, inner = TRUE, contiguity = C)
-  expect_true(is.vector(nn))
-  expect_length(nn, n)
+  expect_vector(nn, size = n)
   expect_named(nn, as.character(seq_len(n)))
   expect_equal(nn, c(3L, 3L, 1L), ignore_attr = TRUE)
 })
@@ -134,7 +128,7 @@ test_that("Update - no linkage",
   expect_vector(updateNN, size = n)
   expect_named(updateNN, as.character(seq_len(n)))
   expect_true(is.nan(updateNN[c2]))
-  expect_true(all(updateNN[-c2] != c2))
+  expect_all(updateNN[-c2] != c2)
   expect_true(updateNN[c1] != c2)
 
   updateNN2 <- nearest_neighbor(M, inner = TRUE)
@@ -166,7 +160,7 @@ test_that("Update - single linkage",
   expect_vector(updateNN, size = n)
   expect_named(updateNN, as.character(seq_len(n)))
   expect_true(is.nan(updateNN[c2]))
-  expect_true(all(updateNN[-c2] != c2))
+  expect_all(updateNN[-c2] != c2)
   expect_true(updateNN[c1] != c2)
 
   updateNN2 <- nearest_neighbor(newM, inner = TRUE)
@@ -198,7 +192,7 @@ test_that("Update - complete linkage",
   expect_vector(updateNN, size = n)
   expect_named(updateNN, as.character(seq_len(n)))
   expect_true(is.nan(updateNN[c2]))
-  expect_true(all(updateNN[-c2] != c2))
+  expect_all(updateNN[-c2] != c2)
   expect_true(updateNN[c1] != c2)
 
   updateNN2 <- nearest_neighbor(newM, inner = TRUE)

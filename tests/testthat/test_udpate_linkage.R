@@ -18,14 +18,14 @@ test_that("Update single linkage",
   updateLink <- update_single_linkage(linkDist, c1, c2)
   expect_true(is.matrix(updateLink))
   expect_identical(nrow(updateLink), nrow(linkDist))
-  expect_true(isSymmetric(updateLink))
-  expect_true(all(updateLink >= 0.0, na.rm = TRUE))
+  expect_symmetric(updateLink)
+  expect_all(updateLink >= 0.0, na.rm = TRUE)
   idsDiffc1c2 <- setdiff(seq_len(nrow(linkDist)), c(c1, c2))
   expect_identical(linkDist[idsDiffc1c2, idsDiffc1c2],
                    updateLink[idsDiffc1c2, idsDiffc1c2])
   idsDiffc1 <- setdiff(seq_len(nrow(linkDist)), c1)
   idsDiffc2 <- setdiff(seq_len(nrow(linkDist)), c2)
-  expect_true(all(is.nan(updateLink[c2, idsDiffc2])))
+  expect_all(is.nan(updateLink[c2, idsDiffc2]))
   expect_identical(updateLink[c1, idsDiffc1c2],
                    pmin(linkDist[c1, idsDiffc1c2], linkDist[c2, idsDiffc1c2]))
 
@@ -46,7 +46,7 @@ test_that("Update complete linkage",
   updateLink <- update_complete_linkage(linkDist, c1, c2)
   expect_true(is.matrix(updateLink))
   expect_identical(nrow(updateLink), nrow(linkDist))
-  expect_true(isSymmetric(updateLink))
+  expect_symmetric(updateLink)
   expect_true(all(updateLink >= 0.0, na.rm = TRUE))
   idsDiffc1c2 <- setdiff(seq_len(nrow(linkDist)), c(c1, c2))
   expect_identical(linkDist[idsDiffc1c2, idsDiffc1c2],
@@ -85,7 +85,7 @@ test_that("Update average linkage",
                                           partitionBefore = partition)
      expect_true(is.matrix(updateLink))
      expect_identical(nrow(updateLink), nrow(linkDist))
-     expect_true(isSymmetric(updateLink))
+     expect_symmetric(updateLink)
      expect_true(all(updateLink >= 0.0, na.rm = TRUE))
      idsDiffc1c2 <- setdiff(seq_len(nrow(linkDist)), c(c1, c2))
      expect_identical(linkDist[idsDiffc1c2, idsDiffc1c2],
@@ -127,7 +127,7 @@ test_that("Update some Lance-Williams linkage",
   updateLink <- lance_williams_update(linkDist, c1, c2, a1, a2, b, g)
   expect_true(is.matrix(updateLink))
   expect_identical(nrow(updateLink), nrow(linkDist))
-  expect_true(isSymmetric(updateLink))
+  expect_symmetric(updateLink)
   expect_true(all(updateLink >= 0.0, na.rm = TRUE))
   idsDiffc1c2 <- setdiff(seq_len(nrow(linkDist)), c(c1, c2))
   expect_identical(linkDist[idsDiffc1c2, idsDiffc1c2],
@@ -171,7 +171,7 @@ test_that("Calculate distance when needed - single linkage",
 
   expect_true(is.matrix(updateLink))
   expect_identical(nrow(updateLink), nrow(linkDist))
-  expect_true(isSymmetric(updateLink))
+  expect_symmetric(updateLink)
   expect_true(all(updateLink >= 0.0, na.rm = TRUE))
   expect_false(is.na(updateLink[1L, 2L]))
   expect_identical(updateLink[1L, 2L],
@@ -199,6 +199,6 @@ test_that("Don't calcule distances if not necessary - single linkage",
                                       elemDistances = elemDist,
                                       partitionBefore = partition)
 
-  expect_true(isSymmetric(updateLink))
+  expect_symmetric(updateLink)
   expect_true(is.na(updateLink[3L, 4L]))
 })

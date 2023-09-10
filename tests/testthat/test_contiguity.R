@@ -38,7 +38,7 @@ true_mat_rook <- matrix(c(T, T, T, F,
 # nolint end
 test_that("Rook 2*2",
 {
-  expect_true(all(mat_rook == true_mat_rook))
+  expect_all(mat_rook == true_mat_rook)
 })
 
 # Queen Contiguity
@@ -48,7 +48,7 @@ mat_queen <- grid_contiguity_matrix(x, y, "Queen")
 testContiguityMatrix(mat_queen)
 test_that("Queen 2*2",
 {
-  expect_true(all(mat_queen))
+  expect_all(mat_queen)
 })
 
 # 3x2 Grid
@@ -68,7 +68,7 @@ true_mat_rook <- matrix(c(T, T, F, T, F, F,
 # nolint end
 test_that("Rook 3*2",
 {
-  expect_true(all(mat_rook == true_mat_rook))
+  expect_all(mat_rook == true_mat_rook)
 })
 
 # Queen Contiguity
@@ -85,7 +85,7 @@ true_mat_queen <- matrix(c(T, T, F, T, T, F,
 # nolint end
 test_that("Queen 3*2",
 {
-  expect_true(all(mat_queen == true_mat_queen))
+  expect_all(mat_queen == true_mat_queen)
 })
 
 # Coordinate Conversion Tool (x,y) -> Matrix Position
