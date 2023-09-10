@@ -57,14 +57,13 @@ Rcpp::NumericVector distanceInterSymMMat(const arma::mat& values,
 {
   const unsigned int nbDistances = indexs.nrow();
   Rcpp::NumericVector distancesInter(nbDistances);
-  unsigned int cluster1, cluster2;
 
   for (unsigned int k = 0; k < nbDistances; k++)
   {
-    cluster1 = indexs(k, 0);
+    const unsigned int cluster1 = indexs(k, 0);
     arma::uvec elementsCluster1 = find(partition == cluster1);
 
-    cluster2 = indexs(k, 1);
+    const unsigned int cluster2 = indexs(k, 1);
     arma::uvec elementsCluster2 = find(partition == cluster2);
 
     distancesInter[k] = compSMSymMMat(values, elementsCluster1,
@@ -94,11 +93,8 @@ unsigned int posElementSymVMat(unsigned int i,
   unsigned int pos = 0;
 
   if (i > j)
-  {
-    unsigned int temp = i;
-    i = j;
-    j = temp;
-  }
+    std::swap(i, j);
+
   else if(aDefautDiag && i == j)
     return 0;
 
@@ -135,16 +131,10 @@ float compSMSymVMat(const arma::vec& values,
 
   if (comp == "min" || comp == "max")
   {
-    float valeur;
-
-    if (comp == "min")
-      valeur = INFINITY;
-    else
-      valeur = -1.0;
+    float valeur = comp == "min" ? INFINITY : -1.0;
 
     for(const auto& i: lignes)
     {
-
       for(const auto& j: colonnes)
       {
         if(aDefautDiag && i == j)
@@ -252,7 +242,7 @@ float compSMSymVMat(const arma::vec& values,
   else
   {
     Rcpp::stop(ERRUNAVAILABLELINKAGE);
-    return -1.;
+    return -1.0;
   }
 }
 
