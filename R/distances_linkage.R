@@ -338,7 +338,8 @@ get_Cppmode_linkage <- function(linkage)
   if (Cpp)
   {
     compCpp <- get_Cppmode_linkage(linkage)
-    Cpp <- !isFALSE(compCpp)
+    Cpp <- !isFALSE(compCpp) && !anyNA(pb)
+    ##Cpp <- !isFALSE(compCpp) && (!anyNA(pb) || inherits(pb, "DistMat"))
   }
 
   if (Cpp)

@@ -34,14 +34,14 @@ test_that("Correct format of returned data - valueOnly = FALSE",
   expect_identical(res$nbElementsClusters, nbElementsClusters)
 
   expect_vector(res$betweenClusters, ptype = double(), size = k)
-  expect_true(all(res$betweenClusters >= 0.0))
+  expect_all(res$betweenClusters >= 0.0)
   expect_named(res$betweenClusters, as.character(1L:2L))
 
   expect_vector(res$B, ptype = double(), size = 1L)
   expect_gte(res$B, 0.0)
 
   expect_vector(res$withinCluster, ptype = double(), size = k)
-  expect_true(all(res$withinCluster >= 0.0))
+  expect_all(res$withinCluster >= 0.0)
   expect_named(res$withinCluster, as.character(1L:2L))
 
   expect_vector(res$W, ptype = double(), size = 1L)

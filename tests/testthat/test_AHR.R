@@ -211,10 +211,15 @@ test_that("Same result independently of the entire linkage calculation",
   pb7x7 <- gen_pb(7L, 7L, d = "euclidean", calculateAllDistances = FALSE)
   pb7x7BIS <- pb7x7$copy(shallow = FALSE)
 
-  res1 <- AHR_single(pb7x7, linkage = "single", calculDistComplet = FALSE)
-  res2 <- AHR_single(pb7x7BIS, linkage = "single", calculDistComplet = TRUE)
+  partition <- seq_len(49L)
+  ##partition <- rep(seq_len(7L), each = 7L)
+  res1 <- AHR_single(pb7x7, linkage = "single",
+                     partitionInit = partition, calculDistComplet = FALSE)
+  res2 <- AHR_single(pb7x7BIS, linkage = "single",
+                     partitionInit = partition, calculDistComplet = TRUE)
 
-  for (i in seq_along(res1$partitions))
-    expect_identical(res1$partitions[[i]]$partition,
-                     res2$partitions[[i]]$partition)
+  expect_true(all.equal(res1, res2))
+  for (i in names(res1))
+    expect_identical(res1[[i]]$partition,
+                     res2[[i]]$partition)
 })

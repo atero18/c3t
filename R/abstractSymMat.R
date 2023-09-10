@@ -296,7 +296,6 @@ data_indexs_pos_vers_matrice <-
     res
   }
 
-
 #' @title Extract Submatrix from `AbstractSymMat`
 #' @param x An `AbstractSymMat` object.
 #' @param indexs A numeric vector representing row and column indices.

@@ -48,7 +48,7 @@ test_that("DistMat is a matrix",
 
 test_that("DistMat is symmetric",
 {
-  expect_true(isSymmetric(M))
+  expect_symmetric(M)
 })
 
 test_that("Returned dimensions are correct",
@@ -75,14 +75,14 @@ test_that("Accessing data one by one",
 
 test_that("Accessing a single row or column",
 {
-  expect_true(all(M[1L, ] == X[1L, ]))
-  expect_true(all(M[, 1L] == X[, 1L]))
+  expect_all(M[1L, ] == X[1L, ])
+  expect_all(M[, 1L] == X[, 1L])
 })
 
 test_that("Returned sub-matrix is correct",
 {
-  expect_true(all(M[1L, 1L:2L] == X[1L, 1L:2L]))
-  expect_true(all(M[1L:2L, 1L] == X[1L:2L, 1L]))
+  expect_all(M[1L, 1L:2L] == X[1L, 1L:2L])
+  expect_all(M[1L:2L, 1L] == X[1L:2L, 1L])
 })
 
 test_that("Returned matrix is indeed the distance matrix",

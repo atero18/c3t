@@ -23,7 +23,7 @@ test_that("2 clusters, 1 element per cluster",
 
   interDistMin <- matrix(c(Inf, 100.0,
                            100.0, Inf), nrow = 2L)
-  expect_true(all(dunn$linkageDistances == interDistMin))
+  expect_all(dunn$linkageDistances == interDistMin)
 
   expect_identical(dunn$separation, 100.0)
   expect_identical(dunn$D, Inf)
@@ -56,7 +56,7 @@ test_that("3 clusters, 2 elements per cluster",
                            1.0, Inf, 1.0,
                            3.0, 1.0, Inf), nrow = 3L)
 
-  expect_true(all(dunnMin$linkageDistances == interDistMin))
+  expect_all(dunnMin$linkageDistances == interDistMin)
   expect_identical(dunnMin$separation, 1.0)
   expect_identical(dunnMin$D, 1.0)
 
@@ -66,7 +66,7 @@ test_that("3 clusters, 2 elements per cluster",
                            3.0, Inf, 3.0,
                            5.0, 3.0, Inf), nrow = 3L)
 
-  expect_true(all(dunnMax$linkageDistances == interDistMax))
+  expect_all(dunnMax$linkageDistances == interDistMax)
   expect_identical(dunnMax$separation, 3.0)
   expect_identical(dunnMax$D, 3.0)
 
@@ -127,7 +127,7 @@ test_that("Updating Dunn index - min linkage distance",
                                   1.0, Inf, 1.0,
                                   2.0, 1.0, Inf), nrow = 3L)
 
-  expect_true(all(dunnUpdated$linkageDistances == interDistMinUpdated))
+  expect_all(dunnUpdated$linkageDistances == interDistMinUpdated)
   expect_identical(dunnUpdated$separation, 1.0)
   expect_identical(dunnUpdated$D, 1.0 / 2.0)
 })
@@ -157,7 +157,7 @@ test_that("Updating Dunn index - max linkage distance",
                                   2.0, Inf, 3.0,
                                   5.0, 3.0, Inf), nrow = 3L)
 
-  expect_true(all(dunnUpdated$linkageDistances == interDistMaxUpdated))
+  expect_all(dunnUpdated$linkageDistances == interDistMaxUpdated)
   expect_identical(dunnUpdated$separation, 2.0)
   expect_identical(dunnUpdated$D, 1.0)
 })
