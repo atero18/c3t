@@ -169,7 +169,7 @@ connected_components <- function(contiguity)
 {
   graph <- contiguity_matrix_to_graph(contiguity)
 
-  components(graph, mode = "weak")$membership
+  as.integer(components(graph, mode = "weak")$membership)
 
 }
 
@@ -181,5 +181,5 @@ nb_connected_components <- function(contiguity)
 {
   graph <- contiguity_matrix_to_graph(contiguity)
 
-  count_components(graph, mode = "weak")
+  as.integer(count_components(graph, mode = "weak"))
 }

@@ -59,7 +59,7 @@ verif_partition <- function(object)
   if (!testString(object$method))
     return("method must be a character string")
 
-  if (!is.vector(object$contraintes))
+  if (!testLogical(object$contraintes, len = 3L))
     return("contraintes must be a logical vector")
 
   if (!all(c("connectivity", "min", "max") %in% names(object$contraintes)))
@@ -67,6 +67,9 @@ verif_partition <- function(object)
                   "of connectivity, min, and max"))
 
 }
+
+#setValidity("Partition", verif_partition)
+
 
 #' Create a `Partition` using the provided parameters.
 #' @param pb A `pbCon` object.

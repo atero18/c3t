@@ -286,3 +286,29 @@ test_that("Transferable Points - Loss of Symmetry",
   expect_true(all(transferable_elements$frontier[2L, ] == c(2L, 4L, 1L, 2L)) ||
                 all(transferable_elements$frontier[2L, ] == c(4L, 2L, 2L, 1L)))
 })
+
+test_that("connected_components returns correct connected components",
+{
+  contiguity <- matrix(c(T, T, F, F, F,
+                         T, T, F, F, F,
+                         F, F, T, F, F,
+                         F, F, F, T, T,
+                         F, F, F, T, T), nrow = 5L, ncol = 5L)
+
+  expected_components <- c(1L, 1L, 2L, 3L, 3L)
+  result <- connected_components(contiguity)
+  expect_identical(result, expected_components)
+})
+
+test_that("nb_connected_components returns the correct number of connected components",
+{
+  contiguity <- matrix(c(T, T, F, F, F,
+                         T, T, F, F, F,
+                         F, F, T, F, F,
+                         F, F, F, T, T,
+                         F, F, F, T, T), nrow = 5L, ncol = 5L)
+
+  expected_count <- 3L
+  result <- nb_connected_components(contiguity)
+  expect_identical(result, expected_count)
+})
