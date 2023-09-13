@@ -55,49 +55,47 @@ test_that("merge_cc_paritions returns merged partition vector",
 test_that("is_feasible_solution",
 {
 
-  # # Test case 1: Valid partition with all constraints
-  # partition_valid <- c(1, 1, 2, 3, 2)
-  # expect_true(is_feasible_solution(partition_valid))
-  #
-  # # Test case 2: Valid partition with contiguity constraint
-  # partition_valid_contiguity <- c(1, 2, 2, 3, 1)
-  # contiguity_valid <- matrix(c(F, 1, 1, 1, 0), nrow = 2)
-  # expect_true(is_feasible_solution(partition_valid_contiguity, contiguity_valid))
-  #
-  # # Test case 3: Invalid partition with contiguity constraint
-  # partition_invalid_contiguity <- c(1, 2, 2, 3, 1)
-  # contiguity_invalid <- matrix(c(0, 1, 1, 0, 0), nrow = 2)
-  # expect_false(is_feasible_solution(partition_invalid_contiguity, contiguity_invalid))Sure! Here are some more test cases:
-  #
-  # # Test case 4: Valid partition with size constraints
-  # partition_valid_sizes <- c(1, 2, 2, 3, 1)
-  # sizes_valid <- c(2, 1, 3, 1, 2)
-  # expect_true(is_feasible_solution(partition_valid_sizes, sizes = sizes_valid, m = 1, M = 4))
-  #
-  # # Test case 5: Invalid partition with size constraints
-  # partition_invalid_sizes <- c(1, 2, 2, 3, 1)
-  # sizes_invalid <- c(2, 1, 3, 1, 2)
-  # expect_false(is_feasible_solution(partition_invalid_sizes, sizes = sizes_invalid, m = 4, M = 10))
-  #
-  #
-  # # Test case 6: Valid partition with minimum size constraint
-  # partition_valid_min_size <- c(1, 2, 2, 3, 1)
-  # sizes_valid_min_size <- c(2, 1, 3, 1, 2)
-  # expect_true(is_feasible_solution(partition_valid_min_size, sizes = sizes_valid_min_size, m = 2))
-  #
-  # # Test case 7: Invalid partition with minimum size constraint
-  # partition_invalid_min_size <- c(1, 2, 2, 3, 1)
-  # sizes_invalid_min_size <- c(2, 1, 3, 1, 2)
-  # expect_false(is_feasible_solution(partition_invalid_min_size, sizes = sizes_invalid_min_size, m = 4))
-  #
-  #
-  # # Test case 8: Valid partition with maximum size constraint
-  # partition_valid_max_size <- c(1, 2, 2, 3, 1)
-  # sizes_valid_max_size <- c(2, 1, 3, 1, 2)
-  # expect_true(is_feasible_solution(partition_valid_max_size, sizes = sizes_valid_max_size, M = 4))
-  #
-  # # Test case 9: Invalid partition with maximum size constraint
-  # partition_invalid_max_size <- c(1, 2, 2, 3, 1)
-  # sizes_invalid_max_size <- c(2, 1, 3, 1, 2)
-  # expect_false(is_feasible_solution(partition_invalid_max_size, sizes = sizes_invalid_max_size, M = 2))
+
+  n <- 5L
+  # Test case 1: Valid partition with all constraints
+  partition_valid <- c(1L, 1L, 2L, 3L, 2L)
+  expect_true(is_feasible_solution(partition_valid))
+
+  partition <- c(1L, 2L, 2L, 3L, 1L)
+  # Test case 2: Valid partition with contiguity constraint
+  contiguity_valid <- closest_neighbor_contiguity(n, loop = TRUE)
+  expect_true(is_feasible_solution(partition, contiguity_valid))
+
+  # Test case 3: Invalid partition with contiguity constraint
+  contiguity_invalid <- closest_neighbor_contiguity(n, loop = FALSE)
+  expect_false(is_feasible_solution(partition, contiguity_invalid))
+
+  sizes <- c(2.0, 1.0, 3.0, 1.0, 2.0)
+
+  # Test case 4: Valid partition with size constraints
+  contiguity_valid <- closest_neighbor_contiguity(n, loop = TRUE)
+  expect_true(is_feasible_solution(partition, sizes = sizes,
+                                   m = 1.0, M = 4.0))
+
+  # Test case 5: Invalid partition with size constraints
+  expect_false(is_feasible_solution(partition, sizes = sizes,
+                                    m = 4.0, M = 10.0))
+
+
+  # Test case 6: Valid partition with minimum size constraint
+  sizes_valid_min_size <- c(2.0, 1.0, 3.0, 2.0, 2.0)
+  expect_true(is_feasible_solution(partition, sizes = sizes_valid_min_size,
+                                   m = 2.0))
+
+
+  # Test case 7: Invalid partition with minimum size constraint
+  expect_false(is_feasible_solution(partition, sizes = sizes, m = 4.0))
+
+
+  # Test case 8: Valid partition with maximum size constraint
+  expect_true(is_feasible_solution(partition, sizes = sizes, M = 4.0))
+
+  # Test case 9: Invalid partition with maximum size constraint
+  sizes_invalid_max_size <- c(2.0, 1.0, 3.0, 1.0, 2.0)
+  expect_false(is_feasible_solution(partition, sizes = sizes, M = 2.0))
 })

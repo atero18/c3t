@@ -289,24 +289,29 @@ test_that("Transferable Points - Loss of Symmetry",
 
 test_that("connected_components returns correct connected components",
 {
+  # nolint start: T_and_F_symbol_linter
   contiguity <- matrix(c(T, T, F, F, F,
                          T, T, F, F, F,
                          F, F, T, F, F,
                          F, F, F, T, T,
                          F, F, F, T, T), nrow = 5L, ncol = 5L)
+  # nolint end
 
   expected_components <- c(1L, 1L, 2L, 3L, 3L)
   result <- connected_components(contiguity)
   expect_identical(result, expected_components)
 })
 
-test_that("nb_connected_components returns the correct number of connected components",
+test_that(paste0("nb_connected_components returns the correct number of ",
+                 "connected components"),
 {
+  # nolint start: T_and_F_symbol_linter
   contiguity <- matrix(c(T, T, F, F, F,
                          T, T, F, F, F,
                          F, F, T, F, F,
                          F, F, F, T, T,
                          F, F, F, T, T), nrow = 5L, ncol = 5L)
+  # nolint end
 
   expected_count <- 3L
   result <- nb_connected_components(contiguity)
