@@ -78,18 +78,6 @@ functions to facilitate these tasks, and its capabilities include:
 - Ensure contiguity and size constraints are met.
 - Explore different fusion constraint modes.
 
-### 6. Detailed Documentation
-
-- Comprehensive documentation to guide users through each function.
-- Examples and explanations of available options.
-
-The `c3t` package is a versatile and robust solution for addressing
-regionalization and clustering problems with constraints, making it a
-valuable tool for spatial analysis and geographic research.
-
-For detailed information on function usage and options, please refer to
-the package documentation.
-
 ## 🚀 Getting Started
 
 Before we begin, ensure you have the `c3t` package and the required
@@ -143,13 +131,13 @@ resRAH <- AHR(contiguity = contiguite,
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
               parallele = FALSE)
-#> ℹ Starting time: 2023-09-14 12:56:36.87824
-#> ℹ 45 AHC to evaluate
-#> → 362 non-trivial regionalisations obtained
-#> ✔ 62 feasable partitions obtained
-#> → 19 redundancies have been removed.
-#> → Calculation of the CHI criterion
-#> → Execution time: 6.40905380249023
+#> ℹ Heure de début : 2023-09-14 15:20:03.25855
+#> ℹ 45 CAH à évaluer
+#> → 362 partitions non triviales obtenues
+#> ✔ 62 partitions faisables obtenues
+#> → 19 redondances ont été supprimées
+#> → Calcul du critère CHI
+#> → Temps d exécution : 5.86777305603027
 ```
 
 The function returns a list of feasible solutions, and you can select
@@ -170,9 +158,9 @@ resEnhance <- enhance_feasible(regionalisation = resRAH$results$partition[[1L]],
                                linkages = c("single", "complete"),
                                parallele = FALSE,
                                verbose = TRUE)
-#> → Evaluation of the 3 enhancements
-#> → Calculation of 1 evaluation criteria on the initial partition
-#> → Calcul of 1 evaluation criteria on the 3 enhanced partitions
+#> → Évaluation de 3 améliorations
+#> → Calcul de 1 critère d'évaluation sur la partition initiale
+#> → Calcul de 1 critère d'évaluation sur les 3 partitions améliorées
 ```
 
 This function allows you to improve your solution according to specified
@@ -194,8 +182,8 @@ resolution <- resolve_unfeasible(contiguity = contiguite,
                                  d = "euclidean", m = 5.0, M = 40.0,
                                  regionalisation = regInfaisable,
                                  verbose = TRUE)
-#> → Transfert of elements one-by-one
-#> ✔ fully resolved partition
+#> → Transfert des éléments un à un
+#> ✔ Partition totalement résolue
 ```
 
 This function aims to transform an unfeasible solution into a feasible
