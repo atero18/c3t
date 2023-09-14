@@ -19,6 +19,7 @@ coverage](https://codecov.io/gh/atero18/c3t/branch/main/graph/badge.svg)](https:
 - [🪛 Installation](#-installation)
 - [📍 Overview](#-overview)
 - [🚀 Getting Started](#-getting-started)
+- [✅ Conclusion](#-conclusion)
 
 ## 🪛 Installation
 
@@ -59,7 +60,7 @@ functions to facilitate these tasks, and its capabilities include:
 
 ### 3. Addressing Unfeasible Solutions
 
-- Convert infeasible solutions into feasible ones.
+- Convert unfeasible solutions into feasible ones.
 - Adjust cluster sizes to meet constraints.
 - Maintain contiguity and other specified criteria.
 
@@ -142,13 +143,13 @@ resRAH <- AHR(contiguity = contiguite,
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
               parallele = FALSE)
-#> ℹ Heure de début : 2023-09-14 14:28:27.852455
-#> ℹ 45 CAH à évaluer
-#> → 362 partitions non triviales obtenues
-#> ✔ 62 partitions faisables obtenues
-#> → 19 redondances ont été supprimées
-#> → Calcul du critère CHI
-#> → Temps d exécution : 8.30705404281616
+#> ℹ Starting time: 2023-09-14 12:56:36.87824
+#> ℹ 45 AHC to evaluate
+#> → 362 non-trivial regionalisations obtained
+#> ✔ 62 feasable partitions obtained
+#> → 19 redundancies have been removed.
+#> → Calculation of the CHI criterion
+#> → Execution time: 6.40905380249023
 ```
 
 The function returns a list of feasible solutions, and you can select
@@ -169,9 +170,9 @@ resEnhance <- enhance_feasible(regionalisation = resRAH$results$partition[[1L]],
                                linkages = c("single", "complete"),
                                parallele = FALSE,
                                verbose = TRUE)
-#> → Évaluation de 3 améliorations
-#> → Calcul de 1 critère d'évaluation sur la partition initiale
-#> → Calcul de 1 critère d'évaluation sur les 3 partitions améliorées
+#> → Evaluation of the 3 enhancements
+#> → Calculation of 1 evaluation criteria on the initial partition
+#> → Calcul of 1 evaluation criteria on the 3 enhanced partitions
 ```
 
 This function allows you to improve your solution according to specified
@@ -181,7 +182,7 @@ criteria.
 
 In cases where a feasible solution cannot be obtained, the
 `resolve_unfeasible` function attempts to provide a feasible solution
-from an infeasible one.
+from an unfeasible one.
 
 ``` r
 regInfaisable <- c(1L, 2L, 3L, 2L, 2L, 2L, 2L, 2L, 2L, 4L,
@@ -193,14 +194,14 @@ resolution <- resolve_unfeasible(contiguity = contiguite,
                                  d = "euclidean", m = 5.0, M = 40.0,
                                  regionalisation = regInfaisable,
                                  verbose = TRUE)
-#> → Transfert des éléments un à un
-#> ✔ Partition totalement résolue
+#> → Transfert of elements one-by-one
+#> ✔ fully resolved partition
 ```
 
-This function aims to transform an infeasible solution into a feasible
+This function aims to transform an unfeasible solution into a feasible
 one while respecting constraints.
 
-## Conclusion
+## ✅ Conclusion
 
 The `c3t` package offers a variety of tools for regionalization and
 clustering with constraints. Explore the documentation and experiment
@@ -212,3 +213,12 @@ package documentation :
 ``` r
 help(package = "c3t")
 ```
+
+For any issue or suggestion please go to the [Issue
+page](https://github.com/atero18/c3t/issues) of the repository. You can
+as well discuss about the project in the [Discussion
+page](https://github.com/atero18/c3t/discussions).
+
+Please note that this project is released with a [Contributor Code of
+Conduct](https://atero18.github.io/c3t/CODE_OF_CONDUCT.html). By
+participating in this project you agree to abide by its terms.

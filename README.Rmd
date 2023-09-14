@@ -28,6 +28,7 @@ knitr::opts_chunk$set(
 - [🪛 Installation](#-installation)
 - [📍 Overview](#-overview)
 - [🚀 Getting Started](#-getting-started)
+- [✅ Conclusion](#-conclusion)
 
 ## 🪛 Installation
 
@@ -61,7 +62,7 @@ The `c3t` package in R is a powerful tool for regionalization and clustering tas
 
 ### 3. Addressing Unfeasible Solutions
 
-- Convert infeasible solutions into feasible ones.
+- Convert unfeasible solutions into feasible ones.
 - Adjust cluster sizes to meet constraints.
 - Maintain contiguity and other specified criteria.
 
@@ -157,7 +158,7 @@ This function allows you to improve your solution according to specified criteri
 
 ### Addressing Unfeasible Solutions
 
-In cases where a feasible solution cannot be obtained, the `resolve_unfeasible` function attempts to provide a feasible solution from an infeasible one.
+In cases where a feasible solution cannot be obtained, the `resolve_unfeasible` function attempts to provide a feasible solution from an unfeasible one.
 
 ```{r}
 regInfaisable <- c(1L, 2L, 3L, 2L, 2L, 2L, 2L, 2L, 2L, 4L,
@@ -171,14 +172,19 @@ resolution <- resolve_unfeasible(contiguity = contiguite,
                                  verbose = TRUE)
 ```
 
-This function aims to transform an infeasible solution into a feasible one while respecting constraints.
+This function aims to transform an unfeasible solution into a feasible one while respecting constraints.
 
-## Conclusion
+## ✅ Conclusion
 
 The `c3t` package offers a variety of tools for regionalization and clustering with constraints. Explore the documentation and experiment with different functions to suit your specific use case.
+
 
 For more details on each function and available options, refer to the package documentation :
 
 ```{r eval=FALSE}
 help(package = "c3t")
 ```
+
+For any issue or suggestion please go to the [Issue page](https://github.com/atero18/c3t/issues) of the repository. You can as well discuss about the project in the [Discussion page](https://github.com/atero18/c3t/discussions).
+
+Please note that this project is released with a [Contributor Code of Conduct](https://atero18.github.io/c3t/CODE_OF_CONDUCT.html). By participating in this project you agree to abide by its terms.
