@@ -149,16 +149,6 @@
 <li>Explore different fusion constraint modes.</li>
 </ul>
 </div>
-<div class="section level3">
-<h3 id="id_6-detailed-documentation">6. Detailed Documentation<a class="anchor" aria-label="anchor" href="#id_6-detailed-documentation"></a>
-</h3>
-<ul>
-<li>Comprehensive documentation to guide users through each function.</li>
-<li>Examples and explanations of available options.</li>
-</ul>
-<p>The <code>c3t</code> package is a versatile and robust solution for addressing regionalization and clustering problems with constraints, making it a valuable tool for spatial analysis and geographic research.</p>
-<p>For detailed information on function usage and options, please refer to the package documentation.</p>
-</div>
 </div>
 <div class="section level2">
 <h2 id="id_-getting-started">🚀 Getting Started<a class="anchor" aria-label="anchor" href="#id_-getting-started"></a>
@@ -202,13 +192,13 @@
 <span>              fusionConstraints <span class="op">=</span> <span class="fu"><a href="reference/available_fusion_constraints.html">available_fusion_constraints</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>              fusionConstraintModes <span class="op">=</span> <span class="fu"><a href="reference/available_fusion_constraints.html">available_fusion_modes</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>              parallele <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Starting time: 2023-09-14 12:56:36.87824</span></span>
-<span><span class="co">#&gt; ℹ 45 AHC to evaluate</span></span>
-<span><span class="co">#&gt; → 362 non-trivial regionalisations obtained</span></span>
-<span><span class="co">#&gt; ✔ 62 feasable partitions obtained</span></span>
-<span><span class="co">#&gt; → 19 redundancies have been removed.</span></span>
-<span><span class="co">#&gt; → Calculation of the CHI criterion</span></span>
-<span><span class="co">#&gt; → Execution time: 6.40905380249023</span></span></code></pre></div>
+<span><span class="co">#&gt; ℹ Heure de début : 2023-09-14 15:20:03.25855</span></span>
+<span><span class="co">#&gt; ℹ 45 CAH à évaluer</span></span>
+<span><span class="co">#&gt; → 362 partitions non triviales obtenues</span></span>
+<span><span class="co">#&gt; ✔ 62 partitions faisables obtenues</span></span>
+<span><span class="co">#&gt; → 19 redondances ont été supprimées</span></span>
+<span><span class="co">#&gt; → Calcul du critère CHI</span></span>
+<span><span class="co">#&gt; → Temps d exécution : 5.86777305603027</span></span></code></pre></div>
 <p>The function returns a list of feasible solutions, and you can select the one that best suits your needs.</p>
 </div>
 <div class="section level3">
@@ -225,9 +215,9 @@
 <span>                               linkages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"single"</span>, <span class="st">"complete"</span><span class="op">)</span>,</span>
 <span>                               parallele <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                               verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; → Evaluation of the 3 enhancements</span></span>
-<span><span class="co">#&gt; → Calculation of 1 evaluation criteria on the initial partition</span></span>
-<span><span class="co">#&gt; → Calcul of 1 evaluation criteria on the 3 enhanced partitions</span></span></code></pre></div>
+<span><span class="co">#&gt; → Évaluation de 3 améliorations</span></span>
+<span><span class="co">#&gt; → Calcul de 1 critère d'évaluation sur la partition initiale</span></span>
+<span><span class="co">#&gt; → Calcul de 1 critère d'évaluation sur les 3 partitions améliorées</span></span></code></pre></div>
 <p>This function allows you to improve your solution according to specified criteria.</p>
 </div>
 <div class="section level3">
@@ -244,8 +234,8 @@
 <span>                                 d <span class="op">=</span> <span class="st">"euclidean"</span>, m <span class="op">=</span> <span class="fl">5.0</span>, M <span class="op">=</span> <span class="fl">40.0</span>,</span>
 <span>                                 regionalisation <span class="op">=</span> <span class="va">regInfaisable</span>,</span>
 <span>                                 verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; → Transfert of elements one-by-one</span></span>
-<span><span class="co">#&gt; ✔ fully resolved partition</span></span></code></pre></div>
+<span><span class="co">#&gt; → Transfert des éléments un à un</span></span>
+<span><span class="co">#&gt; ✔ Partition totalement résolue</span></span></code></pre></div>
 <p>This function aims to transform an unfeasible solution into a feasible one while respecting constraints.</p>
 </div>
 </div>
