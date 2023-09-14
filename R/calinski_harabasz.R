@@ -48,7 +48,7 @@
 #' `NaN`.
 #'
 #' @seealso `calinhara()` from package
-#' [fpc](https://cran.r-project.org/web/packages/fpc/index.html)
+#' [fpc](https://CRAN.R-project.org/package=fpc)
 #' which calculates the CHI and return only its value. This function can be 2
 #' or 3 times faster than `calinski_harabasz` but take a lot more of memory
 #' (empirically the ratio "memory `fpc`" / "memory `c3t`" seems to increase
