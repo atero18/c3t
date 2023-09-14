@@ -71,7 +71,7 @@ Cluster Analysis, Communications in Statistics, 3, 1-27.
 }
 \seealso{
 \code{calinhara()} from package
-\href{https://cran.r-project.org/web/packages/fpc/index.html}{fpc}
+\href{https://CRAN.R-project.org/package=fpc}{fpc}
 which calculates the CHI and return only its value. This function can be 2
 or 3 times faster than \code{calinski_harabasz} but take a lot more of memory
 (empirically the ratio "memory \code{fpc}" / "memory \code{c3t}" seems to increase
