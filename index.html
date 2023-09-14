@@ -73,18 +73,188 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="c3t">c3t<a class="anchor" aria-label="anchor" href="#c3t"></a>
+<div class="page-header"><h1 id="c3t--clustering-with-connectivity-and-size-constraints">c3t : Clustering with Connectivity and Size Constraints<a class="anchor" aria-label="anchor" href="#c3t--clustering-with-connectivity-and-size-constraints"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of c3t is to …</p>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="id_-table-of-contents">📒 Table of Contents<a class="anchor" aria-label="anchor" href="#id_-table-of-contents"></a>
 </h2>
+<ul>
+<li><a href="#id_-table-of-contents">📒 Table of Contents</a></li>
+<li><a href="#id_-installation">🪛 Installation</a></li>
+<li><a href="#id_-overview">📍 Overview</a></li>
+<li><a href="#id_-getting-started">🚀 Getting Started</a></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="id_-installation">🪛 Installation<a class="anchor" aria-label="anchor" href="#id_-installation"></a>
+</h2>
+<p><a href="GPL%203"><img src="https://img.shields.io/github/license/atero18/c3t?style&amp;color=5D6D7E" alt="Licence"></a></p>
 <p>You can install the development version of c3t from <a href="https://github.com/atero18/c3t" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"atero18/c3t"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="id_-overview">📍 Overview<a class="anchor" aria-label="anchor" href="#id_-overview"></a>
+</h2>
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></p>
+<p>The <code>c3t</code> package in R is a powerful tool for regionalization and clustering tasks with various constraints. It offers a range of functions to facilitate these tasks, and its capabilities include:</p>
+<div class="section level3">
+<h3 id="id_1-hierarchical-regionalization-ahr">1. Hierarchical Regionalization (AHR)<a class="anchor" aria-label="anchor" href="#id_1-hierarchical-regionalization-ahr"></a>
+</h3>
+<ul>
+<li>Solve regionalization problems while respecting constraints such as minimum and maximum size.</li>
+<li>Apply a modified Hierarchical Agglomerative Clustering (HAC) algorithm.</li>
+<li>Choose from various linkage methods to define cluster proximity.</li>
+<li>Apply constraints on the merging process to ensure specific criteria are met.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="id_2-improving-feasible-solutions">2. Improving Feasible Solutions<a class="anchor" aria-label="anchor" href="#id_2-improving-feasible-solutions"></a>
+</h3>
+<ul>
+<li>Enhance feasible solutions while preserving constraints.</li>
+<li>Optimize solutions according to user-defined criteria.</li>
+<li>Explore different linkage methods for clustering.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="id_3-addressing-unfeasible-solutions">3. Addressing Unfeasible Solutions<a class="anchor" aria-label="anchor" href="#id_3-addressing-unfeasible-solutions"></a>
+</h3>
+<ul>
+<li>Convert infeasible solutions into feasible ones.</li>
+<li>Adjust cluster sizes to meet constraints.</li>
+<li>Maintain contiguity and other specified criteria.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="id_4-flexible-parameter-customization">4. Flexible Parameter Customization<a class="anchor" aria-label="anchor" href="#id_4-flexible-parameter-customization"></a>
+</h3>
+<ul>
+<li>Choose distance measures, such as Euclidean distance.</li>
+<li>Set minimum and maximum size constraints for regions.</li>
+<li>Specify initial partitions for improved results.</li>
+<li>Apply various criteria for evaluation, including Calinski-Harabasz index (CHI).</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="id_5-versatility-in-constraints">5. Versatility in Constraints<a class="anchor" aria-label="anchor" href="#id_5-versatility-in-constraints"></a>
+</h3>
+<ul>
+<li>Customize constraints based on your specific requirements.</li>
+<li>Ensure contiguity and size constraints are met.</li>
+<li>Explore different fusion constraint modes.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="id_6-detailed-documentation">6. Detailed Documentation<a class="anchor" aria-label="anchor" href="#id_6-detailed-documentation"></a>
+</h3>
+<ul>
+<li>Comprehensive documentation to guide users through each function.</li>
+<li>Examples and explanations of available options.</li>
+</ul>
+<p>The <code>c3t</code> package is a versatile and robust solution for addressing regionalization and clustering problems with constraints, making it a valuable tool for spatial analysis and geographic research.</p>
+<p>For detailed information on function usage and options, please refer to the package documentation.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="id_-getting-started">🚀 Getting Started<a class="anchor" aria-label="anchor" href="#id_-getting-started"></a>
+</h2>
+<p>Before we begin, ensure you have the <code>c3t</code> package and the required dependencies installed. You can do this by running the following commands:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atero18/c3t/" class="external-link">c3t</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="creating-a-grid">Creating a Grid<a class="anchor" aria-label="anchor" href="#creating-a-grid"></a>
+</h3>
+<p>Let’s start by creating a fictitious grid, which will serve as an example for using different functions. We can generate this grid using the <code>gen_grid</code> function. You can specify the number of individuals on the grid, empty cells, and metropolitan areas.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123L</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">4L</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">5L</span></span>
+<span><span class="va">nbIndividuals</span> <span class="op">&lt;-</span> <span class="fl">100L</span></span>
+<span><span class="va">nbCasesVides</span> <span class="op">&lt;-</span> <span class="fl">3L</span></span>
+<span><span class="va">nbMetropolises</span> <span class="op">&lt;-</span> <span class="fl">2L</span></span>
+<span><span class="va">nbVariablesQuant</span> <span class="op">&lt;-</span> <span class="fl">2L</span></span>
+<span></span>
+<span><span class="va">grille</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/gen_grid.html">gen_grid</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, nbIndividuals <span class="op">=</span> <span class="va">nbIndividuals</span>,</span>
+<span>                   nbMinEmptyZones <span class="op">=</span> <span class="va">nbCasesVides</span>,</span>
+<span>                   nbMetropolises <span class="op">=</span> <span class="va">nbMetropolises</span>,</span>
+<span>                   nbQuantitatives <span class="op">=</span> <span class="va">nbVariablesQuant</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">grille</span><span class="op">$</span><span class="va">context</span></span>
+<span><span class="va">individus</span> <span class="op">&lt;-</span> <span class="va">grille</span><span class="op">$</span><span class="va">repartition</span><span class="op">$</span><span class="va">nbIndividuals</span></span>
+<span><span class="va">contiguite</span> <span class="op">&lt;-</span> <span class="va">grille</span><span class="op">$</span><span class="va">contiguity</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="hierarchical-regionalization-ahr">Hierarchical Regionalization (AHR)<a class="anchor" aria-label="anchor" href="#hierarchical-regionalization-ahr"></a>
+</h3>
+<p>To address regionalization problems with constraints like minimum and maximum size, you can use the <code>AHR</code> function. This function applies a modified Hierarchical Agglomerative Clustering (HAC) algorithm while respecting contiguity and size constraints.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">resRAH</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/AHR.html">AHR</a></span><span class="op">(</span>contiguity <span class="op">=</span> <span class="va">contiguite</span>,</span>
+<span>              d <span class="op">=</span> <span class="st">"euclidean"</span>, data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>              sizes <span class="op">=</span> <span class="va">individus</span>,</span>
+<span>              m <span class="op">=</span> <span class="fl">5.0</span>, M <span class="op">=</span> <span class="fl">40.0</span>,</span>
+<span>              criteria <span class="op">=</span> <span class="st">"CHI"</span>,</span>
+<span>              fusionConstraints <span class="op">=</span> <span class="fu"><a href="reference/available_fusion_constraints.html">available_fusion_constraints</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>              fusionConstraintModes <span class="op">=</span> <span class="fu"><a href="reference/available_fusion_constraints.html">available_fusion_modes</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>              parallele <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ Heure de début : 2023-09-14 14:28:27.852455</span></span>
+<span><span class="co">#&gt; ℹ 45 CAH à évaluer</span></span>
+<span><span class="co">#&gt; → 362 partitions non triviales obtenues</span></span>
+<span><span class="co">#&gt; ✔ 62 partitions faisables obtenues</span></span>
+<span><span class="co">#&gt; → 19 redondances ont été supprimées</span></span>
+<span><span class="co">#&gt; → Calcul du critère CHI</span></span>
+<span><span class="co">#&gt; → Temps d exécution : 8.30705404281616</span></span></code></pre></div>
+<p>The function returns a list of feasible solutions, and you can select the one that best suits your needs.</p>
+</div>
+<div class="section level3">
+<h3 id="improving-feasible-solutions">Improving Feasible Solutions<a class="anchor" aria-label="anchor" href="#improving-feasible-solutions"></a>
+</h3>
+<p>Once you have a feasible solution, you can further enhance it while preserving constraints using the <code>enhance_feasible</code> function.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">resEnhance</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/enhance_feasible.html">enhance_feasible</a></span><span class="op">(</span>regionalisation <span class="op">=</span> <span class="va">resRAH</span><span class="op">$</span><span class="va">results</span><span class="op">$</span><span class="va">partition</span><span class="op">[[</span><span class="fl">1L</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>                               contiguity <span class="op">=</span> <span class="va">contiguite</span>,</span>
+<span>                               d <span class="op">=</span> <span class="st">"euclidean"</span>, data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>                               sizes <span class="op">=</span> <span class="va">individus</span>,</span>
+<span>                               m <span class="op">=</span> <span class="fl">5.0</span>, M <span class="op">=</span> <span class="fl">40.0</span>,</span>
+<span>                               enhanceCriteria <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AHC"</span>, <span class="st">"CHI"</span><span class="op">)</span>,</span>
+<span>                               linkages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"single"</span>, <span class="st">"complete"</span><span class="op">)</span>,</span>
+<span>                               parallele <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                               verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; → Évaluation de 3 améliorations</span></span>
+<span><span class="co">#&gt; → Calcul de 1 critère d'évaluation sur la partition initiale</span></span>
+<span><span class="co">#&gt; → Calcul de 1 critère d'évaluation sur les 3 partitions améliorées</span></span></code></pre></div>
+<p>This function allows you to improve your solution according to specified criteria.</p>
+</div>
+<div class="section level3">
+<h3 id="addressing-unfeasible-solutions">Addressing Unfeasible Solutions<a class="anchor" aria-label="anchor" href="#addressing-unfeasible-solutions"></a>
+</h3>
+<p>In cases where a feasible solution cannot be obtained, the <code>resolve_unfeasible</code> function attempts to provide a feasible solution from an infeasible one.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">regInfaisable</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">3L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">4L</span>,</span>
+<span>                   <span class="fl">4L</span>, <span class="fl">2L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">resolution</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/resolve_unfeasible.html">resolve_unfeasible</a></span><span class="op">(</span>contiguity <span class="op">=</span> <span class="va">contiguite</span>,</span>
+<span>                                 sizes <span class="op">=</span> <span class="va">individus</span>,</span>
+<span>                                 data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>                                 d <span class="op">=</span> <span class="st">"euclidean"</span>, m <span class="op">=</span> <span class="fl">5.0</span>, M <span class="op">=</span> <span class="fl">40.0</span>,</span>
+<span>                                 regionalisation <span class="op">=</span> <span class="va">regInfaisable</span>,</span>
+<span>                                 verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; → Transfert des éléments un à un</span></span>
+<span><span class="co">#&gt; ✔ Partition totalement résolue</span></span></code></pre></div>
+<p>This function aims to transform an infeasible solution into a feasible one while respecting constraints.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
+</h2>
+<p>The <code>c3t</code> package offers a variety of tools for regionalization and clustering with constraints. Explore the documentation and experiment with different functions to suit your specific use case.</p>
+<p>For more details on each function and available options, refer to the package documentation :</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"c3t"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
