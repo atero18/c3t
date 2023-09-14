@@ -131,13 +131,13 @@ resRAH <- AHR(contiguity = contiguite,
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
               parallele = FALSE)
-#> ℹ Heure de début : 2023-09-14 15:20:03.25855
-#> ℹ 45 CAH à évaluer
-#> → 362 partitions non triviales obtenues
-#> ✔ 62 partitions faisables obtenues
-#> → 19 redondances ont été supprimées
-#> → Calcul du critère CHI
-#> → Temps d exécution : 5.86777305603027
+#> ℹ Starting time: 2023-09-14 15:55:05.473791
+#> ℹ 45 AHC to evaluate
+#> → 362 non-trivial regionalisations obtained
+#> ✔ 62 feasable partitions obtained
+#> → 19 redundancies have been removed.
+#> → Calculation of the CHI criterion
+#> → Execution time: 9.96041417121887
 ```
 
 The function returns a list of feasible solutions, and you can select
@@ -158,9 +158,9 @@ resEnhance <- enhance_feasible(regionalisation = resRAH$results$partition[[1L]],
                                linkages = c("single", "complete"),
                                parallele = FALSE,
                                verbose = TRUE)
-#> → Évaluation de 3 améliorations
-#> → Calcul de 1 critère d'évaluation sur la partition initiale
-#> → Calcul de 1 critère d'évaluation sur les 3 partitions améliorées
+#> → Evaluation of the 3 enhancements
+#> → Calculation of 1 evaluation criteria on the initial partition
+#> → Calcul of 1 evaluation criteria on the 3 enhanced partitions
 ```
 
 This function allows you to improve your solution according to specified
@@ -182,8 +182,8 @@ resolution <- resolve_unfeasible(contiguity = contiguite,
                                  d = "euclidean", m = 5.0, M = 40.0,
                                  regionalisation = regInfaisable,
                                  verbose = TRUE)
-#> → Transfert des éléments un à un
-#> ✔ Partition totalement résolue
+#> → Transfert of elements one-by-one
+#> ✔ fully resolved partition
 ```
 
 This function aims to transform an unfeasible solution into a feasible
