@@ -75,6 +75,7 @@ be an integer. (integer)}
 
 \item{avgPersonsPerCell}{A number representing the average
 number of individuals in a cell. Must be positive and finite.
+We have \verb{nbIndividuals ≈ x_int * y_int * avgPersonsPerCell}.
 (positive real)}
 }
 \value{

@@ -117,6 +117,7 @@ gen_grid <- function(x_int, y_int, contiguityType = "Queen",
 #' quantitative variables with different means and variances
 #' @param avgPersonsPerCell A number representing the average
 #' number of individuals in a cell. Must be positive and finite.
+#' We have `nbIndividuals ≈ x_int * y_int * avgPersonsPerCell`.
 #' (positive real)
 #' @importFrom checkmate assertCount assertNumber
 #' @examples simple_grid(2L, 3L, 100.0, 123L)
