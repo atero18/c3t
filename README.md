@@ -30,7 +30,8 @@ You can install the development version of `c3t` from
 [GitHub](https://github.com/atero18/c3t) with:
 
 ``` r
-# install.packages("devtools")
+if (!require(devtools, quietly = TRUE))
+  install.packages("devtools")
 devtools::install_github("atero18/c3t")
 ```
 
@@ -133,13 +134,13 @@ resAHR <- AHR(contiguity = contiguity,
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
               parallel = FALSE)
-#> ℹ Starting time: 2023-09-15 08:45:50.187542
+#> ℹ Starting time: 2023-09-15 16:37:03.962595
 #> ℹ 45 AHC to evaluate
 #> → 362 non-trivial regionalisations obtained
 #> ✔ 62 feasible partitions obtained
 #> → 19 redundancies have been removed.
 #> → Calculation of the CHI criterion
-#> → Execution time: 11.103709936142
+#> → Execution time: 7.93057799339294
 ```
 
 The function returns a list of feasible solutions, and you can select

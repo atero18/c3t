@@ -41,7 +41,8 @@ Sys.setenv(LANG = "en")
 You can install the development version of `c3t` from [GitHub](https://github.com/atero18/c3t) with:
 
 ``` {r install_c3t, eval=FALSE}
-# install.packages("devtools")
+if (!require(devtools, quietly = TRUE))
+  install.packages("devtools")
 devtools::install_github("atero18/c3t")
 ```
 
