@@ -92,7 +92,7 @@ parameters.</p>
 <span>  evalLinkages <span class="op">=</span> <span class="va">linkages</span>,</span>
 <span>  minNbClusters <span class="op">=</span> <span class="fl">2L</span>,</span>
 <span>  maxNbClusters <span class="op">=</span> <span class="cn">Inf</span>,</span>
-<span>  parallele <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  parallel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  nbCores <span class="op">=</span> <span class="fu">detectCores</span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -256,7 +256,7 @@ superior or equal to <code>minNbClusters</code>. Can reduce computation time.
 Default to <code>Inf</code>. (strictly positive integer)</p></dd>
 
 
-<dt>parallele</dt>
+<dt>parallel</dt>
 <dd><p>Logical indicating whether to use parallel processing.
 Default is TRUE.</p></dd>
 
@@ -328,13 +328,13 @@ the connected component.</p>
 <span class="r-in"><span>    nbTries <span class="op">=</span> <span class="fl">1L</span>,</span></span>
 <span class="r-in"><span>    fusionConstraints <span class="op">=</span> <span class="fu"><a href="available_fusion_constraints.html">available_fusion_constraints</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    fusionConstraintModes <span class="op">=</span> <span class="fu"><a href="available_fusion_constraints.html">available_fusion_modes</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    parallele <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting time: 2023-09-14 14:26:44.497875</span>
+<span class="r-in"><span>    parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Starting time: 2023-09-15 11:11:58.211488</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> 9 AHC to evaluate</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → 118 non-trivial regionalisations obtained</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 7 feasable partitions obtained</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> 7 feasible partitions obtained</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Calculation of the CHI criterion</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Execution time: 1.27749061584473</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Execution time: 1.25856852531433</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $grid</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   idExp linkage minNbClusters idpartitionInit fusionConstraint</span>
