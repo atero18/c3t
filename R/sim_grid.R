@@ -113,8 +113,11 @@ gen_grid <- function(x_int, y_int, contiguityType = "Queen",
 
 # nocov start
 #' @describeIn gen_grid simpler version with "Queen" contiguity,
-# no mandatory empty zones, and no metropolis, and for context 3
-# quantitative variables with different means and variances
+#' no mandatory empty zones, and no metropolis, and for context 3
+#' quantitative variables with different means and variances
+#' @param avgPersonsPerCell A number representing the average
+#' number of individuals in a cell. Must be positive and finite.
+#' (positive real)
 #' @importFrom checkmate assertCount assertNumber
 #' @examples simple_grid(2L, 3L, 100.0, 123L)
 #' @export

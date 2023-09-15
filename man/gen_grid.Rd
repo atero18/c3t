@@ -72,6 +72,10 @@ defined in \code{quantitatives_mat}. Ignored otherwise. (positive or zero intege
 \item{seed}{indicates if the random seed should be fixed before generating
 values. \code{NULL} (default) if the seed must not be fixed. Otherwise must
 be an integer. (integer)}
+
+\item{avgPersonsPerCell}{A number representing the average
+number of individuals in a cell. Must be positive and finite.
+(positive real)}
 }
 \value{
 a list including:
@@ -98,6 +102,8 @@ different sizes.
 \section{Functions}{
 \itemize{
 \item \code{simple_grid()}: simpler version with "Queen" contiguity,
+no mandatory empty zones, and no metropolis, and for context 3
+quantitative variables with different means and variances
 
 }}
 \examples{
