@@ -150,6 +150,12 @@ defined in <code>quantitatives_mat</code>. Ignored otherwise. (positive or zero 
 values. <code>NULL</code> (default) if the seed must not be fixed. Otherwise must
 be an integer. (integer)</p></dd>
 
+
+<dt>avgPersonsPerCell</dt>
+<dd><p>A number representing the average
+number of individuals in a cell. Must be positive and finite.
+(positive real)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -169,7 +175,9 @@ related to an individual, and each column is a variable.</p></li>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
     
-<ul><li><p><code>simple_grid()</code>: simpler version with "Queen" contiguity,</p></li>
+<ul><li><p><code>simple_grid()</code>: simpler version with "Queen" contiguity,
+no mandatory empty zones, and no metropolis, and for context 3
+quantitative variables with different means and variances</p></li>
 </ul></div>
 
     <div class="section level2">
