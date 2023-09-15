@@ -5,18 +5,19 @@
 ## usethis namespace: start
 #' @importFrom lifecycle badge
 #' @importFrom lifecycle deprecated
-#' @importFrom methods new
-#' @importFrom methods setReplaceMethod
-#' @importFrom methods setMethod
-#' @importFrom methods setGeneric
-#' @importFrom methods validObject
-#' @importFrom methods setValidity
-#' @importFrom methods selectMethod
-#' @importFrom methods callNextMethod
 #' @importFrom methods as
+#' @importFrom methods callNextMethod
+#' @importFrom methods new
+#' @importFrom methods selectMethod
 #' @importFrom methods setAs
+#' @importFrom methods setGeneric
+#' @importFrom methods setMethod
+#' @importFrom methods setReplaceMethod
+#' @importFrom methods setValidity
+#' @importFrom methods validObject
 #' @importFrom pkgconfig get_config
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib c3t
+#' @useDynLib c3t, .registration = TRUE
 ## usethis namespace: end
 NULL

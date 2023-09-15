@@ -31,7 +31,7 @@ NULL
 #' @name distanceInterSymVMat
 #' @noRd
 distanceInterSymVMat <- function(values, partition, indexs, dim, aDefautDiag, defaultDiag, comp) {
-    .Call('_c3t_distanceInterSymVMat', PACKAGE = 'c3t', values, partition, indexs, dim, aDefautDiag, defaultDiag, comp)
+    .Call(`_c3t_distanceInterSymVMat`, values, partition, indexs, dim, aDefautDiag, defaultDiag, comp)
 }
 
 #' @description Calcule toutes les distances inter-clusters demandées
@@ -40,7 +40,7 @@ distanceInterSymVMat <- function(values, partition, indexs, dim, aDefautDiag, de
 #' @name distanceInterSymMMat
 #' @noRd
 distanceInterSymMMat <- function(values, partition, indexs, comp) {
-    .Call('_c3t_distanceInterSymMMat', PACKAGE = 'c3t', values, partition, indexs, comp)
+    .Call(`_c3t_distanceInterSymMMat`, values, partition, indexs, comp)
 }
 
 #' @title Find the nearest neighbor of some points
@@ -77,6 +77,6 @@ NULL
 #' @describeIn cpp_nearest_neighbor case when `distances` is a matrix
 #' @keywords internal
 nearest_neighbor_matrix <- function(distances, subsetPoints, subsetNeighbors, contiguity, inner) {
-    .Call('_c3t_nearest_neighbor_matrix', PACKAGE = 'c3t', distances, subsetPoints, subsetNeighbors, contiguity, inner)
+    .Call(`_c3t_nearest_neighbor_matrix`, distances, subsetPoints, subsetNeighbors, contiguity, inner)
 }
 

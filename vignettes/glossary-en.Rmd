@@ -1,0 +1,82 @@
+---
+title: "Glossary"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Glossary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Here is a list of some terms used in the context of this package and their definitions.
+
+
+# A 
+
+- **AGNES** : Agglomerative nesting
+- **AHC** : Agglomerative hierarchical clustering
+- **AHR** : Agglomerative hierarchical regionalisation
+- **Articulation point** : Vertex of a graph whose removal increases the number of connected components (separator set consisting of a single vertex)
+
+
+# C 
+
+- **CHI** : Calinńki-harabasz index
+- **CLINK** : Complete linkage
+- **Coarse partition** : Partition composed of a single cluster
+- **Compact cluster** : Homogeneous cluster
+- **Compact partition** : Partition where all clusters are compact
+- **Complete graph** : Simple graph in which all nodes are adjacent to each other
+- **Connected component** : Maximal connected subset with respect to inclusion
+- **Connected graph** : Undirected graph where any vertex is accessible from any other vertex by passing only through the vertices of this set
+
+
+# F 
+
+- **Feasible solution** : A partition that respects all constraints (contiguity, size...)
+- **Finite graph** : Graph with a finite number of vertices
+
+
+# I 
+
+- **Interior boundary of a partition** : Set of elements contiguous to an element of another cluster
+
+
+# M 
+
+- **Minimal separator set** : Separator set such that no strict subset is a separator set
+
+
+# R 
+
+- **Region** : Connected cluster
+- **Regionalisation** : Partition where all clusters are regions
+- **Regionalization** : Partition where all clusters are regions
+
+
+# S 
+
+- **SLINK** : Single linkage
+- **Separate partition** : Partition where all clusters are well separated pairwise
+- **Separator set** : Set of vertices of an undirected graph whose removal would create more connected components
+- **Simple undirected graph** : Undirected graph without loops and in which each pair of vertices has at most one edge
+
+
+# T 
+
+- **Totally contiguous** : Set in which each element is contiguous with all the others. The associated contiguity graph is complete.
+- **Transferrable point** : For regionalization, a point that can be transmitted from one region to another while maintaining the connectivity of the regions
+- **Trivial partition** : Partition composed of one cluster per element of the set
+
+
+# V 
+
+- **Vertex connectivity degree** : For a non-empty connected undirected graph, the cardinality of the smallest separator set
+
+

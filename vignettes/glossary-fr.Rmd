@@ -1,0 +1,89 @@
+---
+title: "Glossaire"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Glossaire}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Voici la liste de quelques termes utilisés dans le contexte de ce package et leur définition.
+
+
+# A 
+
+- **AGNES** : Agglomerative nesting
+
+
+# C 
+
+- **CAH** : Classification ascendante hiérarchique
+- **CLINK** : Complete linkage
+- **Cluster compact** : Cluster homogène
+- **Composante connexe** : Sous-ensemble connexe maximal au sens de l'inclusion
+
+
+# D 
+
+- **Degré de sommet connexité** : Pour un graphe non-orienté connexe non-vide, cardinal du plus petit ensemble séparateur
+
+
+# E 
+
+- **Ensemble séparateur** : Ensemble de sommets d'un graphe non-orienté dont la suppression engendrerait la création de davantage de composantes connexes
+- **Ensemble séparateur minimal** : Ensemble séparateur dont tout sous-ensemble strict ne l'est pas
+
+
+# F 
+
+- **Frontière intérieure d'une partition** : Ensemble des éléments étant contigus à un élément d'un autre cluster
+
+
+# G 
+
+- **Graphe complet** : Graphe simple dont tous les nœuds sont adjacents entre eux
+- **Graphe connexe** : Graphe non-orienté dont tout sommet est accessible depuis tout autre sommet en passant uniquement via les sommets de cet ensemble
+- **Graphe fini** : Graphe dont le nombre de sommets est fini
+- **Graphe non-orienté simple** : Graphe non-orienté sans boucle et dont toute paire de sommet possède au plus une arète
+
+
+# I 
+
+- **ICH** : Indice de caliński-harabasz
+
+
+# P 
+
+- **Partition compacte** : Partition dont tous les clusters sont compacts
+- **Partition grossière** : Partition composée d'un seul cluster
+- **Partition séparée** : Partition dont tous les clusters sont bien séparés deux à deux
+- **Partition triviale** : Partition composée d'un cluster par élément de l'ensemble
+- **Point d'articulation** : Sommet d'un graphe dont la suppression augmente le nombre de composantes connexes (ensemble séparateur constitué d'un seul sommet)
+- **Point transférable** : Pour une régionalisation, point pouvant être transmis d'une région à une autre tout en conservant la connexité des régions
+
+
+# R 
+
+- **RAH** : Régionalisation ascendante hiérarchique
+- **Région** : Cluster connexe
+- **Régionalisation** : Partition dont tous les clusters sont des régions
+
+
+# S 
+
+- **SLINK** : Single linkage
+- **Solution faisable** : Partition respectant toutes les contraintes (contiguïté, taille…)
+
+
+# T 
+
+- **Totalement contigu** : Ensemble dont chaque élément est contigu avec tous les autres. Le graphe de contiguité associé est complet.
+
+
