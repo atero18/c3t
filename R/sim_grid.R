@@ -74,7 +74,6 @@ rank_to_xy_grid <- function(k_int, x_int, y_int)
 #' 3. `context`: a dataframe where each row corresponds to the context/data
 #' related to an individual, and each column is a variable.
 #' @name gen_grid
-#' @keywords internal
 #' @export
 gen_grid <- function(x_int, y_int, contiguityType = "Queen",
                      nbIndividuals = x_int * y_int,
@@ -116,7 +115,6 @@ gen_grid <- function(x_int, y_int, contiguityType = "Queen",
 #' @describeIn gen_grid simpler version with "Queen" contiguity,
 # no mandatory empty zones, and no metropolis, and for context 3
 # quantitative variables with different means and variances
-#' @keywords internal
 #' @importFrom checkmate assertCount assertNumber
 #' @examples simple_grid(2L, 3L, 100.0, 123L)
 #' @export
