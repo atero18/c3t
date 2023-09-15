@@ -20,12 +20,13 @@ coverage](https://codecov.io/gh/atero18/c3t/branch/main/graph/badge.svg)](https:
 - [📍 Overview](#-overview)
 - [🚀 Getting Started](#-getting-started)
 - [✅ Conclusion](#-conclusion)
+- [📚 References](#-references)
 
 ## 🪛 Installation
 
 [![Licence](https://img.shields.io/github/license/atero18/c3t?style&color=5D6D7E)](GPL%203)
 
-You can install the development version of c3t from
+You can install the development version of `c3t` from
 [GitHub](https://github.com/atero18/c3t) with:
 
 ``` r
@@ -46,8 +47,9 @@ functions to facilitate these tasks, and its capabilities include:
 
 - Solve regionalization problems while respecting constraints such as
   minimum and maximum size.
-- Apply a modified Hierarchical Agglomerative Clustering (HAC)
-  algorithm.
+- Apply a modified [Agglomerative Hierarchical
+  Clustering](https://www.wikiwand.com/en/Hierarchical_clustering#introduction)
+  (AHC) algorithm.
 - Choose from various linkage methods to define cluster proximity.
 - Apply constraints on the merging process to ensure specific criteria
   are met.
@@ -69,8 +71,8 @@ functions to facilitate these tasks, and its capabilities include:
 - Choose distance measures, such as Euclidean distance.
 - Set minimum and maximum size constraints for regions.
 - Specify initial partitions for improved results.
-- Apply various criteria for evaluation, including Calinski-Harabasz
-  index (CHI).
+- Apply various criteria for evaluation, including Caliński-Harabasz
+  index (CHI) (Caliński and Harabasz 1974).
 
 ### 5. Versatility in Constraints
 
@@ -85,8 +87,8 @@ dependencies installed. You can do this by running the following
 commands:
 
 ``` r
+# load the c3t package
 library(c3t)
-library(dplyr)
 ```
 
 ### Creating a Grid
@@ -101,18 +103,18 @@ set.seed(123L)
 x <- 4L
 y <- 5L
 nbIndividuals <- 100L
-nbCasesVides <- 3L
+nbEmptyZones <- 3L
 nbMetropolises <- 2L
 nbVariablesQuant <- 2L
 
-grille <- gen_grid(x, y, nbIndividuals = nbIndividuals,
-                   nbMinEmptyZones = nbCasesVides,
-                   nbMetropolises = nbMetropolises,
-                   nbQuantitatives = nbVariablesQuant)
+grid <- gen_grid(x, y, nbIndividuals = nbIndividuals,
+                 nbMinEmptyZones = nbEmptyZones,
+                 nbMetropolises = nbMetropolises,
+                 nbQuantitatives = nbVariablesQuant)
 
-data <- grille$context
-individus <- grille$repartition$nbIndividuals
-contiguite <- grille$contiguity
+data <- grid$context
+individuals <- grid$repartition$nbIndividuals
+contiguity <- grid$contiguity
 ```
 
 ### Hierarchical Regionalization (AHR)
@@ -123,21 +125,21 @@ modified Hierarchical Agglomerative Clustering (HAC) algorithm while
 respecting contiguity and size constraints.
 
 ``` r
-resRAH <- AHR(contiguity = contiguite,
+resAHR <- AHR(contiguity = contiguity,
               d = "euclidean", data = data,
-              sizes = individus,
+              sizes = individuals,
               m = 5.0, M = 40.0,
               criteria = "CHI",
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
-              parallele = FALSE)
-#> ℹ Starting time: 2023-09-14 15:55:05.473791
+              parallel = FALSE)
+#> ℹ Starting time: 2023-09-15 08:45:50.187542
 #> ℹ 45 AHC to evaluate
 #> → 362 non-trivial regionalisations obtained
-#> ✔ 62 feasable partitions obtained
+#> ✔ 62 feasible partitions obtained
 #> → 19 redundancies have been removed.
 #> → Calculation of the CHI criterion
-#> → Execution time: 9.96041417121887
+#> → Execution time: 11.103709936142
 ```
 
 The function returns a list of feasible solutions, and you can select
@@ -149,15 +151,16 @@ Once you have a feasible solution, you can further enhance it while
 preserving constraints using the `enhance_feasible` function.
 
 ``` r
-resEnhance <- enhance_feasible(regionalisation = resRAH$results$partition[[1L]],
-                               contiguity = contiguite,
-                               d = "euclidean", data = data,
-                               sizes = individus,
-                               m = 5.0, M = 40.0,
-                               enhanceCriteria = c("AHC", "CHI"),
-                               linkages = c("single", "complete"),
-                               parallele = FALSE,
-                               verbose = TRUE)
+resEnhance <-
+  enhance_feasible(regionalisation = resAHR$results$partition[[1L]],
+                   contiguity = contiguity,
+                   d = "euclidean", data = data,
+                   sizes = individuals,
+                   m = 5.0, M = 40.0,
+                   enhanceCriteria = c("AHC", "CHI"),
+                   linkages = c("single", "complete"),
+                   parallel = FALSE,
+                   verbose = TRUE)
 #> → Evaluation of the 3 enhancements
 #> → Calculation of 1 evaluation criteria on the initial partition
 #> → Calcul of 1 evaluation criteria on the 3 enhanced partitions
@@ -173,14 +176,14 @@ In cases where a feasible solution cannot be obtained, the
 from an unfeasible one.
 
 ``` r
-regInfaisable <- c(1L, 2L, 3L, 2L, 2L, 2L, 2L, 2L, 2L, 4L,
+unfeasibleReg <- c(1L, 2L, 3L, 2L, 2L, 2L, 2L, 2L, 2L, 4L,
                    4L, 2L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L)
 
-resolution <- resolve_unfeasible(contiguity = contiguite,
-                                 sizes = individus,
+resolution <- resolve_unfeasible(contiguity = contiguity,
+                                 sizes = individuals,
                                  data = data,
                                  d = "euclidean", m = 5.0, M = 40.0,
-                                 regionalisation = regInfaisable,
+                                 regionalisation = unfeasibleReg,
                                  verbose = TRUE)
 #> → Transfert of elements one-by-one
 #> ✔ fully resolved partition
@@ -202,7 +205,7 @@ package documentation :
 help(package = "c3t")
 ```
 
-For any issue or suggestion please go to the [Issue
+For any issue or feedback please go to the [Issue
 page](https://github.com/atero18/c3t/issues) of the repository. You can
 as well discuss about the project in the [Discussion
 page](https://github.com/atero18/c3t/discussions).
@@ -210,3 +213,26 @@ page](https://github.com/atero18/c3t/discussions).
 Please note that this project is released with a [Contributor Code of
 Conduct](https://atero18.github.io/c3t/CODE_OF_CONDUCT.html). By
 participating in this project you agree to abide by its terms.
+
+## 📚 References
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-calinski_dendrite_1974" class="csl-entry">
+
+Caliński, T., and J. Harabasz. 1974. “A Dendrite Method for Cluster
+Analysis.” *Communications in Statistics - Theory and Methods* 3 (1):
+1–27. <https://doi.org/10.1080/03610927408827101>.
+
+</div>
+
+<div id="ref-christine_algorithme_2000" class="csl-entry">
+
+Christine, Marc, and Michel Isnard. 2000. “Un Algorithme de Regroupement
+d’unités Statistiques Selon Certains Critères de Similitude.” *Insee
+Méthodes*, 50.
+<http://jms-insee.fr/2000/S03_4_ACTE_CHRISTINE-ISNARD_JMS2000.PDF>.
+
+</div>
+
+</div>

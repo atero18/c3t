@@ -25,7 +25,7 @@ Commençons par créer une grille factice de taille 4L par 5 qui servira d'exemp
 
 Un contexte sera généra pour chaque individu. Le nombre de variables quantatitatives et qualitatives peut être choisi. Ici on choisit de prendre 2 variables normales centrées réduites.
 
-```{r creation_grille}
+```{r grid_creation}
 set.seed(123L)
 x <- 4L
 y <- 5L
@@ -63,7 +63,7 @@ Lorsqu'il y a une contrainte de taille min, l'algorithme n'assure pas que celle-
 
 `fusionConstraint` indique s'il faut appliquer une contrainte sur le choix de la fusion et si oui laquelle. Les possibilités implémentées sont les suivantes :
 
-```{r}
+```{r available_fusion_constraints}
 available_fusion_constraints()
 ```
 
@@ -71,7 +71,7 @@ available_fusion_constraints()
 
 `fusionConstraintMode` définit comment la contrainte de fusion (si elle existe) doit être appliquée.
 
-```{r}
+```{r available_fusion_modes}
 available_fusion_modes()
 ```
 
@@ -87,7 +87,7 @@ L'utilisateur peut choisir s'il souhaite ne démarrer que du bas de l'arbre (de 
 
 Un ou plusieurs critères de classification peuvent être calculés sur les différentes solutions faisables, si elles existent. Plusieurs critères sont disponibles :
 
-```{r}
+```{r available_criteria}
 available_criteria()
 ```
 
@@ -96,7 +96,7 @@ Le critère du score de silhouette n'est disponible que si le package `cluster` 
 Pour cet exemple nous choisissons le critère "CHI", c'est-à-dire l'indice de Calinski-Harabasz. Celui-ci nécessite qu'un contexte soit donné et que toutes ses variables soient quantitatives.
 
 
-```{r}
+```{r set_criterion}
 critere <- "CHI"
 ```
 
@@ -105,17 +105,20 @@ critere <- "CHI"
 
 Appliquons l'algorithme sur nous données. Pour cet exemple nous fixons deux contraintes de taille non-triviale (i.e. qui ne sont pas systématiquement vérifiées) et utilisons la distance euclidienne.
 
-```{r}
+```{r set_constraints}
 m <- 5.0
 M <- 40.0
+```
 
+```{r set_distance}
 d <- "euclidean"
 ```
+
 
 L'algorithme utilise de l'aléatoire pour la génération de partitions initiales et éventuellement l'application de contraintes de fusion. Nous fixons donc préalablement une graine aléatoire.
 
 
-```{r}
+```{r AHR}
 set.seed(123L)
 resRAH <- AHR(contiguity = contiguite,
               d = d, data = data,
@@ -124,12 +127,12 @@ resRAH <- AHR(contiguity = contiguite,
               criteria = critere,
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
-              parallele = FALSE)
+              parallel = FALSE)
 ```
 
 La fonction renvoie une liste de 3 `tibble`. Les solutions faisables sont contenues dans `results` :
 
-```{r}
+```{r print_res_AHR}
 resRAH$results %>%
   select(nbClusters, partition, CHI) %>%
   head()
@@ -138,13 +141,13 @@ resRAH$results %>%
  
  La solution en elle-même se trouve dans la colonne `partition`. Voici la solution faisable qui offre le meilleur indice de Calinski-Harabasz parmi celles trouvées :
  
-```{r}
+```{r print_first_feasible_solution}
 regionalisation <- resRAH$results$partition[[1L]]
 regionalisation
 ```
 Celle-ci vérifie bien les contraintes de contiguïté et de taille :
 
-```{r}
+```{r confirm_feasibility_AHR}
 is_feasible_solution(regionalisation, contiguite,
                      individus, m, M)
 ```
@@ -156,12 +159,12 @@ Une solution faisable ayant été obtenue, on souhaite l'améliorer au regard d'
 
 En conservant notre critère précédent (Calinski-Harabasz), on regarde si celui-ci peut être amélioré. On regarde également si le critère d'optimisation locale ("AHC") permet d'améliorer l'ICH. Le critère "AHC" nécessite une distance de liaison. On propose d'utiliser les distances de saut minimal et maximal.
 
-```{r}
+```{r set_enhancement_criteria}
 criteresAmelioration <- c("AHC", "CHI")
 ```
 
 
-```{r}
+```{r enchancement}
 set.seed(123L)
 resEnhance <- enhance_feasible(regionalisation,
                                contiguity = contiguite,
@@ -170,7 +173,7 @@ resEnhance <- enhance_feasible(regionalisation,
                                m = m, M = M,
                                enhanceCriteria = criteresAmelioration,
                                linkages = c("single", "complete"),
-                               parallele = FALSE,
+                               parallel = FALSE,
                                verbose = TRUE)
 
 resEnhance$results %>% select(-tempsCalcul_mins)
@@ -180,7 +183,7 @@ L'optimisation sous l'ICH permet d'augmenter  cet indice de 0,1 , soit une amél
 
 
 
-```{r}
+```{r print_enhancement}
 partitionCHI <- resEnhance$results$regionalisationOpti[[3L]]
 is_feasible_solution(partitionCHI,
                      contiguite,
@@ -193,7 +196,7 @@ Supposons que l'algorithme `AHR` n'ait pas pu fournir une solution faisable (ce 
 
 Prenons par exemple la partition suivante :
 
-```{r}
+```{r create_unfeasible_solution}
 regInfaisable <-
   c(1L, 2L, 3L, 2L, 2L, 2L, 2L, 2L, 2L, 4L,
     4L, 2L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L)
@@ -201,16 +204,17 @@ regInfaisable <-
 
 Celle-ci est composée de 4L clusters. On peut vérifier que tous ses clusters sont bien des régions, mais qu'elle ne vérifie pas les contraintes de tailles fixées précédemment. Le premier cluster est trop petit et le quatrième trop grand.
 
-```{r}
+```{r confirm_unfeasible}
 is_regionalisation(regInfaisable, contiguite)
 ```
-```{r}
+
+```{r clusters_sizes_unfeasible}
 clusters_sizes(regInfaisable, individus)
 ```
 `resolve_unfeasible` va à partir de de régionalisation proposer une solution faisable, en augmentant la taille du premier cluster et en baissant la taille du dernier.
 
 
-```{r}
+```{r resolve_unfeasible}
 set.seed(123L)
 resolution <- resolve_unfeasible(contiguity = contiguite,
                                  sizes = individus,
@@ -223,7 +227,7 @@ resolution
 ```
 La fonction a obtenu une solution faisable en réalisant six transferts d'éléments. Tous les contraintes sont désormais respectées. En particulier, la solution est bien une régionalisation :
 
-```{r}
+```{r confirm_resolve}
 is_regionalisation(resolution$regionalisation, contiguite)
 ```
 

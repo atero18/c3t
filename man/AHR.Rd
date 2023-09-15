@@ -24,7 +24,7 @@ AHR(
   evalLinkages = linkages,
   minNbClusters = 2L,
   maxNbClusters = Inf,
-  parallele = TRUE,
+  parallel = TRUE,
   nbCores = detectCores() - 1L,
   verbose = TRUE
 )
@@ -158,7 +158,7 @@ exist, those with a superior number of clusters will be removed. Must be
 superior or equal to \code{minNbClusters}. Can reduce computation time.
 Default to \code{Inf}. (strictly positive integer)}
 
-\item{parallele}{Logical indicating whether to use parallel processing.
+\item{parallel}{Logical indicating whether to use parallel processing.
 Default is TRUE.}
 
 \item{nbCores}{Number of CPU cores to use for parallel processing
@@ -225,7 +225,7 @@ AHR(contiguity = contiguity,
     nbTries = 1L,
     fusionConstraints = available_fusion_constraints(),
     fusionConstraintModes = available_fusion_modes(),
-    parallele = FALSE)
+    parallel = FALSE)
 }
 \seealso{
 \code{\link[=merge_cc_partitions]{merge_cc_partitions()}}

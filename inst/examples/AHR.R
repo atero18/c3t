@@ -19,4 +19,4 @@ AHR(contiguity = contiguity,
     nbTries = 1L,
     fusionConstraints = available_fusion_constraints(),
     fusionConstraintModes = available_fusion_modes(),
-    parallele = FALSE)
+    parallel = FALSE)

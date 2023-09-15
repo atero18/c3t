@@ -36,7 +36,7 @@ test_that("Test enhancment with classic criteria",
                                  m = m, M = M,
                                  enhanceCriteria = criteresAmelioration,
                                  linkages = c("single", "complete"),
-                                 parallele = FALSE,
+                                 parallel = FALSE,
                                  verbose = FALSE)
 
   expect_list(resEnhance,

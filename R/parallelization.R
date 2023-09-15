@@ -27,7 +27,7 @@ doInPar <- function()
     isFALSE(getOption("c3t_parallelizing", default = TRUE))
 }
 
-#' @param parallele Logical indicating whether to use parallel processing.
+#' @param parallel Logical indicating whether to use parallel processing.
 #'  Default is TRUE.
 #' @param nbCores Number of CPU cores to use for parallel processing
 #' (sockets method). Default is one less than the detected number of cores.
@@ -208,17 +208,17 @@ c3t_clusters_rm <- function(elementsToRemove = character())
 #' @importFrom cli cli_alert_info cli_alert_danger
 #' @importFrom checkmate assertFlag
 c3t_APP <- function(fonctionApply, fonctionParApply,
-                    parallele,
+                    parallel,
                     donnees, FUN,
                     export = character(0L),
                     exportIfAbsent = character(0L),
                     elementsToRemove = export,
                     envirExport = parent.frame(2L))
 {
-  assertFlag(parallele)
+  assertFlag(parallel)
 
-  parallele <- parallele && !is.null(fonctionParApply)
-  if (parallele)
+  parallel <- parallel && !is.null(fonctionParApply)
+  if (parallel)
   {
     if (getOption("c3t_verbose_parallel", default = FALSE))
     {
@@ -251,7 +251,7 @@ c3t_APP <- function(fonctionApply, fonctionParApply,
 
     if (erreurRealisee)
     {
-      parallele <- FALSE
+      parallel <- FALSE
     }
     else
     {
@@ -261,7 +261,7 @@ c3t_APP <- function(fonctionApply, fonctionParApply,
 
   }
 
-  if (!parallele)
+  if (!parallel)
     return(fonctionApply(donnees, FUN))
 }
 
@@ -274,9 +274,9 @@ c3t_lapply <- function(donnees, FUN, ...,
                        elementsToRemove = export,
                        envirExport = parent.frame(1L))
 {
-  parallele <-  doInPar() && length(donnees) > 1L
+  parallel <-  doInPar() && length(donnees) > 1L
 
-  if (parallele)
+  if (parallel)
   {
     c3t_fonct_parLapply <-
       function(donnees, fun) parLapply(cl = c3t_get_clusters(),
@@ -288,7 +288,7 @@ c3t_lapply <- function(donnees, FUN, ...,
   c3t_fonc_lapply <- function(donnees, FUN)  lapply(X = donnees, FUN = FUN, ...)
 
   c3t_APP(c3t_fonc_lapply, c3t_fonct_parLapply,
-          parallele,
+          parallel,
           donnees, FUN,
           export,
           exportIfAbsent,
@@ -304,9 +304,9 @@ c3t_sapply <- function(donnees, FUN, ..., simplify = TRUE,
                        elementsToRemove = export,
                        envirExport = parent.frame(1L))
 {
-  parallele <- doInPar() && length(donnees) > 1L
+  parallel <- doInPar() && length(donnees) > 1L
 
-  if (parallele)
+  if (parallel)
   {
     c3t_fonct_parSapply <-
       function(donnees, FUN) parSapply(cl = c3t_get_clusters(),
@@ -325,7 +325,7 @@ c3t_sapply <- function(donnees, FUN, ..., simplify = TRUE,
 
   c3t_APP(c3t_fonct_sapply,
           c3t_fonct_parSapply,
-          parallele,
+          parallel,
           donnees, FUN,
           export,
           exportIfAbsent,
@@ -341,16 +341,16 @@ c3t_apply <- function(donnees, MARGIN, FUN, ...,
                       elementsToRemove = export,
                       envirExport = parent.frame(1L))
 {
-  parallele <- doInPar()
+  parallel <- doInPar()
 
-  if (parallele && MARGIN == 1L && ncol(donnees) == 1L)
-    parallele <- FALSE
+  if (parallel && MARGIN == 1L && ncol(donnees) == 1L)
+    parallel <- FALSE
 
-  if (parallele && MARGIN == 2L && nrow(donnees) == 1L)
-    parallele <- FALSE
+  if (parallel && MARGIN == 2L && nrow(donnees) == 1L)
+    parallel <- FALSE
 
 
-  if (parallele)
+  if (parallel)
   {
     c3t_fonct_parApply <-
       function(donnees, FUN) parApply(c3t_get_clusters(),
@@ -370,7 +370,7 @@ c3t_apply <- function(donnees, MARGIN, FUN, ...,
 
   c3t_APP(c3t_fonct_Apply,
           c3t_fonct_parApply,
-          parallele,
+          parallel,
           donnees, FUN,
           export,
           exportIfAbsent,

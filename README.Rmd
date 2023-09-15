@@ -1,5 +1,7 @@
 ---
 output: github_document
+bibliography: inst/readme_references.bib
+nocite: '@*'
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -24,19 +26,21 @@ Sys.setenv(LANG = "en")
 
 
 ## 📒 Table of Contents
+
 - [📒 Table of Contents](#-table-of-contents)
 - [🪛 Installation](#-installation)
 - [📍 Overview](#-overview)
 - [🚀 Getting Started](#-getting-started)
 - [✅ Conclusion](#-conclusion)
+- [📚 References](#-references)
 
 ## 🪛 Installation
 
 [![Licence](https://img.shields.io/github/license/atero18/c3t?style&color=5D6D7E)](GPL 3)
 
-You can install the development version of c3t from [GitHub](https://github.com/atero18/c3t) with:
+You can install the development version of `c3t` from [GitHub](https://github.com/atero18/c3t) with:
 
-``` {r eval=FALSE}
+``` {r install_c3t, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("atero18/c3t")
 ```
@@ -50,7 +54,7 @@ The `c3t` package in R is a powerful tool for regionalization and clustering tas
 ### 1. Hierarchical Regionalization (AHR)
 
 - Solve regionalization problems while respecting constraints such as minimum and maximum size.
-- Apply a modified Hierarchical Agglomerative Clustering (HAC) algorithm.
+- Apply a modified [Agglomerative Hierarchical Clustering](https://www.wikiwand.com/en/Hierarchical_clustering#introduction) (AHC) algorithm.
 - Choose from various linkage methods to define cluster proximity.
 - Apply constraints on the merging process to ensure specific criteria are met.
 
@@ -71,7 +75,7 @@ The `c3t` package in R is a powerful tool for regionalization and clustering tas
 - Choose distance measures, such as Euclidean distance.
 - Set minimum and maximum size constraints for regions.
 - Specify initial partitions for improved results.
-- Apply various criteria for evaluation, including Calinski-Harabasz index (CHI).
+- Apply various criteria for evaluation, including Caliński-Harabasz index (CHI) [@calinski_dendrite_1974].
 
 ### 5. Versatility in Constraints
 
@@ -83,47 +87,47 @@ The `c3t` package in R is a powerful tool for regionalization and clustering tas
 
 Before we begin, ensure you have the `c3t` package and the required dependencies installed. You can do this by running the following commands:
 
-```{r message=FALSE, warning=FALSE}
+```{r setup, message=FALSE, warning=FALSE}
+# load the c3t package
 library(c3t)
-library(dplyr)
 ```
 
 ### Creating a Grid
 
 Let's start by creating a fictitious grid, which will serve as an example for using different functions. We can generate this grid using the `gen_grid` function. You can specify the number of individuals on the grid, empty cells, and metropolitan areas.
 
-```{r}
+```{r grid_creation}
 set.seed(123L)
 x <- 4L
 y <- 5L
 nbIndividuals <- 100L
-nbCasesVides <- 3L
+nbEmptyZones <- 3L
 nbMetropolises <- 2L
 nbVariablesQuant <- 2L
 
-grille <- gen_grid(x, y, nbIndividuals = nbIndividuals,
-                   nbMinEmptyZones = nbCasesVides,
-                   nbMetropolises = nbMetropolises,
-                   nbQuantitatives = nbVariablesQuant)
+grid <- gen_grid(x, y, nbIndividuals = nbIndividuals,
+                 nbMinEmptyZones = nbEmptyZones,
+                 nbMetropolises = nbMetropolises,
+                 nbQuantitatives = nbVariablesQuant)
 
-data <- grille$context
-individus <- grille$repartition$nbIndividuals
-contiguite <- grille$contiguity
+data <- grid$context
+individuals <- grid$repartition$nbIndividuals
+contiguity <- grid$contiguity
 ```
 
 ### Hierarchical Regionalization (AHR)
 
 To address regionalization problems with constraints like minimum and maximum size, you can use the `AHR` function. This function applies a modified Hierarchical Agglomerative Clustering (HAC) algorithm while respecting contiguity and size constraints.
 
-```{r}
-resRAH <- AHR(contiguity = contiguite,
+```{r AHR}
+resAHR <- AHR(contiguity = contiguity,
               d = "euclidean", data = data,
-              sizes = individus,
+              sizes = individuals,
               m = 5.0, M = 40.0,
               criteria = "CHI",
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
-              parallele = FALSE)
+              parallel = FALSE)
 ```
 
 The function returns a list of feasible solutions, and you can select the one that best suits your needs.
@@ -132,16 +136,17 @@ The function returns a list of feasible solutions, and you can select the one th
 
 Once you have a feasible solution, you can further enhance it while preserving constraints using the `enhance_feasible` function.
 
-```{r}
-resEnhance <- enhance_feasible(regionalisation = resRAH$results$partition[[1L]],
-                               contiguity = contiguite,
-                               d = "euclidean", data = data,
-                               sizes = individus,
-                               m = 5.0, M = 40.0,
-                               enhanceCriteria = c("AHC", "CHI"),
-                               linkages = c("single", "complete"),
-                               parallele = FALSE,
-                               verbose = TRUE)
+```{r enchancement}
+resEnhance <-
+  enhance_feasible(regionalisation = resAHR$results$partition[[1L]],
+                   contiguity = contiguity,
+                   d = "euclidean", data = data,
+                   sizes = individuals,
+                   m = 5.0, M = 40.0,
+                   enhanceCriteria = c("AHC", "CHI"),
+                   linkages = c("single", "complete"),
+                   parallel = FALSE,
+                   verbose = TRUE)
 ```
 
 This function allows you to improve your solution according to specified criteria.
@@ -150,15 +155,15 @@ This function allows you to improve your solution according to specified criteri
 
 In cases where a feasible solution cannot be obtained, the `resolve_unfeasible` function attempts to provide a feasible solution from an unfeasible one.
 
-```{r}
-regInfaisable <- c(1L, 2L, 3L, 2L, 2L, 2L, 2L, 2L, 2L, 4L,
+```{r resolve_unfeasible}
+unfeasibleReg <- c(1L, 2L, 3L, 2L, 2L, 2L, 2L, 2L, 2L, 4L,
                    4L, 2L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L)
 
-resolution <- resolve_unfeasible(contiguity = contiguite,
-                                 sizes = individus,
+resolution <- resolve_unfeasible(contiguity = contiguity,
+                                 sizes = individuals,
                                  data = data,
                                  d = "euclidean", m = 5.0, M = 40.0,
-                                 regionalisation = regInfaisable,
+                                 regionalisation = unfeasibleReg,
                                  verbose = TRUE)
 ```
 
@@ -171,10 +176,14 @@ The `c3t` package offers a variety of tools for regionalization and clustering w
 
 For more details on each function and available options, refer to the package documentation :
 
-```{r eval=FALSE}
+```{r ask_help_package, eval=FALSE}
 help(package = "c3t")
 ```
 
-For any issue or suggestion please go to the [Issue page](https://github.com/atero18/c3t/issues) of the repository. You can as well discuss about the project in the [Discussion page](https://github.com/atero18/c3t/discussions).
+For any issue or feedback please go to the [Issue page](https://github.com/atero18/c3t/issues) of the repository. You can as well discuss about the project in the [Discussion page](https://github.com/atero18/c3t/discussions).
 
 Please note that this project is released with a [Contributor Code of Conduct](https://atero18.github.io/c3t/CODE_OF_CONDUCT.html). By participating in this project you agree to abide by its terms.
+
+## 📚 References
+
+<div id="refs"></div>

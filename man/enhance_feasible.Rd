@@ -19,7 +19,7 @@ enhance_feasible(
   linkages = "saut max",
   evaluationCriteria = enhanceCriteria,
   maxIt = Inf,
-  parallele = TRUE,
+  parallel = TRUE,
   nbCores = detectCores() - 1L,
   verbose = TRUE
 )
@@ -98,7 +98,7 @@ See \code{\link[=available_criteria]{available_criteria()}}.}
 \item{maxIt}{maximum number of allowed iterations. Default is \code{Inf}.
 (strictly positive integer)}
 
-\item{parallele}{Logical indicating whether to use parallel processing.
+\item{parallel}{Logical indicating whether to use parallel processing.
 Default is TRUE.}
 
 \item{nbCores}{Number of CPU cores to use for parallel processing

@@ -1,0 +1,51 @@
+﻿word;language;definition
+CHI;en;Calinńki-Harabasz Index
+ICH;fr;Indice de Caliński-Harabasz
+point transférable;fr;pour une régionalisation, point pouvant être transmis d'une région à une autre tout en conservant la connexité des régions
+totalement contigu;fr;ensemble dont chaque élément est contigu avec tous les autres. Le graphe de contiguité associé est complet.
+frontière intérieure d'une partition;fr;ensemble des éléments étant contigus à un élément d'un autre cluster
+partition triviale;fr;partition composée d'un cluster par élément de l'ensemble
+partition grossière;fr;partition composée d'un seul cluster
+région;fr;cluster connexe
+régionalisation;fr;partition dont tous les clusters sont des régions
+graphe non-orienté simple;fr;graphe non-orienté sans boucle et dont toute paire de sommet possède au plus une arète
+graphe fini;fr;graphe dont le nombre de sommets est fini
+graphe complet;fr;graphe simple dont tous les nœuds sont adjacents entre eux
+graphe connexe;fr;graphe non-orienté dont tout sommet est accessible depuis tout autre sommet en passant uniquement via les sommets de cet ensemble
+composante connexe;fr;sous-ensemble connexe maximal au sens de l'inclusion
+point d'articulation;fr;sommet d'un graphe dont la suppression augmente le nombre de composantes connexes (ensemble séparateur constitué d'un seul sommet)
+degré de sommet connexité;fr;pour un graphe non-orienté connexe non-vide, cardinal du plus petit ensemble séparateur
+ensemble séparateur;fr;ensemble de sommets d'un graphe non-orienté dont la suppression engendrerait la création de davantage de composantes connexes
+ensemble séparateur minimal;fr;ensemble séparateur dont tout sous-ensemble strict ne l'est pas
+cluster compact;fr;cluster homogène
+partition compacte;fr;partition dont tous les clusters sont compacts
+partition séparée;fr;partition dont tous les clusters sont bien séparés deux à deux
+SLINK;*;Single Linkage
+CLINK;*;Complete Linkage
+AGNES;*;AGglomerative NESting
+CAH;fr;Classification Ascendante Hiérarchique
+AHC;en;Agglomerative Hierarchical Clustering
+RAH;fr;Régionalisation Ascendante Hiérarchique
+AHR;en;Agglomerative Hierarchical Regionalisation
+transferrable point;en;for regionalization, a point that can be transmitted from one region to another while maintaining the connectivity of the regions
+totally contiguous;en;set in which each element is contiguous with all the others. The associated contiguity graph is complete.
+interior boundary of a partition;en;set of elements contiguous to an element of another cluster
+trivial partition;en;partition composed of one cluster per element of the set
+coarse partition;en;partition composed of a single cluster
+region;en;connected cluster
+regionalization;en;partition where all clusters are regions
+regionalisation;en;partition where all clusters are regions
+simple undirected graph;en;undirected graph without loops and in which each pair of vertices has at most one edge
+finite graph;en;graph with a finite number of vertices
+complete graph;en;simple graph in which all nodes are adjacent to each other
+connected graph;en;undirected graph where any vertex is accessible from any other vertex by passing only through the vertices of this set
+connected component;en;maximal connected subset with respect to inclusion
+articulation point;en;vertex of a graph whose removal increases the number of connected components (separator set consisting of a single vertex)
+vertex connectivity degree;en;for a non-empty connected undirected graph, the cardinality of the smallest separator set
+separator set;en;set of vertices of an undirected graph whose removal would create more connected components
+minimal separator set;en;separator set such that no strict subset is a separator set
+compact cluster;en;homogeneous cluster
+compact partition;en;partition where all clusters are compact
+separate partition;en;partition where all clusters are well separated pairwise
+solution faisable;fr;partition respectant toutes les contraintes (contiguïté, taille…)
+feasible solution;en;A partition that respects all constraints (contiguity, size...)

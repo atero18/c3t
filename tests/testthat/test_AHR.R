@@ -198,7 +198,7 @@ test_that("Functioning of the grid",
   M <- Inf
 
   res <- AHR(d = d, data = context, contiguity = contiguity, m = m, M = M,
-             parallele = FALSE, verbose = FALSE)
+             parallel = FALSE, verbose = FALSE)
 
   expect_list(res, types = "tbl", len = 3L)
   expect_named(res, c("grid", "initialPartitions", "results"))

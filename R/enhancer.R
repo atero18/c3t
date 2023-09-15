@@ -62,7 +62,7 @@ enhance_feasible <-
            linkages = "saut max",
            evaluationCriteria = enhanceCriteria,
            maxIt = Inf,
-           parallele = TRUE, nbCores = detectCores() - 1L,
+           parallel = TRUE, nbCores = detectCores() - 1L,
            verbose = TRUE)
   {
 
@@ -81,9 +81,9 @@ enhance_feasible <-
                                      enhanceCriteria,
                                      linkages)
 
-    parallele <- parallele && nrow(grille) > 1L
+    parallel <- parallel && nrow(grille) > 1L
 
-    if (parallele)
+    if (parallel)
     {
       nbCores <- min(nbCores, nrow(grille))
       c3t_create_clusters(nbCores)

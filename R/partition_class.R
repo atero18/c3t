@@ -68,7 +68,7 @@ verif_partition <- function(object)
 
 }
 
-#setValidity("Partition", verif_partition)
+##setValidity("Partition", verif_partition)
 
 
 #' Create a `Partition` using the provided parameters.

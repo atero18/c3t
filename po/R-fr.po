@@ -25,7 +25,7 @@ msgid "{sum(tailleDFs)} non-trivial regionalisation{?s} obtained"
 msgstr "{sum(tailleDFs)} partition{?s} non triviale{?s} obtenue{?s}"
 
 #: AHR_grid.R:339
-msgid "{sum(sapply(results, nrow))} feasable partitions obtained"
+msgid "{sum(sapply(results, nrow))} feasible partitions obtained"
 msgstr "{sum(sapply(results, nrow))} partition{?s} faisable{?s} obtenue{?s}"
 
 #: AHR_grid.R:346

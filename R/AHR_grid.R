@@ -125,7 +125,7 @@ AHR <- function(distances = NULL, contiguity = NULL, sizes = NULL,
                 evalLinkages = linkages,
                 minNbClusters = 2L,
                 maxNbClusters = Inf,
-                parallele = TRUE,
+                parallel = TRUE,
                 nbCores = detectCores() - 1L,
                 verbose = TRUE)
 {
@@ -133,7 +133,7 @@ AHR <- function(distances = NULL, contiguity = NULL, sizes = NULL,
   # Checking arguments
   assertNumericVector(m, lower = 0.0, any.missing = FALSE, all.missing = FALSE)
   assertNumericVector(M, lower = 0.0, any.missing = FALSE, all.missing = FALSE)
-  assertFlag(parallele)
+  assertFlag(parallel)
   assertFlag(verbose)
   assertFlag(splitConnectedComponents)
 
@@ -148,7 +148,7 @@ AHR <- function(distances = NULL, contiguity = NULL, sizes = NULL,
   options(c3t_verbose = verbose) # nolint
 
 
-  if (parallele)
+  if (parallel)
   {
     assertCount(nbCores)
     if (nbCores > 1L)
@@ -336,7 +336,7 @@ AHR <- function(distances = NULL, contiguity = NULL, sizes = NULL,
       if (verbose)
       {
         success <-
-          gettext("{sum(sapply(results, nrow))} feasable partitions obtained")
+          gettext("{sum(sapply(results, nrow))} feasible partitions obtained")
         cli_alert_success(success)
       }
     }
