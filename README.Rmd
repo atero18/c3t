@@ -1,5 +1,6 @@
 ---
 output: github_document
+
 bibliography: inst/readme_references.bib
 nocite: '@*'
 ---
