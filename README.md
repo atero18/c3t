@@ -3,6 +3,8 @@
 
 # c3t : Clustering with Connectivity and Size Constraints
 
+<a href="dzt"><img src="man/figures/logo.png" align="right" height="139" alt="c3t website" /></a>
+
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/atero18/c3t/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/atero18/c3t/actions/workflows/R-CMD-check.yaml)
@@ -134,13 +136,13 @@ resAHR <- AHR(contiguity = contiguity,
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
               parallel = FALSE)
-#> ℹ Starting time: 2023-09-19 19:33:28.491501
+#> ℹ Starting time: 2023-09-19 20:17:52.025947
 #> ℹ 45 AHC to evaluate
 #> → 362 non-trivial regionalisations obtained
 #> ✔ 62 feasible partitions obtained
 #> → 19 redundancies have been removed.
 #> → Calculation of the CHI criterion
-#> → Execution time: 9.87626695632935
+#> → Execution time: 9.00752687454224
 ```
 
 The function returns a list of feasible solutions, and you can select

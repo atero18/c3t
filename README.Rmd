@@ -18,6 +18,8 @@ Sys.setenv(LANG = "en")
 
 # c3t : Clustering with Connectivity and Size Constraints
 
+<a href="dzt"><img src="man/figures/logo.png" align="right" height="139" alt="c3t website" /></a>
+
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/atero18/c3t/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/atero18/c3t/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/atero18/c3t/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/atero18/c3t/actions/workflows/test-coverage.yaml)

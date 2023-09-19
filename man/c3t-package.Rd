@@ -6,6 +6,8 @@
 \alias{c3t-package}
 \title{c3t: Clustering with Connectivity and Size Constraints}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Enable clustering with connectivity (regionalization) and/or minimum-maximum size constraints. It also provides an algorithm to attempt making a regionalization feasible (while respecting size constraints) and another to enhance a feasible solution.
 }
 \seealso{

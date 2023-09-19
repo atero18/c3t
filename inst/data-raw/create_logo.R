@@ -101,7 +101,6 @@ p <- ggdraw() +
 # Inspired from
 # https://shixiangwang.github.io/home/en/post/2019-06-20-how-i-create-ucscxenatools-logo/
 sticker(p, package = "c3t",
-        url = "atero18.github.io/c3t/",
         filename = "man/figures/logo.png",
         p_size = 0L, s_x = 1.0, s_y = 1.0, s_width = 2.5, s_height = 2.5,
         p_x = 1.1, p_y = 0.9, h_fill = "white", h_color = "black",
