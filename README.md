@@ -1,11 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# c3t : Clustering with Connectivity and Size Constraints
+# c3t : Clustering with Connectivity and Size Constraints <a href="dzt"><img src="man/figures/logo.png" align="right" height="139" alt="c3t website" /></a>
 
 <!-- badges: start -->
 
-<a href="dzt"><img src="man/figures/logo.png" align="right" height="139" alt="c3t website" /></a>
 [![R-CMD-check](https://github.com/atero18/c3t/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/atero18/c3t/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/atero18/c3t/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/atero18/c3t/actions/workflows/test-coverage.yaml)
 [![Lifecycle:
@@ -135,13 +134,13 @@ resAHR <- AHR(contiguity = contiguity,
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
               parallel = FALSE)
-#> ℹ Starting time: 2023-09-19 20:41:56.969036
+#> ℹ Starting time: 2023-09-19 22:44:02.865828
 #> ℹ 45 AHC to evaluate
 #> → 362 non-trivial regionalisations obtained
 #> ✔ 62 feasible partitions obtained
 #> → 19 redundancies have been removed.
 #> → Calculation of the CHI criterion
-#> → Execution time: 9.4570848941803
+#> → Execution time: 9.80664587020874
 ```
 
 The function returns a list of feasible solutions, and you can select
