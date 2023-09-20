@@ -3,8 +3,8 @@ Package: c3t
 Title: Clustering with Connectivity and Size Constraints
 Version: 0.1.0
 Authors@R: c(
-  person("Tangi", "Tassin", email = "tangi.tassin@outlook.fr", role = c("aut", "cre"), comment = c(ORCID = "0009-0004-5956-2910", context = "internship")),
-  person("Stéphane", "Legleye", role = "ths", comment = c(ORCID = "0000-0002-1704-2499"))
+  person("Tangi", "Tassin", email = "tangi.tassin@outlook.fr", role = c("aut", "cre"), comment = c(ORCID = "0009-0004-5956-2910", context = "twos-month internship")),
+  person("Stéphane", "Legleye", role = "ths", comment = c(ORCID = "0000-0002-1704-2499", institution = "Ensai.fr"))
   )
 Description: Enable clustering with connectivity (regionalization) and/or
     minimum-maximum size constraints. It also provides an algorithm to
@@ -13,6 +13,7 @@ Description: Enable clustering with connectivity (regionalization) and/or
     "Classification avec Contrainte de Connexité et de Taille", which in french
     means "Clustering with connecvity and or size constraints".
 License: GPL (>= 3)
+Git: https://github.com/atero18/c3t/
 URL: https://github.com/atero18/c3t/, https://atero18.github.io/c3t/
 BugReports: https://github.com/atero18/c3t/issues
 Depends: 
