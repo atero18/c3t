@@ -20,11 +20,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Tangi Tassin \email{tangi.tassin@outlook.fr} (\href{https://orcid.org/0009-0004-5956-2910}{ORCID})
+\strong{Maintainer}: Tangi Tassin \email{tangi.tassin@outlook.fr} (0009-0004-5956-2910)
 
 Other contributors:
 \itemize{
-  \item Stéphane Legleye (ensai.fr) [thesis advisor]
+  \item Stéphane Legleye (\href{https://orcid.org/0000-0002-1704-2499}{ORCID}) [thesis advisor]
 }
 
 }

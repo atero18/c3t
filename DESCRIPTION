@@ -3,11 +3,15 @@ Package: c3t
 Title: Clustering with Connectivity and Size Constraints
 Version: 0.1.0
 Authors@R: c(
-    person("Tangi", "Tassin", , "tangi.tassin@outlook.fr", role = c("aut", "cre"),
-           comment = c(ORCID = "0009-0004-5956-2910")),
+    person("Tangi", "Tassin",
+           email = "tangi.tassin@outlook.fr",
+           role = c("aut", "cre"),
+           comment = list(ORCID = "0009-0004-5956-2910",
+                       school = "Ensai",
+                       worktype = "Internship")),
     person("Stéphane", "Legleye", role = "ths",
-           comment = "ensai.fr")
-  )
+           comment = c(ORCID = "0000-0002-1704-2499"))
+    )
 Description: Enable clustering with connectivity (regionalization) and/or
     minimum-maximum size constraints. It also provides an algorithm to
     attempt making a regionalization feasible (while respecting size
