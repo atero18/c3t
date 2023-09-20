@@ -3,6 +3,9 @@ AHR
 AHRs
 AssertCollection
 Calinski
+Connexité
+Contrainte
+Ensai
 Harabasz
 ICH
 ISODATA
@@ -13,11 +16,14 @@ Medoid
 Minkowski
 Minkowski's
 Méthodes
+ORCID
 Regionalisation
 Schlegel
 Standardisation
+Taille
 Un
 algorithme
+avec
 binarization
 binarized
 centroid
@@ -26,7 +32,7 @@ certains
 critères
 d'unités
 de
-ensai
+et
 fastDummies
 fpc
 initialisations
@@ -49,4 +55,3 @@ subclasses
 tibble
 undirected
 vectorial
-ORCID

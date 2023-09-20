@@ -3,15 +3,15 @@ Package: c3t
 Title: Clustering with Connectivity and Size Constraints
 Version: 0.1.0
 Authors@R: c(
-  person("Tangi", "Tassin", email = "tangi.tassin@outlook.fr", role = c("aut", "cre"), comment = c(ORCID = "0009-0004-5956-2910", context = "twos-month internship")),
+  person("Tangi", "Tassin", email = "tangi.tassin@outlook.fr", role = c("aut", "cre"), comment = c(ORCID = "0009-0004-5956-2910", context = "two-month internship")),
   person("Stéphane", "Legleye", role = "ths", comment = c(ORCID = "0000-0002-1704-2499", institution = "Ensai.fr"))
   )
 Description: Enable clustering with connectivity (regionalization) and/or
     minimum-maximum size constraints. It also provides an algorithm to
     attempt making a regionalization feasible (while respecting size
-    constraints) and another to enhance a feasible solution. 'c3t' stands for
-    "Classification avec Contrainte de Connexité et de Taille", which in french
-    means "Clustering with connecvity and or size constraints".
+    constraints) and another to enhance a feasible solution. 'c3t' stands
+    for "Classification avec Contrainte de Connexité et de Taille", which
+    in french means "Clustering with connectivity and or size constraints".
 License: GPL (>= 3)
 Git: https://github.com/atero18/c3t/
 URL: https://github.com/atero18/c3t/, https://atero18.github.io/c3t/
@@ -53,7 +53,7 @@ Config/potools/style: base
 Config/testthat/edition: 3
 Config/testthat/load-all: list(export_all = TRUE, helpers = TRUE)
 Config/testthat/parallel: true
-Config/testthat/start-first: AHR, calinski-harabasz
+Config/testthat/start-first: AHR, calinski-harabasz; initialization, resolver
 Encoding: UTF-8
 Language: en-US
 LazyData: true

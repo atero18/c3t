@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Enable clustering with connectivity (regionalization) and/or minimum-maximum size constraints. It also provides an algorithm to attempt making a regionalization feasible (while respecting size constraints) and another to enhance a feasible solution. 'c3t' stands for "Classification avec Contrainte de Connexité et de Taille", which in french means "Clustering with connecvity and or size constraints".
+Enable clustering with connectivity (regionalization) and/or minimum-maximum size constraints. It also provides an algorithm to attempt making a regionalization feasible (while respecting size constraints) and another to enhance a feasible solution. 'c3t' stands for "Classification avec Contrainte de Connexité et de Taille", which in french means "Clustering with connectivity and or size constraints".
 }
 \seealso{
 Useful links:
@@ -20,7 +20,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Tangi Tassin \email{tangi.tassin@outlook.fr} (\href{https://orcid.org/0009-0004-5956-2910}{ORCID}) (2-month intern)
+\strong{Maintainer}: Tangi Tassin \email{tangi.tassin@outlook.fr} (\href{https://orcid.org/0009-0004-5956-2910}{ORCID}) (two-month internship)
 
 Other contributors:
 \itemize{
