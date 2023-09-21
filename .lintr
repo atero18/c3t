@@ -11,4 +11,6 @@ linters: all_linters(
     # No rule for object names
     object_name_linter = NULL
   )
+# Exclusions are generated with a script because normally excluding a
+# folder implies to remove all linters
 exclusions: {source("./inst/exclusions_lintr.R") ; make_exclusions_lintr()}
