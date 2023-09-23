@@ -16,18 +16,6 @@ TRUE if the set is connected, FALSE otherwise.
 \description{
 Verifies via the contiguity matrix whether a set is connected.
 }
-\examples{
-contiguity1 <- matrix(c(FALSE, TRUE, FALSE,
-                        TRUE, FALSE, TRUE,
-                        FALSE, TRUE, FALSE), nrow = 3L)
-
-is_connected(contiguity1) # TRUE
-
-contiguity2 <- matrix(c(FALSE, FALSE,
-                        FALSE, FALSE), nrow = 2L)
-
-is_connected(contiguity2) # FALSE
-}
 \seealso{
 \code{\link[igraph:components]{igraph::is_connected()}}
 }
