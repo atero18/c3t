@@ -42,3 +42,10 @@ elements using a distance matrix.
 in a partition.
 
 }}
+\examples{
+M <- matrix(c(0.0, 1.0, 2.0,
+              1.0, 0.0, 3.0,
+              2.0, 3.0, 00.))
+
+medoid(M)
+}

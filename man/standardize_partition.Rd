@@ -23,3 +23,8 @@ This form is also used by \code{\link[stats:cutree]{stats::cutree()}}.
 Two partitions are equivalent if and only if their
 standardised forms are equal.
 }
+\examples{
+p <- c(2, 3, 1, "a", 2)
+
+standardize_partition(p) # c(1, 2, 3, 4, 1)
+}
