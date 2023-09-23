@@ -106,7 +106,7 @@
 #' the connected component.
 #' @name AHR
 #' @details `r badge('experimental')`
-#' @example inst/examples/AHR.R
+#' @example inst/doc/ex_AHR.R
 #' @export
 #' @seealso [merge_cc_partitions()]
 #' @seealso [stats::hclust()] if you don't have any constraint.

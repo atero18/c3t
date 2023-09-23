@@ -24,7 +24,7 @@ make_exclusions_lintr <- function()
   # Remove some linters for example files
   for (exampleFile in exampleFilenames)
   {
-    pathFile <- file.path("inst/examples/", exampleFile)
+    pathFile <- file.path("inst/doc/", exampleFile)
     exclusions_list[[pathFile]] <- list(implicit_integer_linter = Inf,
                                         commented_code_linter = Inf,
                                         undesirable_function_linter = Inf)

@@ -74,7 +74,7 @@ setGeneric("nbSingletons")
 #' @details This form is also used by [stats::cutree()].
 #' @details Two partitions are equivalent if and only if their
 #' standardised forms are equal.
-#' @example inst/examples/standardize_partition.R
+#' @example inst/doc/ex_standardize_partition.R
 standardize_partition <- function(partition)
 {
   clustersIDs <- clustersIDs(partition)
@@ -96,7 +96,7 @@ standardize_partition <- function(partition)
 #' @importFrom checkmate assertVector
 #' @export
 #'
-#' @example inst/examples/equivalent_partitions.R
+#' @example inst/doc/ex_equivalent_partitions.R
 equivalent_partitions <- function(partition1, partition2)
 {
   assertVector(partition1, min.len = 1L,

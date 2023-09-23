@@ -351,7 +351,7 @@ testContiguityMatrix <- makeTestFunction(checkContiguityMatrix)
 #' @name checkContiguityGraph
 #' @rdname checkContiguityGraph
 #' @family arguments checkers
-#' @example inst/examples/checkContiguityGraph.R
+#' @example inst/doc/ex_checkContiguityGraph.R
 #' @export
 #' @importFrom igraph is_igraph is.simple is.directed gorder gsize
 checkContiguityGraph <- function(g, n = gorder(g))
@@ -413,7 +413,7 @@ testContiguityGraph <- makeTestFunction(checkContiguityGraph)
 #' @inherit check_general details
 #' @family arguments checkers
 #' @export
-#' @example inst/examples/checkDistanceMatrix.R
+#' @example inst/doc/ex_checkDistanceMatrix.R
 #' @importFrom checkmate checkMatrix
 checkDistanceMatrix <- function(x, # nolint: cyclocomp_linter
                                 isComplete = TRUE,
@@ -498,7 +498,7 @@ testDistanceMatrix <- makeTestFunction(checkDistanceMatrix)
 #' @inherit check_general details
 #' @family arguments checkers
 #' @export
-#' @example inst/examples/checkPartition.R
+#' @example inst/doc/ex_checkPartition.R
 
 #' @importFrom checkmate checkIntegerish
 checkPartition <- function(x, n = length(x))
@@ -549,7 +549,7 @@ testPartition <- makeTestFunction(checkPartition)
 #' @inherit check_general return
 #' @inherit check_general details
 #' @family arguments checkers
-#' @example inst/examples/checkRegionalisation.R
+#' @example inst/doc/ex_checkRegionalisation.R
 #' @export
 #' @importFrom igraph gorder is_igraph
 checkRegionalisation <- function(regionalisation, contiguity)

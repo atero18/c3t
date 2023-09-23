@@ -14,7 +14,7 @@ NULL
 #' @param byName `TRUE` if the returned result should be the row name
 #' corresponding to the medoid, `FALSE` if it should be the row number.
 #' Ignored if `distances` is not named. (flag)
-#' @example inst/examples/medoid.R
+#' @example inst/doc/ex_medoid.R
 #' @export
 medoid <- function(distances, byName = FALSE)
 {
