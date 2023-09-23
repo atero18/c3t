@@ -1,0 +1,5 @@
+M <- matrix(c(0.0, 1.0, 2.3,
+              1.0, 0.0, 3.2,
+              2.3, 3.2, 0.0), nrow = 3L)
+
+checkDistanceMatrix(M, isComplete = TRUE)

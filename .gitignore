@@ -50,6 +50,6 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-*core
+core
 docs
 inst/doc

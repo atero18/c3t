@@ -101,7 +101,7 @@ setGeneric("is_connected", igraph::is_connected)
 #' @returns TRUE if the set is connected, FALSE otherwise.
 #' @seealso [igraph::is_connected()]
 #' @keywords internal
-#' @example inst/doc/ex_is_connected.R
+#' @example inst/examples/is_connected.R
 #' @export
 #' @importFrom igraph is_connected
 setMethod(
