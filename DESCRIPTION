@@ -62,7 +62,6 @@ Git: https://github.com/atero18/c3t/
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3.9000
 Collate: 
     'arguments.R'
     'abstractSymMat.R'
@@ -106,3 +105,4 @@ Collate:
     'symMMat.R'
     'symVMat.R'
     'transferable_points.R'
+RoxygenNote: 7.2.3
