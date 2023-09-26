@@ -118,6 +118,23 @@ functions results.</p>
 <code><a href="checkPartition.html">checkPartition</a>()</code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">contiguity</span> <span class="op">&lt;-</span> <span class="fu"><a href="gen_grid.html">simple_grid</a></span><span class="op">(</span><span class="fl">3L</span>, <span class="fl">2L</span><span class="op">)</span><span class="op">$</span><span class="va">contiguity</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">regionalisation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>,</span></span>
+<span class="r-in"><span>                     <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">2L</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">checkRegionalisation</span><span class="op">(</span><span class="va">regionalisation</span>, <span class="va">contiguity</span><span class="op">)</span> <span class="co"># TRUE</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">notRegionalisation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">1L</span>,</span></span>
+<span class="r-in"><span>                        <span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">1L</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">checkRegionalisation</span><span class="op">(</span><span class="va">notRegionalisation</span>, <span class="va">contiguity</span><span class="op">)</span> <span class="co"># message</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "at least one cluster is not connected"</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

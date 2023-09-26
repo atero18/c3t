@@ -170,6 +170,72 @@ Default is TRUE.</p></dd>
 
 </dl></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">grid</span>  <span class="op">&lt;-</span> <span class="fu"><a href="gen_grid.html">simple_grid</a></span><span class="op">(</span><span class="fl">4L</span>, <span class="fl">5L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">grid</span><span class="op">$</span><span class="va">context</span></span></span>
+<span class="r-in"><span><span class="va">sizes</span> <span class="op">&lt;-</span> <span class="va">grid</span><span class="op">$</span><span class="va">repartition</span><span class="op">$</span><span class="va">nbIndividuals</span></span></span>
+<span class="r-in"><span><span class="va">contiguity</span> <span class="op">&lt;-</span> <span class="va">grid</span><span class="op">$</span><span class="va">contiguity</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fl">200.0</span></span></span>
+<span class="r-in"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fl">800.0</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="st">"euclidean"</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">unfeasibleSolution</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">3L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">2L</span>, <span class="fl">4L</span>,</span></span>
+<span class="r-in"><span>    <span class="fl">4L</span>, <span class="fl">2L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span>, <span class="fl">4L</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">resolve_unfeasible</span><span class="op">(</span>contiguity <span class="op">=</span> <span class="va">contiguity</span>,</span></span>
+<span class="r-in"><span>                   sizes <span class="op">=</span> <span class="va">sizes</span>,</span></span>
+<span class="r-in"><span>                   data <span class="op">=</span> <span class="va">data</span>,</span></span>
+<span class="r-in"><span>                   d <span class="op">=</span> <span class="va">d</span>, m <span class="op">=</span> <span class="va">m</span>, M <span class="op">=</span> <span class="va">M</span>,</span></span>
+<span class="r-in"><span>                   regionalisation <span class="op">=</span> <span class="va">unfeasibleSolution</span>,</span></span>
+<span class="r-in"><span>                   verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fully_resolved"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $itTransfers</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $itFusions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $initialSmallRegions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $finalSmallRegions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $initialBigRegions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $finalBigRegions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $resolvedRegions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 3 4 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $initialRegionsSizes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1   2   3   4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  89 811 103 997 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $finalRegionsSizes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1   2   3   4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 315 727 274 684 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $regionalisation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 2 2 2 1 3 3 3 3 1 4 3 3 4 4 4 3 4 4 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $initialNbClusters</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $finalNbClusters</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
