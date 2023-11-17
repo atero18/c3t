@@ -75,7 +75,7 @@ available_fusion_constraints()
 available_fusion_modes()
 ```
 
-Plusieurs contraintes et modes de fusions peuvent être demandés.
+Plusieurs contraintes et modes de fusions peuvent être demandées.
 
 ## Situation initiale
 
@@ -95,11 +95,9 @@ Le critère du score de silhouette n'est disponible que si le package `cluster` 
 
 Pour cet exemple nous choisissons le critère "CHI", c'est-à-dire l'indice de Calinski-Harabasz. Celui-ci nécessite qu'un contexte soit donné et que toutes ses variables soient quantitatives.
 
-
 ```{r set_criterion}
 critere <- "CHI"
 ```
-
 
 ## Application
 
@@ -114,9 +112,7 @@ M <- 40.0
 d <- "euclidean"
 ```
 
-
 L'algorithme utilise de l'aléatoire pour la génération de partitions initiales et éventuellement l'application de contraintes de fusion. Nous fixons donc préalablement une graine aléatoire.
-
 
 ```{r AHR}
 set.seed(123L)
@@ -124,6 +120,7 @@ resRAH <- AHR(contiguity = contiguite,
               d = d, data = data,
               sizes = individus,
               m = m, M = M,
+              linkages = "saut_min",
               criteria = critere,
               fusionConstraints = available_fusion_constraints(),
               fusionConstraintModes = available_fusion_modes(),
@@ -137,21 +134,22 @@ resRAH$results %>%
   select(nbClusters, partition, CHI) %>%
   head()
 ```
- 38 solutions faisables distinctes ont été obtenues. 
- 
- La solution en elle-même se trouve dans la colonne `partition`. Voici la solution faisable qui offre le meilleur indice de Calinski-Harabasz parmi celles trouvées :
- 
+
+38 solutions faisables distinctes ont été obtenues.
+
+La solution en elle-même se trouve dans la colonne `partition`. Voici la solution faisable qui offre le meilleur indice de Calinski-Harabasz parmi celles trouvées :
+
 ```{r print_first_feasible_solution}
 regionalisation <- resRAH$results$partition[[1L]]
 regionalisation
 ```
+
 Celle-ci vérifie bien les contraintes de contiguïté et de taille :
 
 ```{r confirm_feasibility_AHR}
 is_feasible_solution(regionalisation, contiguite,
                      individus, m, M)
 ```
-
 
 # Amélioration de la solution faisable
 
@@ -162,7 +160,6 @@ En conservant notre critère précédent (Calinski-Harabasz), on regarde si celu
 ```{r set_enhancement_criteria}
 criteresAmelioration <- c("AHC", "CHI")
 ```
-
 
 ```{r enchancement}
 set.seed(123L)
@@ -179,9 +176,7 @@ resEnhance <- enhance_feasible(regionalisation,
 resEnhance$results %>% select(-tempsCalcul_mins)
 ```
 
-L'optimisation sous l'ICH permet d'augmenter  cet indice de 0,1 , soit une amélioration d'environ 4L%. La solution proposée est bien une solution faisable :
-
-
+L'optimisation sous l'ICH permet d'augmenter cet indice de 0,1 , soit une amélioration d'environ 4%. La solution proposée est bien une solution faisable :
 
 ```{r print_enhancement}
 partitionCHI <- resEnhance$results$regionalisationOpti[[3L]]
@@ -211,8 +206,8 @@ is_regionalisation(regInfaisable, contiguite)
 ```{r clusters_sizes_unfeasible}
 clusters_sizes(regInfaisable, individus)
 ```
-`resolve_unfeasible` va à partir de de régionalisation proposer une solution faisable, en augmentant la taille du premier cluster et en baissant la taille du dernier.
 
+`resolve_unfeasible` va à partir de de régionalisation proposer une solution faisable, en augmentant la taille du premier cluster et en baissant la taille du dernier.
 
 ```{r resolve_unfeasible}
 set.seed(123L)
@@ -225,11 +220,9 @@ resolution <- resolve_unfeasible(contiguity = contiguite,
 
 resolution
 ```
+
 La fonction a obtenu une solution faisable en réalisant six transferts d'éléments. Tous les contraintes sont désormais respectées. En particulier, la solution est bien une régionalisation :
 
 ```{r confirm_resolve}
 is_regionalisation(resolution$regionalisation, contiguite)
 ```
-
-
-
