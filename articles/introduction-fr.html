@@ -161,7 +161,7 @@ fusion (si elle existe) doit être appliquée.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/available_fusion_constraints.html">available_fusion_modes</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "deterministic" "random"</span></span></code></pre></div>
-<p>Plusieurs contraintes et modes de fusions peuvent être demandés.</p>
+<p>Plusieurs contraintes et modes de fusions peuvent être demandées.</p>
 </div>
 <div class="section level3">
 <h3 id="situation-initiale">Situation initiale<a class="anchor" aria-label="anchor" href="#situation-initiale"></a>
@@ -217,17 +217,18 @@ fixons donc préalablement une graine aléatoire.</p>
 <span>              d <span class="op">=</span> <span class="va">d</span>, data <span class="op">=</span> <span class="va">data</span>,</span>
 <span>              sizes <span class="op">=</span> <span class="va">individus</span>,</span>
 <span>              m <span class="op">=</span> <span class="va">m</span>, M <span class="op">=</span> <span class="va">M</span>,</span>
+<span>              linkages <span class="op">=</span> <span class="st">"saut_min"</span>,</span>
 <span>              criteria <span class="op">=</span> <span class="va">critere</span>,</span>
 <span>              fusionConstraints <span class="op">=</span> <span class="fu"><a href="../reference/available_fusion_constraints.html">available_fusion_constraints</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>              fusionConstraintModes <span class="op">=</span> <span class="fu"><a href="../reference/available_fusion_constraints.html">available_fusion_modes</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>              parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Starting time: 2023-09-26 15:44:20.938505</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Starting time: 2023-11-17 09:03:47.822522</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> 45 AHC to evaluate</span></span>
 <span><span class="co">#&gt; → 432 non-trivial regionalisations obtained</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 56 feasible partitions obtained</span></span>
 <span><span class="co">#&gt; → 18 redundancies have been removed.</span></span>
 <span><span class="co">#&gt; → Calculation of the CHI criterion</span></span>
-<span><span class="co">#&gt; → Execution time: 8.45390295982361</span></span></code></pre></div>
+<span><span class="co">#&gt; → Execution time: 4.83163261413574</span></span></code></pre></div>
 <p>La fonction renvoie une liste de 3 <code>tibble</code>. Les solutions
 faisables sont contenues dans <code>results</code> :</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -295,7 +296,7 @@ de saut minimal et maximal.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> AHC       Complete amelioration          6 <span style="color: #949494;">&lt;int [20]&gt;</span>          -<span style="color: #BB0000;">1.61</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> CHI       <span style="color: #BB0000;">NA</span>       amelioration          1 <span style="color: #949494;">&lt;int [20]&gt;</span>           0.117</span></span></code></pre></div>
 <p>L’optimisation sous l’ICH permet d’augmenter cet indice de 0,1 , soit
-une amélioration d’environ 4L%. La solution proposée est bien une
+une amélioration d’environ 4%. La solution proposée est bien une
 solution faisable :</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">partitionCHI</span> <span class="op">&lt;-</span> <span class="va">resEnhance</span><span class="op">$</span><span class="va">results</span><span class="op">$</span><span class="va">regionalisationOpti</span><span class="op">[[</span><span class="fl">3L</span><span class="op">]</span><span class="op">]</span></span>
