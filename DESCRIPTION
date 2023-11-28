@@ -3,7 +3,7 @@ Package: c3t
 Title: Clustering with Connectivity and Size Constraints
 Version: 0.1.0
 Authors@R: c(
-    person("Tangi", "Tassin", , "tangi.tassin@outlook.fr", role = c("aut", "cre"),
+    person("Tangi", "Tassin", , "dev.ttassin@proton.me", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0004-5956-2910", context = "two-month internship")),
     person("Stéphane", "Legleye", role = "ths",
            comment = c(ORCID = "0000-0002-1704-2499", institution = "Ensai.fr"))
